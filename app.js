@@ -1,8 +1,8 @@
 (function() {
 	var sammy = Sammy('#content', function() {
-		this.get('#/', function() {
-			console.log('spam');
-		});
+		this.get('#/', homeController);
+
+		this.get('#/timing/:stopcode', timingController);
 	});
 
 	sammy.run('#/');

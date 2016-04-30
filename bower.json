@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "jquery": "^2.2.3",
-    "sammy": "^0.7.6"
+    "sammy": "^0.7.6",
+    "handlebars": "^4.0.5"
   }
 }
