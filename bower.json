@@ -1,0 +1,22 @@
+{
+  "name": "SofiaTransport",
+  "authors": [
+    "Kristiyan Tsaklev <cuki@cukii.tk>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "GPL3",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "sammy": "^0.7.6"
+  }
+}
