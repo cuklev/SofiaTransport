@@ -1,9 +1,7 @@
 var timingController = (function() {
 	var template;
 
-	function get() {
-		var stopcode = this.params.stopcode;
-
+	function update(stopcode) {
 		templates.get('timing').then(function(result) {
 			template = result;
 			return sumc.getTiming(stopcode);
@@ -17,7 +15,15 @@ var timingController = (function() {
 			});
 			$('#container').html(template(timings));
 		});
+	}
+
+	function get() {
+		update(this.params.stopcode);
+
 	};
 
-	return get;
+	return {
+		get: get,
+		update: update
+	};
 }());
