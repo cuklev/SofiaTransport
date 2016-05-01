@@ -8,18 +8,21 @@ var timingController = (function() {
 		}).then(function(timings) {
 			timings = timings.map(function(x) {
 				return {
-					line: x.lineName,
+					line: +x.lineName,
 					type: ['tram', 'bus', 'trolley'][x.type],
 					timing: x.timing.split(',')
 				};
 			});
+			timings.sort(function(a, b) {
+				return a.line - b.line;
+			});
+
 			$('#container').html(template(timings));
 		});
 	}
 
 	function get() {
 		update(this.params.stopcode);
-
 	};
 
 	return {
