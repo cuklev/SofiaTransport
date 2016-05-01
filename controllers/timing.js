@@ -8,6 +8,13 @@ var timingController = (function() {
 			template = result;
 			return sumc.getTiming(stopcode);
 		}).then(function(timings) {
+			timings = timings.map(function(x) {
+				return {
+					line: x.lineName,
+					type: ['tram', 'bus', 'trolley'][x.type],
+					timing: x.timing.split(',')
+				};
+			});
 			$('#container').html(template(timings));
 		});
 	};

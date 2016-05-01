@@ -1,10 +1,10 @@
 <ul>
 	{{#each this}}
-		<li>{{lineName}}<ul>
-			<li>type: {{type}}</li>
-			<li>timing: {{timing}}</li>
-			<li>routeId: {{routeId}}</li>
-			<li>lineId: {{lineId}}</li>
-		</ul></li>
+		<li>
+			<span class="{{type}}">{{line}}</span>
+			<ul>{{#each timing}}
+				{{#if this}}<li>{{this}}</li>{{/if}}
+			{{/each}}</ul>
+		</li>
 	{{/each}}
 </ul>
