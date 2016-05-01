@@ -1,6 +1,6 @@
 var sumc = (function() {
-	var baseUrl = 'http://drone.sumc.bg/api';
-	// Yep, creates issues when serving the app through https
+	//var baseUrl = 'http://drone.sumc.bg/api';
+	var baseUrl = 'api/';
 
 	var getTiming = function(stopcode) {
 		var data = {
