@@ -1,0 +1,24 @@
+{
+  "name": "sofiatransport",
+  "version": "1.0.0",
+  "description": "The aim of this project is to display schedules and ETAs of Sofia City Transport busses in a (hopefully) more meaningful way.",
+  "main": "server.js",
+  "dependencies": {
+    "bower": "^1.7.9",
+    "express": "^4.13.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cuklev/SofiaTransport.git"
+  },
+  "author": "Kristiyan Tsaklev",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/cuklev/SofiaTransport/issues"
+  },
+  "homepage": "https://github.com/cuklev/SofiaTransport#readme"
+}
