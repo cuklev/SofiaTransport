@@ -11,8 +11,6 @@ module.exports = {
 		  url: url
 		};
 
-		console.log(options);
-
 		// Maybe implement caching
 
 		request(options, function (err, res1, body) {
