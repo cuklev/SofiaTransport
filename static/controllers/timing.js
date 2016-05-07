@@ -1,16 +1,20 @@
 var timingController = (function() {
 	function get(stopcode) {
-		var template, timings;
+		var template, timings, stopname;
 
 		function update() {
-			if(template === undefined) {
-				return;
-			}
-			if(timings === undefined) {
+			if(template === undefined
+			 || timings === undefined
+			 || stopname == undefined) {
 				return;
 			}
 
-			$('#timingContainer').html(template(timings));
+			var params = {
+				timings: timings,
+				stopname: stopname
+			};
+
+			$('#timingContainer').html(template(params));
 		}
 
 		templates.get('timing').then(function(result) {
@@ -29,6 +33,11 @@ var timingController = (function() {
 				return a.line - b.line;
 			});
 
+			update();
+		});
+
+		db.getStopname(stopcode).then(function(result) {
+			stopname = result;
 			update();
 		});
 	}
