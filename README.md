@@ -5,7 +5,7 @@ The aim of this project is to display schedules and ETAs of Sofia City Transport
 - To start the app run:
 
 ```
-npm init
-./node_modules/bower/bin/bower init
+npm install
+./node_modules/bower/bin/bower install
 node server.js
 ```
