@@ -17,7 +17,7 @@ function routes(req, res) {
 	var linetype = req.body.linetype;
 	var linename = req.body.linename;
 
-	var routes = [db.trams, db.buses, db.trolleys][linetype].routes;
+	var routes = [db.trams, db.buses, db.trolleys][linetype].routes[linename];
 	res.send(routes);
 }
 
