@@ -1,7 +1,7 @@
 var sumc = (function() {
-	var baseUrl = 'sumcapi'; // setup the route as proxypass to http://drone.sumc.bg/api;
+	var baseUrl = '/sumcapi';
 
-	var getTiming = function(stopcode) {
+	function getTiming(stopcode) {
 		var data = {
 			stopCode: stopcode
 		};
