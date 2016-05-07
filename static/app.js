@@ -1,7 +1,10 @@
-$(window).on('hashchange', function() {
+function loadTiming() {
 	var stopcode = location.hash.replace(/^#/, '');
 	timingController.get(stopcode);
-});
+}
+
+$(loadTiming);
+$(window).on('hashchange', loadTiming);
 
 $(function() {
 	var input = $('#enterStopcode');
