@@ -1,12 +1,25 @@
 var timingController = (function() {
-	var template;
-
 	function get(stopcode) {
+		var template, timings;
+
+		function update() {
+			if(template === undefined) {
+				return;
+			}
+			if(timings === undefined) {
+				return;
+			}
+
+			$('#timingContainer').html(template(timings));
+		}
+
 		templates.get('timing').then(function(result) {
 			template = result;
-			return sumc.getTiming(stopcode);
-		}).then(function(timings) {
-			timings = timings.map(function(x) {
+			update();
+		});
+
+		sumc.getTiming(stopcode).then(function(result) {
+			timings = result.map(function(x) {
 				return {
 					line: +x.lineName,
 					type: ['tram', 'bus', 'trolley'][x.type],
@@ -16,7 +29,7 @@ var timingController = (function() {
 				return a.line - b.line;
 			});
 
-			$('#timingContainer').html(template(timings));
+			update();
 		});
 	}
 
