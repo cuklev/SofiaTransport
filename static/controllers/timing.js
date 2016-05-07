@@ -5,7 +5,7 @@ var timingController = (function() {
 		function update() {
 			if(template === undefined
 			 || timings === undefined
-			 || stopname == undefined) {
+			 || stopname === undefined) {
 				return;
 			}
 
