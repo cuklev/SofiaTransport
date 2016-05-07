@@ -13,7 +13,25 @@ function lines(req, res) {
 	});
 };
 
+function routes(req, res) {
+	var linetype = req.body.linetype;
+	var linename = req.body.linename;
+
+	var routes = [db.trams, db.buses, db.trolleys][linetype].routes;
+	res.send(routes);
+}
+
+function points(req, res) {
+	var linetype = req.body.linetype;
+	var linename = req.body.linename;
+
+	var points = [db.trams, db.buses, db.trolleys][linetype].points;
+	res.send(points);
+}
+
 module.exports = {
 	stopname: stopname,
-	lines: lines
+	lines: lines,
+	routes: routes,
+	points: points
 };
