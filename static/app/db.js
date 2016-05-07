@@ -1,21 +1,44 @@
 var db = (function() {
-	var url = '/api/stopname';
+	var getStopname = (function() {
+		var url = '/api/stopname';
 
-	function getStopname(stopcode) {
-		var data = {
-			stopcode: stopcode
-		};
+		return function(stopcode) {
+			var data = {
+				stopcode: stopcode
+			};
 
-		var promise = new Promise(function(resolve, reject) {
-			$.post(url, data, function(stopname) {
-				resolve(stopname);
+			var promise = new Promise(function(resolve, reject) {
+				$.post(url, data, function(stopname) {
+					resolve(stopname);
+				});
 			});
-		});
 
-		return promise;
-	}
+			return promise;
+		}
+	}());
+
+	var getLines = (function() {
+		var cache;
+		var url = '/api/lines';
+
+		return function() {
+			var promise = new Promise(function(resolve, reject) {
+				if(cache) {
+					resolve(cache);
+					return;
+				}
+				$.get(url, function(lines) {
+					cache = lines;
+					resolve(lines);
+				});
+			});
+
+			return promise;
+		};
+	}());
 
 	return {
-		getStopname: getStopname
+		getStopname: getStopname,
+		getLines: getLines
 	};
 }());

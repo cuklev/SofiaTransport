@@ -7,3 +7,7 @@
 .tram {
 	color: orange;
 }
+
+#linesContainer {
+	width: 20%;
+}

@@ -22,3 +22,10 @@ $(function() {
 		// rewrite this better
 	});
 });
+
+$(function() {
+	var input = $('#enterLinename');
+	input.on('keyup', function(e) {
+		linesController.get(input.val());
+	});
+});
