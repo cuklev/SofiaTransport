@@ -1,11 +1,14 @@
+.tram {
+	color: orange;
+}
 .bus {
 	color: red;
 }
 .trolley {
 	color: blue;
 }
-.tram {
-	color: orange;
+.tram, .bus, .trolley {
+	cursor: pointer
 }
 
 #linesContainer {

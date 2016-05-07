@@ -15,6 +15,19 @@ var timingController = (function() {
 				stopname: stopname
 			};
 			$('#timingContainer').html(template(params));
+
+			$('#timingContainer .tram').on('click', function(e) {
+				var linename = e.target.innerHTML;
+				routesController.get(0, linename);
+			})
+			$('#timingContainer .bus').on('click', function(e) {
+				var linename = e.target.innerHTML;
+				routesController.get(1, linename);
+			})
+			$('#timingContainer .trolley').on('click', function(e) {
+				var linename = e.target.innerHTML;
+				routesController.get(2, linename);
+			})
 		}
 
 		templates.get('timing').then(function(result) {
