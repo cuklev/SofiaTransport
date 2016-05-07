@@ -44,11 +44,11 @@ var db = (function() {
 		};
 	}());
 
-	var getRoutes = (function(line) {
+	var getRoutes = (function() {
 		var url = 'api/routes';
 		var cache = {}; // is array better?
 
-		return function() {
+		return function(line) {
 			var promise = new Promise(function(resolve, reject) {
 				if(!cache[line.type]) {
 					cache[line.type] = {};

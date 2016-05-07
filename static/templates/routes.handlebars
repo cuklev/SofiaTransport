@@ -1,0 +1,12 @@
+{{#each this}}
+	<h2>{{routename}}</h2>
+	<ol>
+		{{#each routestops}}
+			<li>
+				<a href="#{{stopcode}}">
+					{{stopname}} ({{stopcode}})
+				</a>
+			</li>
+		{{/each}}
+	</ol>
+{{/each}}
