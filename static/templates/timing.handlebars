@@ -1,11 +1,15 @@
-<h2>{{stopname}}</h2>
-<ul>
-	{{#each timings}}
-		<li>
-			<span class="{{type}}">{{line}}</span>
-			<ul>{{#each timing}}
-				{{#if this}}<li>{{this}}</li>{{/if}}
-			{{/each}}</ul>
-		</li>
-	{{/each}}
-</ul>
+{{#if timings}}
+	<h2>{{stopname}} ({{stopcode}})</h2>
+	<ul>
+		{{#each timings}}
+			<li>
+				<span class="{{type}}">{{line}}</span>
+				<ul>{{#each timing}}
+					{{#if this}}<li>{{this}}</li>{{/if}}
+				{{/each}}</ul>
+			</li>
+		{{/each}}
+	</ul>
+{{else}}
+	<h2>No such stop ({{stopcode}})</h2>
+{{/if}}

@@ -11,9 +11,9 @@ var timingController = (function() {
 
 			var params = {
 				timings: timings,
+				stopcode: stopcode,
 				stopname: stopname
 			};
-
 			$('#timingContainer').html(template(params));
 		}
 
@@ -23,6 +23,12 @@ var timingController = (function() {
 		});
 
 		sumc.getTiming(stopcode).then(function(result) {
+			if(!Array.isArray(result)) {
+				timings = false;
+				update();
+				return;
+			}
+
 			timings = result.map(function(x) {
 				return {
 					line: +x.lineName,
