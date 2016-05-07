@@ -1,7 +1,7 @@
 var timingController = (function() {
 	var template;
 
-	function update(stopcode) {
+	function get(stopcode) {
 		templates.get('timing').then(function(result) {
 			template = result;
 			return sumc.getTiming(stopcode);
@@ -10,23 +10,17 @@ var timingController = (function() {
 				return {
 					line: +x.lineName,
 					type: ['tram', 'bus', 'trolley'][x.type],
-					timing: x.timing.split(',')
+					timing: x.timing.split(',') // must sort these parts
 				};
-			});
-			timings.sort(function(a, b) {
+			}).sort(function(a, b) {
 				return a.line - b.line;
 			});
 
-			$('#container').html(template(timings));
+			$('#timingContainer').html(template(timings));
 		});
 	}
 
-	function get() {
-		update(this.params.stopcode);
-	};
-
 	return {
-		get: get,
-		update: update
+		get: get
 	};
 }());

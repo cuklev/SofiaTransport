@@ -1,22 +1,16 @@
-(function() {
-	var sammy = Sammy('#container', function() {
-		this.get('#/', homeController);
-
-		this.get('#/timing/:stopcode', timingController.get);
-	});
-
-	sammy.run('#/');
-}());
+$(window).on('hashchange', function() {
+	var stopcode = location.hash.replace(/^#/, '');
+	timingController.get(stopcode);
+});
 
 $(function() {
 	var input = $('#enterStopcode');
 	input.on('keyup', function(e) {
-		var stopcode = input.val();
-		if(!stopcode.match(/[0-9]{4}/)) {
+		if(e.which !== 13) {
 			return;
 		}
 
-		document.location = '#/timing/' + stopcode;
-		timingController.update(stopcode);
+		location.hash = '#' + input.val();
+		// rewrite this better
 	});
 });
