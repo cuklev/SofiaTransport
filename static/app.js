@@ -23,9 +23,9 @@ $(function() {
 	});
 });
 
+$(linesController.get());
 $(function() {
-	var input = $('#enterLinename');
-	input.on('keyup', function(e) {
-		linesController.get(input.val());
+	$('#enterLinename').on('keyup', function(e) {
+		linesController.get();
 	});
 });

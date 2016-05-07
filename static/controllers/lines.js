@@ -1,5 +1,5 @@
 var linesController = (function() {
-	function get(prefix) {
+	function get() {
 		var template, lines;
 
 		function update() {
@@ -17,10 +17,12 @@ var linesController = (function() {
 		});
 
 		db.getLines().then(function(result) {
+			var prefix = $('#enterLinename').val();
+
 			lines = {};
 			for(var i in result) {
 				lines[i] = result[i].filter(function(x) {
-					return (x.indexOf(prefix) === 0);
+					return (x.indexOf(prefix) === 0); // rewrite me better
 				});
 			}
 
