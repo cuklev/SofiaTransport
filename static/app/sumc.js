@@ -1,5 +1,5 @@
 var sumc = (function() {
-	var baseUrl = '/sumcapi';
+	var baseUrl = 'sumcapi';
 
 	function getTiming(stopcode) {
 		var data = {

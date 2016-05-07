@@ -1,6 +1,6 @@
 var db = (function() {
 	var getStopname = (function() {
-		var url = '/api/stopname';
+		var url = 'api/stopname';
 
 		return function(stopcode) {
 			var data = {
@@ -19,7 +19,7 @@ var db = (function() {
 
 	var getLines = (function() {
 		var cache;
-		var url = '/api/lines';
+		var url = 'api/lines';
 
 		return function() {
 			var promise = new Promise(function(resolve, reject) {
