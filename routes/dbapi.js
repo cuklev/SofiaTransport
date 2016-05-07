@@ -5,6 +5,15 @@ function stopname(req, res) {
 	res.send(db.stops[stopcode]);
 }
 
+function lines(req, res) {
+	res.send({
+		trams: Object.keys(db.trams),
+		buses: Object.keys(db.buses),
+		trolleys: Object.keys(db.trolleys)
+	});
+};
+
 module.exports = {
-	stopname: stopname
+	stopname: stopname,
+	lines: lines
 };

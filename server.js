@@ -12,5 +12,6 @@ app.use(express.static(__dirname + '/static'));
 app.post('/sumcapi/v1/timing', sumcapi.timingHandler);
 
 app.post('/api/stopname', dbapi.stopname);
+app.get('/api/lines', dbapi.lines);
 
 app.listen(3000, '127.0.0.1');
