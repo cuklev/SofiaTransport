@@ -7,9 +7,9 @@ function stopname(req, res) {
 
 function lines(req, res) {
 	res.send({
-		trams: Object.keys(db.trams),
-		buses: Object.keys(db.buses),
-		trolleys: Object.keys(db.trolleys)
+		trams: db.trams.all,
+		buses: db.buses.all,
+		trolleys: db.trolleys.all
 	});
 };
 
