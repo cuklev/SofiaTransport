@@ -8,7 +8,12 @@ var routesController = (function() {
 				return;
 			}
 
-			$('#routesContainer').html(template(routes));
+			var params = {
+				routes: routes,
+				linetype: ['Трамвай', 'Автобус', 'Тролейбус'][linetype],
+				linename: linename
+			};
+			$('#routesContainer').html(template(params));
 		}
 
 		templates.get('routes').then(function(result) {

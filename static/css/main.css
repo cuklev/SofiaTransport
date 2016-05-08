@@ -11,6 +11,10 @@
 	cursor: pointer
 }
 
-#linesContainer {
-	width: 20%;
+.centered {
+	text-align: center;
+}
+
+.column {
+	float: left;
 }
