@@ -21,6 +21,7 @@ node server.js
   - It is not that buggy
   - Have to parse some html, meh
 - Keep list of favourite stops in `localStorage`
+- Support subway stops
 - Add map for route visualization
   - Probably [openstreetmap](http://www.openstreetmap.org/)
     - Or another free alternative (free as in freedom)
