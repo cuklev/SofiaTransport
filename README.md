@@ -17,9 +17,9 @@ node server.js
 
 ## TODO
 - Fix layout, write some css
-- Write scripts to obtain lines|routes|stops info from [soffiatraffic.bg]()
-  - It is not that buggy
-  - Have to parse some html, meh
+- Auto poll remaining time
+- ~~Write scripts to obtain lines|routes|stops info from [soffiatraffic.bg]()~~
+  - Fix lines with more than two routes
 - Keep list of favourite stops in `localStorage`
 - Support subway stops
 - Add map for route visualization
