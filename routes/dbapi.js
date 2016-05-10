@@ -22,11 +22,12 @@ function routes(req, res) {
 }
 
 function points(req, res) {
-	var linetype = req.body.linetype;
-	var linename = req.body.linename;
+	res.send('No points');
+//	var linetype = req.body.linetype;
+//	var linename = req.body.linename;
 
-	var points = [db.trams, db.buses, db.trolleys][linetype].points;
-	res.send(points);
+//	var points = [db.trams, db.buses, db.trolleys][linetype].points;
+//	res.send(points);
 }
 
 module.exports = {

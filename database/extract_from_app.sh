@@ -32,4 +32,4 @@
 	done
 
 	echo "];"
-} > app_database.js
+} > raw_database.js

@@ -1,8 +1,9 @@
-var database = require('./app_database');
+var database = require('./raw_database');
 
-var trams = {all: [], routes: [], points: []},
-	buses = {all: [], routes: [], points: []},
-	trolleys = {all: [], routes: [], points: []},
+// Will add points later
+var trams = {all: [], routes: []}, //, points: []},
+	buses = {all: [], routes: []}, //, points: []},
+	trolleys = {all: [], routes: []}, //, points: []},
 	stops = {};
 
 database.forEach(function(x) {
@@ -10,12 +11,12 @@ database.forEach(function(x) {
 		routename: x.routename,
 		routestops: []
 	};
-	var points = {
-		routename: x.routename,
-		routepoints: []
-	};
+//	var points = {
+//		routename: x.routename,
+//		routepoints: []
+//	};
 
-	x.points.forEach(function(x) {
+	x.stops.forEach(function(x) {
 		if(x.stopcode !== 0) {
 			stops[x.stopcode] = x.stopname;
 			// different stopnames may exist for one stopcode
@@ -28,23 +29,23 @@ database.forEach(function(x) {
 			});
 		}
 		
-		points.routepoints.push({
-			lat: x.lat,
-			lon: x.lon,
-			stopcode: x.stopcode,
-			stopname: x.stopname
-		});
+//		points.routepoints.push({
+//			lat: x.lat,
+//			lon: x.lon,
+//			stopcode: x.stopcode,
+//			stopname: x.stopname
+//		});
 	});
 
 	var transport = [trams, buses, trolleys][x.linetype];
 
 	if(!transport.routes.hasOwnProperty(x.linename)) {
 		transport.routes[x.linename] = [];
-		transport.points[x.linename] = [];
+//		transport.points[x.linename] = [];
 	}
 
 	transport.routes[x.linename].push(route);
-	transport.points[x.linename].push(points);
+//	transport.points[x.linename].push(points);
 });
 
 trams.all = Object.keys(trams.routes);
