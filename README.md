@@ -11,9 +11,13 @@ node server.js
 ```
 
 - To obtain the database
+  - Use the `database/extract_from_site.sh` script
+
+<!--
   - Get the `/data/data/com.sofiatraffic.android` folder from android device with the app
-  - Use the `database/extract.sh` script
+  - Use the `database/extract_from_app.sh` script
   - _The app currently holds buggy database_
+-->
 
 ## TODO
 - Fix layout, write some css
