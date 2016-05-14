@@ -20,16 +20,22 @@
 	</head>
 
 	<body>
-		<label for="enterStopcode">
-			Enter stop code:
-		</label>
-		<input id="enterStopcode">
-		<div id="timingContainer"></div>
-		<label for="enterLinename">
-			Enter line number:
-		</label>
-		<input id="enterLinename">
-		<div id="linesContainer"></div>
-		<div id="routesContainer"></div>
+		<div class="column" style="width:20%"> <!-- remove style property -->
+			<label for="enterStopcode">
+				Enter stop code:
+			</label>
+			<input id="enterStopcode">
+			<div id="timingContainer"></div>
+		</div>
+
+		<div class="column" style="width:25%"> <!-- remove style property -->
+			<label for="enterLinename">
+				Enter line number:
+			</label>
+			<input id="enterLinename">
+			<div id="linesContainer"></div>
+		</div>
+
+		<div id="routesContainer" class="column" style="width:45%"></div> <!-- remove style property -->
 	</body>
 </html>

@@ -1,15 +1,17 @@
 <h2 class="centered">{{linetype}} {{linename}}</h2>
 {{#each routes}}
-	<column>
+	<div class="column">
 		<h3 class="centered">{{routename}}</h3>
-		<ol>
-			{{#each routestops}}
-				<li>
-					<a href="#{{stopcode}}">
-						{{stopname}} ({{stopcode}})
-					</a>
-				</li>
-			{{/each}}
-		</ol>
-	</column>
+		<div class="scrollable">
+			<ol>
+				{{#each routestops}}
+					<li>
+						<a href="#{{stopcode}}">
+							{{stopname}} ({{stopcode}})
+						</a>
+					</li>
+				{{/each}}
+			</ol>
+		</div>
+	</div>
 {{/each}}

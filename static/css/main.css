@@ -15,6 +15,14 @@
 	text-align: center;
 }
 
+/* fix this */
 .column {
 	float: left;
+	margin: 1%;
+	width: 47%;
+}
+
+.scrollable {
+	height: 75vh;
+	overflow: auto;
 }
