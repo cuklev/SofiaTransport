@@ -1,5 +1,6 @@
 {{#if timings}}
 	<h2>{{stopname}} ({{stopcode}})</h2>
+	<button onclick="favouritesController.add({{stopcode}}, '{{stopname}}')">Add to favourites</button>
 	<ul>
 		{{#each timings}}
 			<li>

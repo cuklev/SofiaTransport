@@ -29,3 +29,8 @@ $(function() {
 		linesController.get();
 	});
 });
+
+$(function() {
+	favouritesController.load();
+	favouritesController.get();
+});

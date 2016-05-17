@@ -1,0 +1,12 @@
+<h2 class="centered">Favourites</h2>
+<div class="scrollable">
+	<ol>
+		{{#each this}}
+			<li>
+				<a href="#{{@key}}">
+					{{this}} ({{@key}})
+				</a>
+			</li>
+		{{/each}}
+	</ol>
+</div>
