@@ -24,7 +24,10 @@ node server.js
 - Auto poll remaining time
 - ~~Write scripts to obtain lines|routes|stops info from [soffiatraffic.bg]()~~
   - Fix lines with more than two routes
-- Keep list of favourite stops in `localStorage`
+- ~~Keep list of favourite stops in `localStorage`~~
+  - Make it possible to rename favourite stops
+  - Make it possible to delete favourite stops
+    - Delete all option
 - Support subway stops
 - Add map for route visualization
   - Probably [openstreetmap](http://www.openstreetmap.org/)
