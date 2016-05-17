@@ -14,41 +14,28 @@
 		esac
 		linename=${rel_path#*/}
 
-		route_count=2 # A hackish workaround for weekdays / weekends
 		echo Downloading $rel_path >&2
 
-		while read direction; do
-			if [[ "$direction" == "--" ]]; then
-				continue
-			elif [[ "$direction" == *"span"* ]]; then
-				let route_count-=1
-				routename=$(echo "$direction" | sed 's/<[^>]*>//g')
+		m_url="http://m.sofiatraffic.bg/schedules?tt=$linetype&ln=$linename&s=%D0%A2%D1%8A%D1%80%D1%81%D0%B5%D0%BD%D0%B5"
 
-				echo "	{linename: '$linename', linetype: $linetype, routeid: '$routeid', routename: '$routename', stops: ["
+		first=1
+		while read line; do
+			route_regex='info">([^<]*)<'
+			stop_regex='^\s*(.*)\s\(([0-9]*)\)\s*</option'
 
-				while read stop; do
-					stop=${stop#*sign/}
-					curr_route=${stop%%/*}
-					[ "$routeid" == "$curr_route" ] || continue
-
-					stop=${stop#*/}
-					stopcode=${stop%%\"*}
-					stop=${stop%</a>}
-					stopname=${stop##*>}
-
-					echo "		{stopcode: $stopcode, stopname: '$stopname'},"
-				done < <(curl -s "$base_url""$rel_path" | grep '#sign/')
-
-				echo "	]},"
-				[[ $route_count == 0 ]] && break
-			else
-				direction=${direction#*href=\"}
-				direction=${direction%%\"*}
-
-				routeid=${direction##*/}
+			if [[ $line =~ $route_regex ]]; then
+				routename=${BASH_REMATCH[1]}
+				[[ $first == 0 ]] && echo "	]},"
+				first=0
+				echo "	{linename: '$linename', linetype: $linetype, routename: '$routename', stops: ["
+			elif [[ $line =~ $stop_regex ]]; then
+				stopname=${BASH_REMATCH[1]}
+				stopcode=$(echo ${BASH_REMATCH[2]} | sed 's/^0*//')
+				echo "		{stopcode: $stopcode, stopname: '$stopname'},"
 			fi
-		done < <(curl -s "$base_url""$rel_path" | grep -A 1 '#direction')
+		done < <(curl -s "$m_url")
+		echo "	]},"
 	done < <(curl -s "$base_url"| grep -Eo 'href="(tramway|autobus|trolley)[^"]*' | sed 's/href="//')
 
 	echo "];"
-} > site_database.js
+} > raw_database.js
