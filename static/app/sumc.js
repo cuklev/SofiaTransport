@@ -7,7 +7,7 @@ var sumc = (function() {
 		};
 
 		var promise = new Promise(function(resolve, reject) {
-			$.post(baseUrl + '/v1/timing', data, function(timings) {
+			$.post(baseUrl + '/timing', data, function(timings) {
 				resolve(timings);
 			});
 		});
