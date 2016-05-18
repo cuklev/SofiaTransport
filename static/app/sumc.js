@@ -15,7 +15,16 @@ var sumc = (function() {
 		return promise;
 	};
 
+	function getDatetime() {
+		var promise = new Promise(function(resolve, reject) {
+			$.get(baseUrl + '/datetime', function(datetime) {
+				resolve(datetime);
+			});
+		});
+	}
+
 	return {
-		getTiming: getTiming
+		getTiming: getTiming,
+		getDatetime: getDatetime
 	};
 }());
