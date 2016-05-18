@@ -9,7 +9,8 @@ app.use(bodyParser.urlencoded());
 
 app.use(express.static(__dirname + '/static'));
 
-app.post('/sumcapi/v1/timing', sumcapi.timingHandler);
+app.post('/sumcapi/timing', sumcapi.timingHandler);
+app.get('/sumcapi/datetime', sumcapi.datetimeHandler);
 
 app.post('/api/stopname', dbapi.stopname);
 app.get('/api/lines', dbapi.lines);
