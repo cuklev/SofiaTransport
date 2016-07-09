@@ -30,6 +30,14 @@ var favouritesController = (function() {
 	function get() {
 		templates.get('favourites').then(function(template) {
 			$('#favouritesContainer').html(template(favourites));
+
+			var stops = document.getElementsByClassName('favourite_stop');
+			[].forEach.call(stops, function(stop) {
+				var stopId = stop.id.replace(/.*_/, '');
+				stop.onclick = function() {
+					remove(stopId);
+				};
+			});
 		});
 	}
 
@@ -39,11 +47,17 @@ var favouritesController = (function() {
 		get();
 	}
 
+	function remove(stopcode) {
+		delete favourites[stopcode];
+		save();
+		get();
+	}
+
 	return {
 		get: get,
 		save: save,
 		load: load,
-		add: add
+		add: add,
+		remove: remove
 	};
 }());
-

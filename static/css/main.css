@@ -8,7 +8,7 @@
 	color: blue;
 }
 .tram, .bus, .trolley {
-	cursor: pointer
+	cursor: pointer;
 }
 
 .centered {
@@ -25,4 +25,8 @@
 .scrollable {
 	height: 75vh;
 	overflow: auto;
+}
+
+.favourite_stop {
+	cursor: pointer;
 }
