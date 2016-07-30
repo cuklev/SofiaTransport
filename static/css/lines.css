@@ -8,7 +8,7 @@ ul.lines li {
 
 ul.lines li .lines-wrapper {
     padding: 0;
-    clear:both;
+    clear: both;
     overflow: hidden;
 }
 
@@ -29,8 +29,12 @@ ul.lines li .lines-wrapper a.hidden {
     display: none;
 }
 
-ul.lines li .lines-wrapper a:hover, ul.lines li .lines-wrapper a.selected {
-    background-color: lightslategray;
+ul.lines li .lines-wrapper a:hover {
+    background-color: gray;
+    color: white;
+}
+ul.lines li .lines-wrapper a.selected {
+    background-color: green;
     color: white;
 }
 
