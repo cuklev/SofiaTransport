@@ -29,15 +29,9 @@ ul.lines li .lines-wrapper a.hidden {
     display: none;
 }
 
-ul.lines li .lines-wrapper a:hover {
+ul.lines li .lines-wrapper a:hover, ul.lines li .lines-wrapper a.selected {
     background-color: lightslategray;
     color: white;
-}
-
-ul.lines li .lines-wrapper a.selected {
-    background-color: lightslategray;
-    color: white;
-    text-decoration: underline;
 }
 
 ul.lines li strong {

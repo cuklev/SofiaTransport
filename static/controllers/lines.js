@@ -11,13 +11,23 @@ var linesController = (function() {
 
 			$('#linesContainer').html(template(lines));
 
+			var lastSelected;
+
 			$('.lines').on('click', 'a', function (ev) {
 				var $target = $(ev.target),
 					transportType = $target
 										.parents('li')
 										.data()['lineType'];
-
+				
 				routesController.get(transportType, $target.text());
+
+				
+				if(lastSelected) {
+					lastSelected.removeClass('selected');
+				}
+
+				$target.addClass('selected');
+				lastSelected = $target;
 			});
 		});
 	}
@@ -29,10 +39,12 @@ var linesController = (function() {
 			var $element = $(element),
 			indexOf = $element.text().toLowerCase().indexOf(prefix);
 
-			if(indexOf)
+			if(indexOf){
 				$element.addClass('hidden');
-			else
+			}
+			else {
 				$element.removeClass('hidden');
+			}
 		});
 	}
 
