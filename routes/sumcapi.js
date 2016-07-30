@@ -14,7 +14,7 @@ function timingHandler(req, res) {
 
 	request(options, function (err, res1, body) {
 		if(err) {
-			console.log('Error:', err);
+			console.error('Error:', err);
 			return;
 		}
 
@@ -32,7 +32,7 @@ function datetimeHandler(req, res) {
 
 	request(options, function (err, res1, body) {
 		if(err) {
-			console.log('Error:', err);
+			console.error('Error:', err);
 			return;
 		}
 
