@@ -12,11 +12,13 @@ var linesController = (function() {
 
 			var lastSelected;
 
-			$('.lines').on('click', 'a', function (ev) {
-				var $target = $(ev.target),
-					transportType = $target.data()['lineType'];
+			$('.lines').on('click', 'a', function (e) {
+				var $target = $(e.target),
+					data = $target.data(),
+					lineType = data['lineType'],
+					lineName = data['lineName'];
 
-				routesController.get(transportType, $target.text());
+				routesController.get(lineType, lineName);
 
 				if(lastSelected) {
 					lastSelected.removeClass('selected');

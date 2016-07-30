@@ -3,7 +3,7 @@
 		<strong>Trams:</strong>
 		<div class="lines-wrapper">
 			{{#each trams}}
-				<a class="tram" data-line-type="0">{{this}}</a>
+				<a class="tram" data-line-type="0" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
@@ -11,7 +11,7 @@
 		<strong>Buses:</strong>
 		<div class="lines-wrapper">
 			{{#each buses}}
-				<a class="bus" data-line-type="1">{{this}}</a>
+				<a class="bus" data-line-type="1" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
@@ -19,7 +19,7 @@
 		<strong>Trolleys:</strong>
 		<div class="lines-wrapper">
 			{{#each trolleys}}
-				<a class="trolley" data-line-type="2">{{this}}</a>
+				<a class="trolley" data-line-type="2" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>

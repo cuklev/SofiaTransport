@@ -72,9 +72,11 @@ var timingController = (function() {
 
 			$('#timingContainer').on('click', 'a', function(e) {
 				var $target = $(e.target),
-					transportType = $target.data()['lineType'];
+					data = $target.data(),
+					lineType = data['lineType'],
+					lineName = data['lineName'];
 
-				routesController.get(transportType, $target.text());
+				routesController.get(lineType, lineName);
 			});
 		});
 	}
