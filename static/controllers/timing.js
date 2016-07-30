@@ -70,17 +70,11 @@ var timingController = (function() {
 
 			setTimingFormat();
 
-			$('#timingContainer .tram').on('click', function(e) {
-				var linename = e.target.innerHTML;
-				routesController.get(0, linename);
-			});
-			$('#timingContainer .bus').on('click', function(e) {
-				var linename = e.target.innerHTML;
-				routesController.get(1, linename);
-			});
-			$('#timingContainer .trolley').on('click', function(e) {
-				var linename = e.target.innerHTML;
-				routesController.get(2, linename);
+			$('#timingContainer').on('click', 'a', function(e) {
+				var $target = $(e.target),
+					transportType = $target.data()['lineType'];
+
+				routesController.get(transportType, $target.text());
 			});
 		});
 	}
