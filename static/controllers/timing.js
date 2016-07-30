@@ -1,8 +1,6 @@
 var timingController = (function() {
 	function get(stopcode) {
-		var template, timings, stopname;
-
-		function expandTimes() {
+		function expandTiming(timings) {
 			var expanded = [];
 			timings.forEach(function(line) {
 				line.timing.forEach(function(time) {
@@ -35,16 +33,34 @@ var timingController = (function() {
 
 		$('#timing-format').on('change', setTimingFormat);
 
-		function update() {
-			if(template === undefined
-			 || timings === undefined
-			 || stopname === undefined) {
-				return;
+		Promise.all([
+			templates.get('timing'),
+			sumc.getTiming(stopcode),
+			db.getStopname(stopcode)
+		]).then(function(values) {
+			var template = values[0],
+				timings = values[1],
+				stopname = values[2];
+
+			// this should be made async
+			if(!Array.isArray(timings)) {
+				timings = false;
+			}
+			else {
+				timings = timings.map(function(x) {
+					return {
+						line: +x.lineName,
+						type: ['tram', 'bus', 'trolley'][x.type],
+						timing: x.timing.split(',') // must sort these parts
+					};
+				}).sort(function(a, b) {
+					return a.line - b.line;
+				});
 			}
 
 			var params = {
 				timings: timings,
-				expanded: expandTimes(),
+				expanded: expandTiming(timings),
 				stopcode: stopcode,
 				stopname: stopname
 			};
@@ -64,36 +80,6 @@ var timingController = (function() {
 				var linename = e.target.innerHTML;
 				routesController.get(2, linename);
 			});
-		}
-
-		templates.get('timing').then(function(result) {
-			template = result;
-			update();
-		});
-
-		sumc.getTiming(stopcode).then(function(result) {
-			if(!Array.isArray(result)) {
-				timings = false;
-				update();
-				return;
-			}
-
-			timings = result.map(function(x) {
-				return {
-					line: +x.lineName,
-					type: ['tram', 'bus', 'trolley'][x.type],
-					timing: x.timing.split(',') // must sort these parts
-				};
-			}).sort(function(a, b) {
-				return a.line - b.line;
-			});
-
-			update();
-		});
-
-		db.getStopname(stopcode).then(function(result) {
-			stopname = result;
-			update();
 		});
 	}
 

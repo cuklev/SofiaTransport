@@ -1,12 +1,16 @@
 var routesController = (function() {
 	function get(linetype, linename) {
-		var template, routes;
+		var line = {
+			type: linetype,
+			name: linename
+		};
 
-		function update() {
-			if(template === undefined
-			 || routes === undefined) {
-				return;
-			}
+		Promise.all([
+			templates.get('routes'),
+			db.getRoutes(line)
+		]).then(function(values) {
+		var template = values[0],
+			routes = values[1];
 
 			var params = {
 				routes: routes,
@@ -14,20 +18,6 @@ var routesController = (function() {
 				linename: linename
 			};
 			$('#routesContainer').html(template(params));
-		}
-
-		templates.get('routes').then(function(result) {
-			template = result;
-			update();
-		});
-
-		var line = {
-			type: linetype,
-			name: linename
-		};
-		db.getRoutes(line).then(function(result) {
-			routes = result;
-			update();
 		});
 	}
 
