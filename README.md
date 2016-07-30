@@ -27,7 +27,7 @@ node server.js
   - Fix lines with more than two routes
 - ~~Keep list of favourite stops in `localStorage`~~
   - Make it possible to rename favourite stops
-  - Make it possible to delete favourite stops
+  -~~ Make it possible to delete favourite stops~~
     - Delete all option
 - Support subway stops
 - Add map for route visualization
