@@ -18,10 +18,9 @@ var linesController = (function() {
 					transportType = $target
 										.parents('li')
 										.data()['lineType'];
-				
+
 				routesController.get(transportType, $target.text());
 
-				
 				if(lastSelected) {
 					lastSelected.removeClass('selected');
 				}
@@ -31,10 +30,10 @@ var linesController = (function() {
 			});
 		});
 	}
-	
+
 	function filter() {
 		var prefix = $('#enterLinename').val();
-		
+
 		$('.lines a').each(function (index, element) {
 			var $element = $(element),
 			indexOf = $element.text().toLowerCase().indexOf(prefix);
