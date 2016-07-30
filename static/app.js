@@ -26,7 +26,7 @@ $(function() {
 $(linesController.get());
 $(function() {
 	$('#enterLinename').on('keyup', function(e) {
-		linesController.get();
+		linesController.filter();
 	});
 });
 

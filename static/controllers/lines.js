@@ -1,49 +1,55 @@
 var linesController = (function() {
 	function get() {
-		var template, lines;
 
-		function update() {
-			if(template === undefined
-			 || lines === undefined) {
-				return;
-			}
+		Promise.all([
+			db.getLines(),
+			templates.get('lines')
+		])
+		.then(function (values) {
+			var lines = values[0],
+				template = values[1];
 
 			$('#linesContainer').html(template(lines));
 
-			$('#linesContainer .tram').on('click', function(e) {
-				var linename = e.target.innerHTML;
-				routesController.get(0, linename);
-			})
-			$('#linesContainer .bus').on('click', function(e) {
-				var linename = e.target.innerHTML;
-				routesController.get(1, linename);
-			})
-			$('#linesContainer .trolley').on('click', function(e) {
-				var linename = e.target.innerHTML;
-				routesController.get(2, linename);
-			})
-		}
+			var lastSelected;
 
-		templates.get('lines').then(function(result) {
-			template = result;
-			update();
+			$('.lines').on('click', 'a', function (ev) {
+				var $target = $(ev.target),
+					transportType = $target
+										.parents('li')
+										.data()['lineType'];
+				
+				routesController.get(transportType, $target.text());
+
+				
+				if(lastSelected) {
+					lastSelected.removeClass('selected');
+				}
+
+				$target.addClass('selected');
+				lastSelected = $target;
+			});
 		});
+	}
+	
+	function filter() {
+		var prefix = $('#enterLinename').val();
+		
+		$('.lines a').each(function (index, element) {
+			var $element = $(element),
+			indexOf = $element.text().toLowerCase().indexOf(prefix);
 
-		db.getLines().then(function(result) {
-			var prefix = $('#enterLinename').val();
-
-			lines = {};
-			for(var i in result) {
-				lines[i] = result[i].filter(function(x) {
-					return (x.indexOf(prefix) === 0); // rewrite me better
-				});
+			if(indexOf){
+				$element.addClass('hidden');
 			}
-
-			update();
+			else {
+				$element.removeClass('hidden');
+			}
 		});
 	}
 
 	return {
-		get: get
+		get: get,
+		filter: filter
 	};
 }());
