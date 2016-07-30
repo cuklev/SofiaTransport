@@ -11,12 +11,12 @@ app.use(bodyParser.urlencoded());
 
 app.use(express.static(__dirname + '/static'));
 
-app.post('/sumcapi/timing', sumcapi.timingHandler);
+app.get('/sumcapi/timing', sumcapi.timingHandler);
 app.get('/sumcapi/datetime', sumcapi.datetimeHandler);
 
-app.post('/api/stopname', dbapi.stopname);
+app.get('/api/stopname', dbapi.stopname);
 app.get('/api/lines', dbapi.lines);
-app.post('/api/routes', dbapi.routes);
-app.post('/api/points', dbapi.points);
+app.get('/api/routes', dbapi.routes);
+app.get('/api/points', dbapi.points);
 
 app.listen(port, '127.0.0.1');

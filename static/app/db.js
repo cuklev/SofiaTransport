@@ -14,7 +14,7 @@ var db = (function() {
 					stopcode: stopcode
 				};
 
-				$.post(url, data, function(stopname) {
+				$.get(url, data, function(stopname) {
 					cache[stopcode] = stopname;
 					resolve(stopname);
 				});
@@ -63,7 +63,7 @@ var db = (function() {
 					linename: line.name
 				};
 
-				$.post(url, data, function(routes) {
+				$.get(url, data, function(routes) {
 					cache[line.type][line.name] = routes;
 					resolve(routes);
 				});
@@ -92,7 +92,7 @@ var db = (function() {
 					linename: line.name
 				};
 
-				$.post(url, data, function(points) {
+				$.get(url, data, function(points) {
 					cache[line.type][line.name] = points;
 					resolve(points);
 				});

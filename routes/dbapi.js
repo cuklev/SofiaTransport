@@ -1,7 +1,7 @@
 const db = require('../database/database');
 
 function stopname(req, res) {
-	let stopcode = req.body.stopcode;
+	const stopcode = req.query.stopcode;
 	res.send(db.stops[stopcode]);
 }
 
@@ -14,17 +14,17 @@ function lines(req, res) {
 };
 
 function routes(req, res) {
-	let linetype = req.body.linetype;
-	let linename = req.body.linename;
+	const linetype = req.query.linetype;
+	const linename = req.query.linename;
 
-	let routes = [db.trams, db.buses, db.trolleys][linetype].routes[linename];
+	const routes = [db.trams, db.buses, db.trolleys][linetype].routes[linename];
 	res.send(routes);
 }
 
 function points(req, res) {
 	res.send('No points');
-//	var linetype = req.body.linetype;
-//	var linename = req.body.linename;
+//	var linetype = req.query.linetype;
+//	var linename = req.query.linename;
 
 //	var points = [db.trams, db.buses, db.trolleys][linetype].points;
 //	res.send(points);
