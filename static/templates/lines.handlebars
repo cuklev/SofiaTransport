@@ -1,25 +1,25 @@
 <ul class="lines">
-	<li class="trams" data-line-type="0">
+	<li class="trams">
 		<strong>Trams:</strong>
 		<div class="lines-wrapper">
 			{{#each trams}}
-				<a href="#" class="tram">{{this}}</a>
+				<a class="tram" data-line-type="0">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
-	<li class="buses" data-line-type="1">
+	<li class="buses">
 		<strong>Buses:</strong>
 		<div class="lines-wrapper">
 			{{#each buses}}
-				<a class="bus">{{this}}</a>
+				<a class="bus" data-line-type="1">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
-	<li class="trolleys" data-line-type="2">
+	<li class="trolleys">
 		<strong>Trolleys:</strong>
 		<div class="lines-wrapper">
 			{{#each trolleys}}
-				<a href="#" class="trolley">{{this}}</a>
+				<a class="trolley" data-line-type="2">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>

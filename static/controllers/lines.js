@@ -14,9 +14,7 @@ var linesController = (function() {
 
 			$('.lines').on('click', 'a', function (ev) {
 				var $target = $(ev.target),
-					transportType = $target
-										.parents('li')
-										.data()['lineType'];
+					transportType = $target.data()['lineType'];
 
 				routesController.get(transportType, $target.text());
 
