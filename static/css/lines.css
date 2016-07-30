@@ -46,3 +46,48 @@ ul.lines li strong {
     text-align: center;
     margin-bottom: 2.5%;
 }
+
+.filter-lines-wrapper {
+    width: 100%;
+}
+
+.filter-lines-wrapper label {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.filter-lines-wrapper input {
+    width: 50%;
+    margin-left: 25%;
+}
+
+.filter-lines-wrapper > label::before {
+    content: ' ';
+    display: inline-block;
+    background-size: cover;
+    background-image: url('../imgs/search.ico');
+    height: 24px;
+    width: 24px;
+}
+
+.lines li strong::before {
+    content: ' ';
+    display: inline-block;
+    background-size: cover;
+    height: 24px;
+    width: 24px;
+    margin-right: 2%;
+}
+
+.lines .trams strong::before {
+    background-image: url('../imgs/tram.png');
+}
+
+.lines .buses strong::before {
+    background-image: url('../imgs/bus.png');
+}
+
+.lines .trolleys strong::before {
+    background-image: url('../imgs/trolleybus.png');
+}
