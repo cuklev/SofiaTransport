@@ -1,6 +1,5 @@
 var linesController = (function() {
 	function get() {
-
 		Promise.all([
 			templates.get('lines'),
 			db.getLines()

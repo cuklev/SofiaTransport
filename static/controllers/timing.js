@@ -50,7 +50,8 @@ var timingController = (function() {
 				timings = timings.map(function(x) {
 					return {
 						line: +x.lineName,
-						type: ['tram', 'bus', 'trolley'][x.type],
+						type: x.type,
+						typename: ['tram', 'bus', 'trolley'][x.type],
 						timing: x.timing.split(',') // must sort these parts
 					};
 				}).sort(function(a, b) {

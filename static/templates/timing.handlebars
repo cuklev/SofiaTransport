@@ -4,7 +4,7 @@
 	<ul class="times-by-lines">
 		{{#each timings}}
 			<li>
-				<a class="{{type}}">{{line}}</a>
+				<a class="{{typename}}" data-line-type="{{type}}">{{line}}</a>
 				<ul>
 					{{#each timing}}
 						{{#if this}}
@@ -19,7 +19,7 @@
 		{{#each expanded}}
 			<li>
 				{{time}} &rarr;
-				<a class="{{type}}">{{line}}</a>
+				<a class="{{typename}}" data-line-type="{{type}}">{{line}}</a>
 			</li>
 		{{/each}}
 	</ul>
