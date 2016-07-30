@@ -1,11 +1,11 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 
-var sumcapi = require('./routes/sumcapi');
-var dbapi = require('./routes/dbapi');
+const sumcapi = require('./routes/sumcapi');
+const dbapi = require('./routes/dbapi');
 
-var port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded());
 

@@ -13,7 +13,6 @@ npm start
 
 ## TODO
 - Fix layout, write some css
-- Use ES6 features
 - Auto poll remaining time
 - ~~Write scripts to obtain lines|routes|stops info from [soffiatraffic.bg]()~~
   - Fix lines with more than two routes

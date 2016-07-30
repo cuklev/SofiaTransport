@@ -1,9 +1,9 @@
-var request = require('request');
+const request = require('request');
 
 function timingHandler(req, res) {
-	var url = 'http://drone.sumc.bg/api/v1/timing';
+	let url = 'http://drone.sumc.bg/api/v1/timing';
 
-	var options = {
+	let options = {
 		method: 'post',
 		body: req.body,
 		json: true,
@@ -23,9 +23,9 @@ function timingHandler(req, res) {
 }
 
 function datetimeHandler(req, res) {
-	var url = 'http://drone.sumc.bg/api/v1/config';
+	let url = 'http://drone.sumc.bg/api/v1/config';
 
-	var options = {
+	let options = {
 		method: 'get',
 		url: url
 	};

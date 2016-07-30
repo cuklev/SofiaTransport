@@ -1,7 +1,7 @@
-var database = require('./raw_database');
+const database = require('./raw_database');
 
 // Will add points later
-var trams = {all: [], routes: []}, //, points: []},
+let trams = {all: [], routes: []}, //, points: []},
 	buses = {all: [], routes: []}, //, points: []},
 	trolleys = {all: [], routes: []}, //, points: []},
 	stops = {};
@@ -37,7 +37,7 @@ database.forEach(function(x) {
 //		});
 	});
 
-	var transport = [trams, buses, trolleys][x.linetype];
+	let transport = [trams, buses, trolleys][x.linetype];
 
 	if(!transport.routes.hasOwnProperty(x.linename)) {
 		transport.routes[x.linename] = [];
