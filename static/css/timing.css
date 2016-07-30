@@ -1,0 +1,7 @@
+.times-expanded li {
+	width: 45%;
+}
+
+.times-expanded span {
+	float: right;
+}

@@ -1,13 +1,21 @@
 {{#if timings}}
 	<h2>{{stopname}} ({{stopcode}})</h2>
 	<button onclick="favouritesController.add({{stopcode}}, '{{stopname}}')">Add to favourites</button>
-	<ul>
+	<ul class="times-by-lines">
 		{{#each timings}}
 			<li>
 				<a class="{{type}}">{{line}}</a>
 				<ul>{{#each timing}}
 					{{#if this}}<li>{{this}}</li>{{/if}}
 				{{/each}}</ul>
+			</li>
+		{{/each}}
+	</ul>
+	<ul class="times-expanded">
+		{{#each expanded}}
+			<li>
+				<a class="{{type}}">{{line}}</a>
+				<span>&rarr; {{time}}</span>
 			</li>
 		{{/each}}
 	</ul>

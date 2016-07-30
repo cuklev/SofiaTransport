@@ -2,6 +2,39 @@ var timingController = (function() {
 	function get(stopcode) {
 		var template, timings, stopname;
 
+		function expandTimes() {
+			var expanded = [];
+			timings.forEach(function(line) {
+				line.timing.forEach(function(time) {
+					if(time === '') {
+						return;
+					}
+					expanded.push({
+						line: line.line,
+						type: line.type,
+						time: time
+					});
+				});
+			});
+			expanded.sort(function(a, b) {
+				return a.time > b.time;
+			});
+			return expanded;
+		}
+
+		function setTimingFormat() {
+			if($('#timing-format')[0].checked) {
+				$('.times-by-lines').addClass('hidden');
+				$('.times-expanded').removeClass('hidden');
+			}
+			else {
+				$('.times-by-lines').removeClass('hidden');
+				$('.times-expanded').addClass('hidden');
+			}
+		}
+
+		$('#timing-format').on('change', setTimingFormat);
+
 		function update() {
 			if(template === undefined
 			 || timings === undefined
@@ -11,10 +44,13 @@ var timingController = (function() {
 
 			var params = {
 				timings: timings,
+				expanded: expandTimes(),
 				stopcode: stopcode,
 				stopname: stopname
 			};
 			$('#timingContainer').html(template(params));
+
+			setTimingFormat();
 
 			$('#timingContainer .tram').on('click', function(e) {
 				var linename = e.target.innerHTML;
