@@ -1,0 +1,48 @@
+ul.lines {
+    list-style: none;
+}
+
+ul.lines li {
+    margin-top: 5%;
+}
+
+ul.lines li .lines-wrapper {
+    padding: 0;
+    clear:both;
+    overflow: hidden;
+}
+
+ul.lines li .lines-wrapper * {
+    margin: 0;
+    padding: 0;
+}
+
+ul.lines li .lines-wrapper a {
+    width: 15%;
+    height: 10%;
+    text-align: center;
+    float: left;
+    text-decoration: none;
+}
+
+ul.lines li .lines-wraper a.hidden {
+    display: none;
+}
+
+ul.lines li .lines-wrapper a:hover {
+    background-color: lightslategray;
+    color: white;
+}
+
+ul.lines li .lines-wrapper a.selected {
+    background-color: lightslategray;
+    color: white;
+    text-decoration: underline;
+}
+
+ul.lines li strong {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2.5%;
+}
