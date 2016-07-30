@@ -5,9 +5,13 @@
 		{{#each timings}}
 			<li>
 				<a class="{{type}}">{{line}}</a>
-				<ul>{{#each timing}}
-					{{#if this}}<li>{{this}}</li>{{/if}}
-				{{/each}}</ul>
+				<ul>
+					{{#each timing}}
+						{{#if this}}
+							<li>{{this}}</li>
+						{{/if}}
+					{{/each}}
+				</ul>
 			</li>
 		{{/each}}
 	</ul>
