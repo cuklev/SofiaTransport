@@ -1,11 +1,11 @@
 const request = require('request');
 
 function timingHandler(req, res) {
-	let url = 'http://drone.sumc.bg/api/v1/timing';
+	const url = 'http://drone.sumc.bg/api/v1/timing';
 
-	let options = {
+	const options = {
 		method: 'post',
-		body: req.body,
+		body: req.query,
 		json: true,
 		url: url
 	};
@@ -14,7 +14,7 @@ function timingHandler(req, res) {
 
 	request(options, function (err, res1, body) {
 		if(err) {
-			console.log('Error:', err);
+			console.error('Error:', err);
 			return;
 		}
 
@@ -23,16 +23,16 @@ function timingHandler(req, res) {
 }
 
 function datetimeHandler(req, res) {
-	let url = 'http://drone.sumc.bg/api/v1/config';
+	const url = 'http://drone.sumc.bg/api/v1/config';
 
-	let options = {
+	const options = {
 		method: 'get',
 		url: url
 	};
 
 	request(options, function (err, res1, body) {
 		if(err) {
-			console.log('Error:', err);
+			console.error('Error:', err);
 			return;
 		}
 

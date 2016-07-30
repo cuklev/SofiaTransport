@@ -37,7 +37,7 @@ database.forEach(function(x) {
 //		});
 	});
 
-	let transport = [trams, buses, trolleys][x.linetype];
+	const transport = [trams, buses, trolleys][x.linetype];
 
 	if(!transport.routes.hasOwnProperty(x.linename)) {
 		transport.routes[x.linename] = [];
