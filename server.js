@@ -1,13 +1,10 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 
 const sumcapi = require('./routes/sumcapi');
 const dbapi = require('./routes/dbapi');
 
 const port = process.env.PORT || 3000;
-
-app.use(bodyParser.urlencoded());
 
 app.use(express.static(__dirname + '/static'));
 

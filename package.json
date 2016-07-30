@@ -4,7 +4,6 @@
   "description": "The aim of this project is to display schedules and ETAs of Sofia City Transport busses in a (hopefully) more meaningful way.",
   "main": "server.js",
   "dependencies": {
-    "body-parser": "^1.15.1",
     "bower": "^1.7.9",
     "express": "^4.13.4",
     "request": "^2.72.0"
@@ -12,8 +11,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"download_db": "(cd database; ./extract_from_site.sh)",
-	"start": "node server.js"
+    "download_db": "(cd database; ./extract_from_site.sh)",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
