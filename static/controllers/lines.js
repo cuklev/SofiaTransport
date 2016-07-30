@@ -2,12 +2,12 @@ var linesController = (function() {
 	function get() {
 
 		Promise.all([
-			db.getLines(),
-			templates.get('lines')
+			templates.get('lines'),
+			db.getLines()
 		])
 		.then(function (values) {
-			var lines = values[0],
-				template = values[1];
+			var template = values[0],
+				lines = values[1];
 
 			$('#linesContainer').html(template(lines));
 
