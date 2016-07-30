@@ -1,17 +1,26 @@
-<ul>
-	<li>Trams:
-		{{#each trams}}
-			<span class="tram">{{this}}</span>
-		{{/each}}
+<ul class="lines">
+	<li data-line-type="0">
+		<strong>Trams:</strong>
+		<div class="lines-wrapper">
+			{{#each trams}}
+				<a href="#" class="tram">{{this}}</a>
+			{{/each}}
+		</div>
 	</li>
-	<li>Buses:
-		{{#each buses}}
-			<span class="bus">{{this}}</span>
-		{{/each}}
+	<li data-line-type="1">
+		<strong>Buses:</strong>
+		<div class="lines-wrapper">
+			{{#each buses}}
+				<a class="bus">{{this}}</a>
+			{{/each}}
+		</div>
 	</li>
-	<li>Trolleys:
-		{{#each trolleys}}
-			<span class="trolley">{{this}}</span>
-		{{/each}}
+	<li data-line-type="2">
+		<strong>Trolleys:</strong>
+		<div class="lines-wrapper">
+			{{#each trolleys}}
+				<a href="#" class="trolley">{{this}}</a>
+			{{/each}}
+		</div>
 	</li>
 <ul>
