@@ -10,6 +10,7 @@ var timingController = (function() {
 					expanded.push({
 						line: line.line,
 						type: line.type,
+						typename: line.typename,
 						time: time
 					});
 				});
