@@ -7,17 +7,9 @@ The aim of this project is to display schedules and ETAs of Sofia City Transport
 ```
 npm install
 ./node_modules/bower/bin/bower install # I don't like installing globally with npm
-node server.js
+npm download_db # Generates ./database/raw_database.js, might be buggy
+npm start
 ```
-
-- To obtain the database
-  - Use the `database/extract_from_site.sh` script
-
-<!--
-  - Get the `/data/data/com.sofiatraffic.android` folder from android device with the app
-  - Use the `database/extract_from_app.sh` script
-  - _The app currently holds buggy database_
--->
 
 ## TODO
 - Fix layout, write some css
@@ -27,7 +19,7 @@ node server.js
   - Fix lines with more than two routes
 - ~~Keep list of favourite stops in `localStorage`~~
   - Make it possible to rename favourite stops
-  -~~ Make it possible to delete favourite stops~~
+  - ~~Make it possible to delete favourite stops~~
     - Delete all option
 - Support subway stops
 - Add map for route visualization
