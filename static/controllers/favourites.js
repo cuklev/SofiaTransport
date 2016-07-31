@@ -31,12 +31,10 @@ var favouritesController = (function() {
 		templates.get('favourites').then(function(template) {
 			$('#favouritesContainer').html(template(favourites));
 
-			var stops = document.getElementsByClassName('favourite_stop');
-			[].forEach.call(stops, function(stop) {
-				var stopId = stop.id.replace(/.*_/, '');
-				stop.onclick = function() {
-					remove(stopId);
-				};
+			// TODO: use a single event
+			$('.favourite_stop').on('click', function(e) {
+				var stop_id = $(e.target).data('stopId');
+				remove(stop_id);
 			});
 		});
 	}
