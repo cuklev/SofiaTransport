@@ -27,7 +27,6 @@
 }
 
 .scrollable {
-	height: 75vh;
 	overflow: auto;
 }
 /* --- */
