@@ -32,7 +32,7 @@ var favouritesController = (function() {
 			$('#favouritesContainer').html(template(favourites));
 
 			// TODO: use a single event
-			$('.favourite_stop').on('click', function(e) {
+			$('.remove-favourite').on('click', function(e) {
 				var stop_id = $(e.target).data('stopId');
 				remove(stop_id);
 			});
