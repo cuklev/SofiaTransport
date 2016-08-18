@@ -29,7 +29,7 @@ var favouritesController = (function() {
 
 	function get() {
 		templates.get('favourites').then(function(template) {
-			$('#favouritesContainer').html(template(favourites));
+			$('#favourites-container').html(template(favourites));
 
 			// TODO: use a single event
 			$('.remove-favourite').on('click', function(e) {

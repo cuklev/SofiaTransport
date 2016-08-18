@@ -66,11 +66,11 @@ var timingController = (function() {
 				stopcode: stopcode,
 				stopname: stopname
 			};
-			$('#timingContainer').html(template(params));
+			$('#timing-container').html(template(params));
 
 			setTimingFormat();
 
-			$('#timingContainer').on('click', 'a', function(e) {
+			$('#timing-container').on('click', 'a', function(e) {
 				var $target = $(e.target),
 					data = $target.data(),
 					lineType = data['lineType'],

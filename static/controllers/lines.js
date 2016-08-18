@@ -8,7 +8,7 @@ var linesController = (function() {
 			var template = values[0],
 				lines = values[1];
 
-			$('#linesContainer').html(template(lines));
+			$('#lines-container').html(template(lines));
 
 			var lastSelected;
 
@@ -31,7 +31,7 @@ var linesController = (function() {
 	}
 
 	function filter() {
-		var prefix = $('#enterLinename').val();
+		var prefix = $('#enter-linename').val();
 
 		$('.lines a').each(function (index, element) {
 			var $element = $(element),

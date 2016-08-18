@@ -17,7 +17,7 @@ var routesController = (function() {
 				linetype: ['Трамвай', 'Автобус', 'Тролейбус'][linetype],
 				linename: linename
 			};
-			$('#routesContainer').html(template(params));
+			$('#routes-container').html(template(params));
 		});
 	}
 
