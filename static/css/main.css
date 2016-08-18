@@ -19,18 +19,18 @@
 	display: none;
 }
 
-/* fix this */
-.column {
-	float: left;
-	margin: 1%;
-	width: 47%;
-}
-
 .scrollable {
 	overflow: auto;
 }
-/* --- */
 
 .remove-favourite {
 	cursor: pointer;
+}
+
+@media(min-width:768px) {
+	.column {
+		float: left;
+		margin: 1%;
+		width: 30%;
+	}
 }
