@@ -1,91 +1,64 @@
-ul.lines {
-    list-style: none;
+.lines {
+	list-style: none;
 }
 
-ul.lines li {
-    margin-top: 5%;
+.lines li {
+	margin-top: 5%;
 }
 
-ul.lines li .lines-wrapper {
-    padding: 0;
-    clear: both;
-    overflow: hidden;
+.lines .lines-wrapper {
+	padding: 0;
+	clear: both;
+	overflow: hidden;
 }
 
-ul.lines li .lines-wrapper * {
-    margin: 0;
-    padding: 0;
+.lines .lines-wrapper a {
+	float: left;
+	width: 10%;
+	min-width: 30px;
+	padding: 5px 0;
+	text-align: center;
 }
 
-ul.lines li .lines-wrapper a {
-    width: 15%;
-    height: 10%;
-    text-align: center;
-    float: left;
-    text-decoration: none;
+.lines .lines-wrapper a:hover {
+	background-color: gray;
+	color: white;
 }
-
-ul.lines li .lines-wrapper a.hidden {
-    display: none;
-}
-
-ul.lines li .lines-wrapper a:hover {
-    background-color: gray;
-    color: white;
-}
-ul.lines li .lines-wrapper a.selected {
-    background-color: green;
-    color: white;
-}
-
-ul.lines li strong {
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 2.5%;
-}
-
-.filter-lines-wrapper {
-    width: 100%;
+.lines .lines-wrapper a.selected {
+	background-color: green;
+	color: white;
 }
 
 .filter-lines-wrapper label {
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-}
-
-.filter-lines-wrapper input {
-    width: 50%;
-    margin-left: 25%;
+	display: block;
 }
 
 .filter-lines-wrapper > label::before {
-    content: ' ';
-    display: inline-block;
-    background-size: cover;
-    background-image: url('../imgs/search.ico');
-    height: 24px;
-    width: 24px;
+	content: '';
+	display: inline-block;
+	background-size: cover;
+	background-image: url('../imgs/search.ico');
+	height: 24px;
+	width: 24px;
 }
 
-.lines li strong::before {
-    content: ' ';
-    display: inline-block;
-    background-size: cover;
-    height: 24px;
-    width: 24px;
-    margin-right: 2%;
+.lines strong::before {
+	content: '';
+	display: inline-block;
+	background-size: cover;
+	height: 24px;
+	width: 24px;
+	margin-right: 2%;
 }
 
 .lines .trams strong::before {
-    background-image: url('../imgs/tram.png');
+	background-image: url('../imgs/tram.png');
 }
 
 .lines .buses strong::before {
-    background-image: url('../imgs/bus.png');
+	background-image: url('../imgs/bus.png');
 }
 
 .lines .trolleys strong::before {
-    background-image: url('../imgs/trolleybus.png');
+	background-image: url('../imgs/trolleybus.png');
 }

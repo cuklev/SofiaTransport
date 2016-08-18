@@ -27,10 +27,24 @@
 	cursor: pointer;
 }
 
+.column {
+	float: left;
+	width: 50%;
+}
+
 @media(min-width:768px) {
-	.column {
+	.column-timing, .column-lines, .column-routes {
 		float: left;
 		margin: 1%;
+	}
+
+	.column-timing {
+		width: 20%;
+	}
+	.column-lines {
 		width: 30%;
+	}
+	.column-routes {
+		width: 44%;
 	}
 }
