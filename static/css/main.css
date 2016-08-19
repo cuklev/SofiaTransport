@@ -27,12 +27,12 @@
 	cursor: pointer;
 }
 
-.column {
-	float: left;
-	width: 50%;
-}
-
 @media(min-width:768px) {
+	.column {
+		float: left;
+		width: 50%;
+	}
+
 	.column-timing, .column-lines, .column-routes {
 		float: left;
 		margin: 1%;
