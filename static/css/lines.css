@@ -1,5 +1,6 @@
 .lines {
 	list-style: none;
+	padding: 0;
 }
 
 .lines li {
@@ -7,9 +8,8 @@
 }
 
 .lines .lines-wrapper {
-	padding: 0;
-	clear: both;
 	overflow: hidden;
+	padding: 0 5%;
 }
 
 .lines .lines-wrapper a {
