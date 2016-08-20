@@ -18,7 +18,12 @@ var linesController = (function() {
 					lineType = data['lineType'],
 					lineName = data['lineName'];
 
-				routesController.get(lineType, lineName);
+				if(lineType === 3) {
+					routesController.getSubway();
+				}
+				else {
+					routesController.get(lineType, lineName);
+				}
 
 				if(lastSelected) {
 					lastSelected.removeClass('selected');

@@ -43,7 +43,6 @@ var sumc = (function() {
 		return function() {
 			var promise = new Promise(function(resolve, reject) {
 				$.getJSON(url, function(routes) {
-					console.log(routes);
 					resolve(routes);
 				});
 			});

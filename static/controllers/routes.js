@@ -21,7 +21,23 @@ var routesController = (function() {
 		});
 	}
 
+	function getSubway() {
+		Promise.all([
+			templates.get('subwayRoutes'),
+			sumc.getSubwayRoutes()
+		]).then(function(values) {
+			var template = values[0],
+				stations = values[1];
+
+			var data = {
+				stations: stations
+			};
+			$('#routes-container').html(template(data));
+		});
+	}
+
 	return {
-		get: get
+		get: get,
+		getSubway: getSubway
 	};
 }());
