@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000;
 app.use(express.static(__dirname + '/static'));
 
 app.get('/sumcapi/timing', sumcapi.timingHandler);
+app.get('/sumcapi/timetable', sumcapi.timetableHandler);
 app.get('/sumcapi/datetime', sumcapi.datetimeHandler);
 
 app.get('/api/stopname', dbapi.stopname);
