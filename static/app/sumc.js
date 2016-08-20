@@ -42,7 +42,8 @@ var sumc = (function() {
 
 		return function() {
 			var promise = new Promise(function(resolve, reject) {
-				$.get(url, function(routes) {
+				$.getJSON(url, function(routes) {
+					console.log(routes);
 					resolve(routes);
 				});
 			});
@@ -60,7 +61,7 @@ var sumc = (function() {
 			};
 
 			var promise = new Promise(function(resolve, reject) {
-				$.get(url, data, function(timings) {
+				$.getJSON(url, data, function(timings) {
 					resolve(timings);
 				});
 			});
