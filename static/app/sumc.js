@@ -49,7 +49,7 @@ var sumc = (function() {
 
 			return promise;
 		}
-	}();
+	}());
 
 	var getSubwayTimings = (function() {
 		var url = baseUrl + '/subway';
@@ -81,6 +81,9 @@ var sumc = (function() {
 
 	return {
 		getTiming: getTiming,
+		getTimetable: getTimetable,
+		getSubwayRoutes: getSubwayRoutes,
+		getSubwayTimings: getSubwayTimings,
 		getDatetime: getDatetime
 	};
 }());
