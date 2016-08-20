@@ -2,104 +2,112 @@ const request = require('request');
 
 const baseUrl = 'http://drone.sumc.bg/api/v1';
 
-function timingHandler(req, res) {
+const timingHandler = (function() {
 	const url = baseUrl + '/timing';
 
-	const options = {
-		method: 'post',
-		body: req.query,
-		json: true,
-		url: url
-	};
+	return function(req, res) {
+		const options = {
+			method: 'post',
+			body: req.query,
+			json: true,
+			url: url
+		};
 
-	// Maybe implement caching
+		// Maybe implement caching
 
-	request(options, function (err, res1, body) {
-		if(err) {
-			console.error('Error:', err);
-			return;
-		}
+		request(options, function (err, res1, body) {
+			if(err) {
+				console.error('Error:', err);
+				return;
+			}
 
-		res.send(body);
-	});
-}
+			res.send(body);
+		});
+	}
+}());
 
-function timetableHandler(req, res) {
+const timetableHandler = (function() {
 	const url = baseUrl + '/timetable';
 
-	const options = {
-		method: 'post',
-		body: req.query,
-		json: true,
-		url: url
-	};
+	return function(req, res) {
+		const options = {
+			method: 'post',
+			body: req.query,
+			json: true,
+			url: url
+		};
 
-	// Maybe implement caching
+		// Maybe implement caching
 
-	request(options, function (err, res1, body) {
-		if(err) {
-			console.error('Error:', err);
-			return;
-		}
+		request(options, function (err, res1, body) {
+			if(err) {
+				console.error('Error:', err);
+				return;
+			}
 
-		res.send(body);
-	});
-}
+			res.send(body);
+		});
+	}
+}());
 
-function subwayRoutesHandler(req, res) {
+const subwayRoutesHandler = (function() {
 	const url = baseUrl + '/metro/all';
-
 	const options = {
 		method: 'get',
 		url: url
 	};
 
-	request(options, function(err, res1, body) {
-		if(err) {
-			console.error('Error:', err);
-			return;
-		}
+	return function(req, res) {
+		request(options, function(err, res1, body) {
+			if(err) {
+				console.error('Error:', err);
+				return;
+			}
 
-		res.send(body);
-	});
-}
+			res.send(body);
+		});
+	}
+}());
 
-function subwayTimetableHandler(req, res) {
-	const url = baseUrl + '/metro/times/' + req.query.id;
+const subwayTimetableHandler = (function() {
+	const url = baseUrl + '/metro/times/';
 
-	const options = {
-		method: 'get',
-		url: url
-	};
+	return function(req, res) {
+		const options = {
+			method: 'get',
+			url: url + req.query.id
+		};
 
-	request(options, function(err, res1, body) {
-		if(err) {
-			console.error('Error:', err);
-			return;
-		}
+		request(options, function(err, res1, body) {
+			if(err) {
+				console.error('Error:', err);
+				return;
+			}
 
-		res.send(body);
-	});
-}
+			res.send(body);
+		});
+	}
+}());
 
-function datetimeHandler(req, res) {
+const datetimeHandler = (function() {
 	const url = baseUrl + '/config';
-
 	const options = {
 		method: 'get',
 		url: url
 	};
 
-	request(options, function (err, res1, body) {
-		if(err) {
-			console.error('Error:', err);
-			return;
-		}
+	return function(req, res) {
+		request(options, function (err, res1, body) {
+			if(err) {
+				console.error('Error:', err);
+				return;
+			}
 
-		body = body.replace(/^.*date":"([^"]*)".*$/, '$1');
-		res.send(body);
-	});
-}
+			body = body.replace(/^.*date":"([^"]*)".*$/, '$1');
+			res.send(body);
+		});
+	}
+}());
 
 module.exports = {
 	timingHandler: timingHandler,
