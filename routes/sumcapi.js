@@ -46,6 +46,42 @@ function timetableHandler(req, res) {
 	});
 }
 
+function subwayRoutesHandler(req, res) {
+	const url = baseUrl + '/metro/all';
+
+	const options = {
+		method: 'get',
+		url: url
+	};
+
+	request(options, function(err, res1, body) {
+		if(err) {
+			console.error('Error:', err);
+			return;
+		}
+
+		res.send(body);
+	});
+}
+
+function subwayTimetableHandler(req, res) {
+	const url = baseUrl + '/metro/times/' + req.query.id;
+
+	const options = {
+		method: 'get',
+		url: url
+	};
+
+	request(options, function(err, res1, body) {
+		if(err) {
+			console.error('Error:', err);
+			return;
+		}
+
+		res.send(body);
+	});
+}
+
 function datetimeHandler(req, res) {
 	const url = baseUrl + '/config';
 
@@ -68,5 +104,7 @@ function datetimeHandler(req, res) {
 module.exports = {
 	timingHandler: timingHandler,
 	timetableHandler: timetableHandler,
+	subwayRoutesHandler: subwayRoutesHandler,
+	subwayTimetableHandler: subwayTimetableHandler,
 	datetimeHandler: datetimeHandler
 };

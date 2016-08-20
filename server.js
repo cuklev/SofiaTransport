@@ -10,6 +10,8 @@ app.use(express.static(__dirname + '/static'));
 
 app.get('/sumcapi/timing', sumcapi.timingHandler);
 app.get('/sumcapi/timetable', sumcapi.timetableHandler);
+app.get('/sumcapi/subway/routes', sumcapi.subwayRoutesHandler);
+app.get('/sumcapi/subway', sumcapi.subwayTimetableHandler);
 app.get('/sumcapi/datetime', sumcapi.datetimeHandler);
 
 app.get('/api/stopname', dbapi.stopname);
