@@ -20,7 +20,7 @@ Obtained by Man-in-the-Middle-ing the SofiaTraffic android app.
 #### POST `http://drone.sumc.bg/api/v1/routes/changes`
 - Parameters:
   - `from_date=UNIX TIMESTAMP`
-- Returns a JSON object (or 502, or [FatalErrorException]())
+- Returns a JSON object (or 502, or [FatalErrorException](https://rawgit.com/cuklev/SofiaTransport/master/fun.html))
   - Probably useful information if have a local database with routes and need to update it
   - Contains coordinates
 
