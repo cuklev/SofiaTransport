@@ -9,8 +9,8 @@ var routesController = (function() {
 			templates.get('routes'),
 			db.getRoutes(line)
 		]).then(function(values) {
-		var template = values[0],
-			routes = values[1];
+			var template = values[0],
+				routes = values[1];
 
 			var params = {
 				routes: routes,
