@@ -53,7 +53,7 @@ var timingController = (function() {
 						line: +x.lineName,
 						type: x.type,
 						typename: ['tram', 'bus', 'trolley'][x.type],
-						timing: x.timing.split(',') // must sort these parts
+						timing: x.timing.split(',').sort()
 					};
 				}).sort(function(a, b) {
 					return a.line - b.line;
