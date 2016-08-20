@@ -37,6 +37,36 @@ var sumc = (function() {
 		};
 	}());
 
+	var getSubwayRoutes = (function() {
+		var url = baseUrl + '/subway/routes';
+
+		return function() {
+			var promise = new Promise(function(resolve, reject) {
+				$.get(url, function(routes) {
+					resolve(routes);
+				});
+			});
+
+			return promise;
+		}
+	}();
+
+	var getSubwayTimings = (function() {
+		var url = baseUrl + '/subway';
+
+		return function(id) {
+			var data = {
+				id: id
+			};
+
+			var promise = new Promise(function(resolve, reject) {
+				$.get(url, data, function(timings) {
+					resolve(timings);
+				});
+			});
+		}
+	}());
+
 	var getDatetime = (function() {
 		var url = baseUrl + '/datetime';
 
