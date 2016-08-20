@@ -1,7 +1,31 @@
 const request = require('request');
 
+const baseUrl = 'http://drone.sumc.bg/api/v1';
+
 function timingHandler(req, res) {
-	const url = 'http://drone.sumc.bg/api/v1/timing';
+	const url = baseUrl + '/timing';
+
+	const options = {
+		method: 'post',
+		body: req.query,
+		json: true,
+		url: url
+	};
+
+	// Maybe implement caching
+
+	request(options, function (err, res1, body) {
+		if(err) {
+			console.error('Error:', err);
+			return;
+		}
+
+		res.send(body);
+	});
+}
+
+function timetableHandler(req, res) {
+	const url = baseUrl + '/timetable';
 
 	const options = {
 		method: 'post',
@@ -23,7 +47,7 @@ function timingHandler(req, res) {
 }
 
 function datetimeHandler(req, res) {
-	const url = 'http://drone.sumc.bg/api/v1/config';
+	const url = baseUrl + '/config';
 
 	const options = {
 		method: 'get',
@@ -43,5 +67,6 @@ function datetimeHandler(req, res) {
 
 module.exports = {
 	timingHandler: timingHandler,
+	timetableHandler: timetableHandler,
 	datetimeHandler: datetimeHandler
 };
