@@ -1,5 +1,5 @@
 var sumc = (function() {
-	var baseUrl = '/sumcapi';
+	var baseUrl = 'sumcapi';
 
 	var getTiming = (function() {
 		var url = baseUrl + '/timing';
