@@ -40,9 +40,9 @@ var linesController = (function() {
 
 		$('.lines a').each(function (index, element) {
 			var $element = $(element),
-			indexOf = $element.text().toLowerCase().indexOf(prefix);
+				lineName = $element.attr('data-line-name') || '';
 
-			if(indexOf){
+			if(lineName.indexOf(prefix) === -1) {
 				$element.addClass('hidden');
 			}
 			else {

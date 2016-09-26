@@ -23,14 +23,11 @@ $(function() {
 	});
 });
 
-$(linesController.get());
-$(function() {
-	$('#enterLinename').on('keyup', function(e) {
-		linesController.filter();
-	});
+linesController.get();
+
+$('#enter-linename').on('keyup', function(e) {
+	linesController.filter();
 });
 
-$(function() {
-	favouritesController.load();
-	favouritesController.get();
-});
+favouritesController.load();
+favouritesController.get();
