@@ -12,7 +12,7 @@ $(loadTiming);
 $(window).on('hashchange', loadTiming);
 
 $(function() {
-	var input = $('#enterStopcode');
+	var input = $('#enter-stopcode');
 	input.on('keyup', function(e) {
 		if(e.which !== 13) {
 			return;
