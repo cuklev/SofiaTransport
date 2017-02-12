@@ -52,6 +52,14 @@ const timingController = (function() {
 				})).sort(function(a, b) {
 					return a.line - b.line;
 				});
+
+				const [linetype, linename] = router.getLine();
+				const index = timings.findIndex(x => x.type === +linetype && x.line === +linename);
+				if(index >= 0) {
+					const wanted = timings.splice(index, 1);
+					wanted[0].separate = timings.length > 0;
+					timings = wanted.concat(timings);
+				}
 			}
 
 			const params = {
