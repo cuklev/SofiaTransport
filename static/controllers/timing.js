@@ -83,7 +83,7 @@ const timingController = (function() {
 			return;
 		}
 
-		$('#timingContainer').prepend('<h3>Loading timings for stop ' + stopcode + '</h3>')
+		$('#timingContainer').prepend(`<h3>Loading timings for stop ${stopcode}</h3>`)
 		get(stopcode);
 	}
 
