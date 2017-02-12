@@ -1,5 +1,5 @@
 const favouritesController = (function() {
-	const favourites = {};
+	let favourites = {};
 
 	function load() {
 		const str = localStorage.getItem('fav_stops');
