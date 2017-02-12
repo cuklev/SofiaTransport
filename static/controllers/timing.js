@@ -44,14 +44,12 @@ const timingController = (function() {
 				timings = false;
 			}
 			else {
-				timings = timings.map(function(x) {
-					return {
-						line: +x.lineName,
-						type: x.type,
-						typename: ['tram', 'bus', 'trolley'][x.type],
-						timing: x.timing.split(',').sort()
-					};
-				}).sort(function(a, b) {
+				timings = timings.map(x => ({
+					line: +x.lineName,
+					type: x.type,
+					typename: ['tram', 'bus', 'trolley'][x.type],
+					timing: x.timing.split(',').sort()
+				})).sort(function(a, b) {
 					return a.line - b.line;
 				});
 			}
