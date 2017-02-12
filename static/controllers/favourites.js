@@ -28,15 +28,20 @@ const favouritesController = (function() {
 	}
 
 	function get() {
-		templates.get('favourites').then(function(template) {
-			$('#favourites-container').html(template(favourites));
+		templates.get('favourites')
+			.then(function(template) {
+				const data = {
+					favourites,
+					line: router.getLine().join('/')
+				};
+				$('#favourites-container').html(template(data));
 
-			// TODO: use a single event
-			$('.remove-favourite').on('click', function(e) {
-				const stop_id = $(e.target).data('stopId');
-				remove(stop_id);
+				// TODO: use a single event
+				$('.remove-favourite').on('click', function(e) {
+					const stop_id = $(e.target).data('stopId');
+					remove(stop_id);
+				});
 			});
-		});
 	}
 
 	function add(stopcode, stopname) {

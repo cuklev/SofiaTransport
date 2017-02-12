@@ -2,25 +2,24 @@
 	<li class="trams">
 		<strong>Trams:</strong>
 		<div class="lines-wrapper">
-			{{#each trams}}
-				<a class="tram" data-line-type="0" data-line-name="{{this}}">{{this}}</a>
-				<a class="tram" href="#/0/{{this}}">{{this}}</a>
+			{{#each lines.trams}}
+				<a class="tram" href="#{{../stopcode}}/0/{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
 	<li class="buses">
 		<strong>Buses:</strong>
 		<div class="lines-wrapper">
-			{{#each buses}}
-				<a class="bus" href="#/1/{{this}}">{{this}}</a>
+			{{#each lines.buses}}
+				<a class="bus" href="#{{../stopcode}}/1/{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
 	<li class="trolleys">
 		<strong>Trolleys:</strong>
 		<div class="lines-wrapper">
-			{{#each trolleys}}
-				<a class="trolley" href="#/2/{{this}}">{{this}}</a>
+			{{#each lines.trolleys}}
+				<a class="trolley" href="#{{../stopcode}}/2/{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>

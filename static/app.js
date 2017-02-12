@@ -1,5 +1,5 @@
-navigateRoute();
-$(window).on('hashchange', navigateRoute);
+router.navigate();
+$(window).on('hashchange', router.navigate);
 
 $(function() {
 	var input = $('#enter-stopcode');

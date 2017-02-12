@@ -1,4 +1,4 @@
-<h2 class="centered">{{linetype}} {{linename}}</h2>
+<h2 class="centered">{{transport}} {{linename}}</h2>
 {{#each routes}}
 	<div class="column">
 		<h3 class="centered">{{routename}}</h3>
@@ -6,7 +6,7 @@
 			<ol>
 				{{#each routestops}}
 					<li>
-						<a href="#{{stopcode}}">
+						<a href="#{{stopcode}}/{{../../linetype}}/{{../../linename}}">
 							{{stopname}} ({{stopcode}})
 						</a>
 					</li>

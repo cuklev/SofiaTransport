@@ -10,9 +10,10 @@ const routesController = (function() {
 			db.getRoutes(line)
 		]).then(function([template, routes]) {
 			const params = {
-				routes: routes,
-				linetype: ['Трамвай', 'Автобус', 'Тролейбус'][linetype],
-				linename: linename
+				routes,
+				linetype,
+				linename,
+				transport: ['Трамвай', 'Автобус', 'Тролейбус'][linetype]
 			};
 			$('#routes-container').html(template(params));
 		});

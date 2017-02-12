@@ -1,9 +1,9 @@
 <h2 class="centered">Favourites</h2>
 <div class="scrollable">
 	<ol>
-		{{#each this}}
+		{{#each favourites}}
 			<li>
-				<a href="#{{@key}}">
+				<a href="#{{@key}}/{{../line}}">
 					{{this}} ({{@key}})
 				</a>
 				&nbsp;
