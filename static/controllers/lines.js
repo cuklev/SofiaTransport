@@ -6,29 +6,6 @@ const linesController = (function() {
 		])
 		.then(function([template, lines]) {
 			$('#lines-container').html(template(lines));
-
-			let lastSelected;
-
-			$('.lines').on('click', 'a', function (e) {
-				const $target = $(e.target),
-					data = $target.data(),
-					lineType = data.lineType,
-					lineName = data.lineName;
-
-				if(lineType === 3) {
-					routesController.getSubway();
-				}
-				else {
-					routesController.get(lineType, lineName);
-				}
-
-				if(lastSelected) {
-					lastSelected.removeClass('selected');
-				}
-
-				$target.addClass('selected');
-				lastSelected = $target;
-			});
 		});
 	}
 

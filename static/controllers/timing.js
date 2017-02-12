@@ -65,15 +65,6 @@ const timingController = (function() {
 			$('#timing-container').html(template(params));
 
 			setTimingFormat();
-
-			$('#timing-container').on('click', 'a', function(e) {
-				const $target = $(e.target),
-					data = $target.data(),
-					lineType = data.lineType,
-					lineName = data.lineName;
-
-				routesController.get(lineType, lineName);
-			});
 		});
 	}
 
