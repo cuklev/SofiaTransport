@@ -6,7 +6,6 @@ function navigateRoute() {
 	}
 
 	if(stopcode) {
-		console.log('here', +stopcode);
 		timingController.load(+stopcode);
 	}
 }
