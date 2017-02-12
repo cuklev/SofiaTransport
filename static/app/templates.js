@@ -9,7 +9,7 @@ const templates = (function() {
 				return;
 			}
 
-			const url = './templates/' + name + '.handlebars';
+			const url = `./templates/${name}.handlebars`;
 
 			$.get(url, function(hb) {
 				const html = handlebars.compile(hb);
