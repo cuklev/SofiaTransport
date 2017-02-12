@@ -1,5 +1,5 @@
-$(timingController.load);
-$(window).on('hashchange', timingController.load);
+navigateRoute();
+$(window).on('hashchange', navigateRoute);
 
 $(function() {
 	var input = $('#enter-stopcode');
@@ -9,7 +9,7 @@ $(function() {
 		}
 
 		location.hash = '#' + input.val();
-		// rewrite this better
+		// TODO: rewrite this better
 	});
 });
 

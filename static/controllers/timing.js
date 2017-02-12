@@ -77,12 +77,7 @@ const timingController = (function() {
 		});
 	}
 
-	function load() {
-		const stopcode = +location.hash.replace(/^#/, '');
-		if(!Number(stopcode)) {
-			return;
-		}
-
+	function load(stopcode) {
 		$('#timingContainer').prepend(`<h3>Loading timings for stop ${stopcode}</h3>`)
 		get(stopcode);
 	}
