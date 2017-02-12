@@ -1,19 +1,16 @@
-var linesController = (function() {
+const linesController = (function() {
 	function get() {
 		Promise.all([
 			templates.get('lines'),
 			db.getLines()
 		])
-		.then(function (values) {
-			var template = values[0],
-				lines = values[1];
-
+		.then(function([template, lines]) {
 			$('#lines-container').html(template(lines));
 
-			var lastSelected;
+			let lastSelected;
 
 			$('.lines').on('click', 'a', function (e) {
-				var $target = $(e.target),
+				const $target = $(e.target),
 					data = $target.data(),
 					lineType = data['lineType'],
 					lineName = data['lineName'];
@@ -36,10 +33,10 @@ var linesController = (function() {
 	}
 
 	function filter() {
-		var prefix = $('#enter-linename').val();
+		const prefix = $('#enter-linename').val();
 
 		$('.lines a').each(function (index, element) {
-			var $element = $(element),
+			const $element = $(element),
 				lineName = $element.attr('data-line-name') || '';
 
 			if(lineName.indexOf(prefix) === -1) {

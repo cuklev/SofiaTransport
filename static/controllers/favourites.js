@@ -1,8 +1,8 @@
-var favouritesController = (function() {
-	var favourites = {};
+const favouritesController = (function() {
+	const favourites = {};
 
 	function load() {
-		var str = localStorage.getItem('fav_stops');
+		const str = localStorage.getItem('fav_stops');
 
 		favourites = {};
 		if(str === null) {
@@ -16,8 +16,8 @@ var favouritesController = (function() {
 	}
 
 	function save() {
-		var str = '';
-		for(var stopcode in favourites) {
+		let str = '';
+		for(const stopcode in favourites) {
 			if(str !== '') {
 				str += ';';
 			}
@@ -33,7 +33,7 @@ var favouritesController = (function() {
 
 			// TODO: use a single event
 			$('.remove-favourite').on('click', function(e) {
-				var stop_id = $(e.target).data('stopId');
+				const stop_id = $(e.target).data('stopId');
 				remove(stop_id);
 			});
 		});

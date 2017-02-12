@@ -1,7 +1,7 @@
-var timingController = (function() {
+const timingController = (function() {
 	function get(stopcode) {
 		function expandTiming(timings) {
-			var expanded = [];
+			const expanded = [];
 			timings.forEach(function(line) {
 				line.timing.forEach(function(time) {
 					if(time === '') {
@@ -38,11 +38,7 @@ var timingController = (function() {
 			templates.get('timing'),
 			sumc.getTiming(stopcode),
 			db.getStopname(stopcode)
-		]).then(function(values) {
-			var template = values[0],
-				timings = values[1],
-				stopname = values[2];
-
+		]).then(function([template, timings, stopname]) {
 			// this should be made async
 			if(!Array.isArray(timings)) {
 				timings = false;
@@ -60,7 +56,7 @@ var timingController = (function() {
 				});
 			}
 
-			var params = {
+			const params = {
 				timings: timings,
 				expanded: expandTiming(timings),
 				stopcode: stopcode,
@@ -71,7 +67,7 @@ var timingController = (function() {
 			setTimingFormat();
 
 			$('#timing-container').on('click', 'a', function(e) {
-				var $target = $(e.target),
+				const $target = $(e.target),
 					data = $target.data(),
 					lineType = data.lineType,
 					lineName = data.lineName;
@@ -82,7 +78,7 @@ var timingController = (function() {
 	}
 
 	function load() {
-		var stopcode = +location.hash.replace(/^#/, '');
+		const stopcode = +location.hash.replace(/^#/, '');
 		if(!Number(stopcode)) {
 			return;
 		}

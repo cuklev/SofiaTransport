@@ -1,6 +1,6 @@
-var routesController = (function() {
+const routesController = (function() {
 	function get(linetype, linename) {
-		var line = {
+		const line = {
 			type: linetype,
 			name: linename
 		};
@@ -8,11 +8,8 @@ var routesController = (function() {
 		Promise.all([
 			templates.get('routes'),
 			db.getRoutes(line)
-		]).then(function(values) {
-			var template = values[0],
-				routes = values[1];
-
-			var params = {
+		]).then(function([template, routes]) {
+			const params = {
 				routes: routes,
 				linetype: ['Трамвай', 'Автобус', 'Тролейбус'][linetype],
 				linename: linename
@@ -25,11 +22,8 @@ var routesController = (function() {
 		Promise.all([
 			templates.get('subwayRoutes'),
 			sumc.getSubwayRoutes()
-		]).then(function(values) {
-			var template = values[0],
-				stations = values[1];
-
-			var data = {
+		]).then(function([template, stations]) {
+			const data = {
 				stations: stations
 			};
 			$('#routes-container').html(template(data));

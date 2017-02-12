@@ -1,16 +1,16 @@
-var db = (function() {
-	var getStopname = (function() {
-		var url = 'api/stopname';
-		var cache = {};
+const db = (function() {
+	const getStopname = (function() {
+		const url = 'api/stopname';
+		const cache = {};
 
 		return function(stopcode) {
-			var promise = new Promise(function(resolve, reject) {
+			const promise = new Promise(function(resolve, reject) {
 				if(cache[stopcode]) {
 					resolve(cache[stopcode]);
 					return;
 				}
 
-				var data = {
+				const data = {
 					stopcode: stopcode
 				};
 
@@ -24,12 +24,12 @@ var db = (function() {
 		}
 	}());
 
-	var getLines = (function() {
-		var url = 'api/lines';
-		var cache;
+	const getLines = (function() {
+		const url = 'api/lines';
+		const cache;
 
 		return function() {
-			var promise = new Promise(function(resolve, reject) {
+			const promise = new Promise(function(resolve, reject) {
 				if(cache) {
 					resolve(cache);
 					return;
@@ -44,12 +44,12 @@ var db = (function() {
 		};
 	}());
 
-	var getRoutes = (function() {
-		var url = 'api/routes';
-		var cache = {}; // is array better?
+	const getRoutes = (function() {
+		const url = 'api/routes';
+		const cache = {}; // is array better?
 
 		return function(line) {
-			var promise = new Promise(function(resolve, reject) {
+			const promise = new Promise(function(resolve, reject) {
 				if(!cache[line.type]) {
 					cache[line.type] = {};
 				}
@@ -58,7 +58,7 @@ var db = (function() {
 					return;
 				}
 
-				var data = {
+				const data = {
 					linetype: line.type,
 					linename: line.name
 				};
@@ -73,12 +73,12 @@ var db = (function() {
 		}
 	}());
 
-	var getPoints = (function(line) {
-		var url = 'api/points';
-		var cache = {}; // is array better?
+	const getPoints = (function(line) {
+		const url = 'api/points';
+		const cache = {}; // is array better?
 
 		return function() {
-			var promise = new Promise(function(resolve, reject) {
+			const promise = new Promise(function(resolve, reject) {
 				if(!cache[line.type]) {
 					cache[line.type] = {};
 				}
@@ -87,7 +87,7 @@ var db = (function() {
 					return;
 				}
 
-				var data = {
+				const data = {
 					linetype: line.type,
 					linename: line.name
 				};
