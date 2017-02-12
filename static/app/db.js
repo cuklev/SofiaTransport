@@ -26,7 +26,7 @@ const db = (function() {
 
 	const getLines = (function() {
 		const url = 'api/lines';
-		const cache;
+		let cache;
 
 		return function() {
 			const promise = new Promise(function(resolve, reject) {
