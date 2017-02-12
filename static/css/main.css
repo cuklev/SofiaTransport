@@ -8,7 +8,7 @@
 	color: blue;
 }
 .tram, .bus, .trolley {
-	cursor: pointer;
+	text-decoration: none;
 }
 
 .centered {
