@@ -73,8 +73,8 @@ var timingController = (function() {
 			$('#timing-container').on('click', 'a', function(e) {
 				var $target = $(e.target),
 					data = $target.data(),
-					lineType = data['lineType'],
-					lineName = data['lineName'];
+					lineType = data.lineType,
+					lineName = data.lineName;
 
 				routesController.get(lineType, lineName);
 			});
