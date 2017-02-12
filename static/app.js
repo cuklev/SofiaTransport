@@ -4,7 +4,7 @@ function loadTiming() {
 		return;
 	}
 
-	$('#timingContainer').prepend('<h3>Loading timings for stop ' + stopcode + '<h3>')
+	$('#timingContainer').prepend('<h3>Loading timings for stop ' + stopcode + '</h3>')
 	timingController.get(stopcode);
 }
 
