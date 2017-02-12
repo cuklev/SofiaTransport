@@ -12,8 +12,8 @@ const linesController = (function() {
 			$('.lines').on('click', 'a', function (e) {
 				const $target = $(e.target),
 					data = $target.data(),
-					lineType = data['lineType'],
-					lineName = data['lineName'];
+					lineType = data.lineType,
+					lineName = data.lineName;
 
 				if(lineType === 3) {
 					routesController.getSubway();
