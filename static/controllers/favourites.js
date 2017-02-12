@@ -9,6 +9,9 @@ const favouritesController = (function() {
 			return;
 		}
 
+		if(str === '') {
+			return;
+		}
 		str.split(';').forEach(function(x) {
 			x = x.split('"');
 			favourites[x[0]] = x[1];
