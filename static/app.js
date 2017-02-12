@@ -1,15 +1,5 @@
-function loadTiming() {
-	var stopcode = +location.hash.replace(/^#/, '');
-	if(!Number(stopcode)) {
-		return;
-	}
-
-	$('#timingContainer').prepend('<h3>Loading timings for stop ' + stopcode + '</h3>')
-	timingController.get(stopcode);
-}
-
-$(loadTiming);
-$(window).on('hashchange', loadTiming);
+$(timingController.load);
+$(window).on('hashchange', timingController.load);
 
 $(function() {
 	var input = $('#enter-stopcode');
