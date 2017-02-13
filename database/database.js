@@ -1,13 +1,13 @@
 const database = require('./raw_database');
 
 // Will add points later
-let trams = {all: [], routes: []}, //, points: []},
+const trams = {all: [], routes: []}, //, points: []},
 	buses = {all: [], routes: []}, //, points: []},
 	trolleys = {all: [], routes: []}, //, points: []},
 	stops = {};
 
 database.forEach(function(x) {
-	var route = {
+	const route = {
 		routename: x.routename,
 		routestops: []
 	};
