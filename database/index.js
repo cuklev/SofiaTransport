@@ -53,8 +53,8 @@ buses.all = Object.keys(buses.routes);
 trolleys.all = Object.keys(trolleys.routes);
 
 module.exports = {
-	trams: trams,
-	buses: buses,
-	trolleys: trolleys,
-	stops: stops
+	trams,
+	buses,
+	trolleys,
+	stops
 };

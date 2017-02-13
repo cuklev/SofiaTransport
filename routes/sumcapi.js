@@ -110,9 +110,9 @@ const datetimeHandler = (function() {
 }());
 
 module.exports = {
-	timingHandler: timingHandler,
-	timetableHandler: timetableHandler,
-	subwayRoutesHandler: subwayRoutesHandler,
-	subwayTimetableHandler: subwayTimetableHandler,
-	datetimeHandler: datetimeHandler
+	timingHandler,
+	timetableHandler,
+	subwayRoutesHandler,
+	subwayTimetableHandler,
+	datetimeHandler
 };

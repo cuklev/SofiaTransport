@@ -31,8 +31,8 @@ function points(req, res) {
 }
 
 module.exports = {
-	stopname: stopname,
-	lines: lines,
-	routes: routes,
-	points: points
+	stopname,
+	lines,
+	routes,
+	points
 };
