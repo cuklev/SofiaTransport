@@ -51,8 +51,6 @@ const favouritesController = (function() {
 	}
 
 	return {
-		get: get,
-		save: save,
 		load: load,
 		add: add
 	};

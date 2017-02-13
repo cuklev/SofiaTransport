@@ -20,4 +20,3 @@ $('#enter-linename').on('keyup', function(e) {
 });
 
 favouritesController.load();
-favouritesController.get();
