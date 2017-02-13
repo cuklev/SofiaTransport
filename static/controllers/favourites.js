@@ -1,29 +1,21 @@
 const favouritesController = (function() {
-	const favourites = {};
+	let favourites = {};
 
 	function load() {
 		const str = localStorage.getItem('fav_stops');
-		if(!str) {
-			return;
-		}
 
-		str.split(';').forEach(function(x) {
-			x = x.split('"');
-			favourites[x[0]] = x[1];
-		});
+		try {
+			favourites = JSON.parse(str);
+		}
+		catch(e) {
+			save();
+		}
 
 		get();
 	}
 
 	function save() {
-		let str = '';
-		for(const stopcode in favourites) {
-			if(str !== '') {
-				str += ';';
-			}
-			str += stopcode + '"' + favourites[stopcode];
-		}
-
+		const str = JSON.stringify(favourites);
 		localStorage.setItem('fav_stops', str);
 	}
 
