@@ -1,8 +1,10 @@
 const favouritesController = (function() {
+	const STORAGE_KEY = 'fav_stops';
+
 	let favourites = {};
 
 	function load() {
-		const str = localStorage.getItem('fav_stops');
+		const str = localStorage.getItem(STORAGE_KEY);
 
 		try {
 			favourites = JSON.parse(str);
@@ -16,7 +18,7 @@ const favouritesController = (function() {
 
 	function save() {
 		const str = JSON.stringify(favourites);
-		localStorage.setItem('fav_stops', str);
+		localStorage.setItem(STORAGE_KEY, str);
 	}
 
 	function rename(target, id) {
