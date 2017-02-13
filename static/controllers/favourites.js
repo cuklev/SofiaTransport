@@ -4,7 +4,7 @@ const favouritesController = (function() {
 	let favourites = {};
 
 	function load() {
-		const str = localStorage.getItem(STORAGE_KEY);
+		const str = localStorage.getItem(STORAGE_KEY) || '';
 
 		try {
 			favourites = JSON.parse(str);
