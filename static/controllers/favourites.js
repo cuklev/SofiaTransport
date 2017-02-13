@@ -36,8 +36,8 @@ const favouritesController = (function() {
 				$('#favourites-container').html(template(favourites));
 
 				// TODO: use a single event
-				$('.remove-favourite').on('click', function(e) {
-					const stop_id = $(e.target).data('stopId');
+				$('.remove-favourite').on('click', 'img', function(e) {
+					const stop_id = $(e.target).parent().data('stopId');
 					remove(stop_id);
 				});
 			});
@@ -59,7 +59,6 @@ const favouritesController = (function() {
 		get: get,
 		save: save,
 		load: load,
-		add: add,
-		remove: remove
+		add: add
 	};
 }());

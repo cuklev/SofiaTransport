@@ -7,7 +7,12 @@
 					{{this}} ({{@key}})
 				</a>
 				&nbsp;
-				<a class="remove-favourite" data-stop-id="{{@key}}">Изтрий</a>
+				<a class="edit-favourite" data-stop-id="{{@key}}">
+					<img src="imgs/edit.png" width="20px" />
+				</a>
+				<a class="remove-favourite" data-stop-id="{{@key}}">
+					<img src="imgs/remove.png" width="20px" />
+				</a>
 			</li>
 		{{/each}}
 	</ol>
