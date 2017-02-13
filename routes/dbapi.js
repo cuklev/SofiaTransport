@@ -1,4 +1,4 @@
-const db = require('../database/database');
+const db = require('../database');
 
 function stopname(req, res) {
 	const stopcode = req.query.stopcode;
