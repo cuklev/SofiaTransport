@@ -11,6 +11,8 @@ const favouritesController = (function() {
 			x = x.split('"');
 			favourites[x[0]] = x[1];
 		});
+
+		get();
 	}
 
 	function save() {
