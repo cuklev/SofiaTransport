@@ -33,11 +33,7 @@ const favouritesController = (function() {
 	function get() {
 		templates.get('favourites')
 			.then(function(template) {
-				const data = {
-					favourites,
-					line: router.getLine().join('/')
-				};
-				$('#favourites-container').html(template(data));
+				$('#favourites-container').html(template(favourites));
 
 				// TODO: use a single event
 				$('.remove-favourite').on('click', function(e) {
