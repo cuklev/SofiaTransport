@@ -59,6 +59,9 @@ const favouritesController = (function() {
 	}
 
 	function add(stopcode, stopname) {
+		if(favourites.hasOwnProperty(stopcode)) {
+			return;
+		}
 		favourites[stopcode] = `${stopname} (${stopcode})`;
 		save();
 		get();
