@@ -63,10 +63,10 @@ const timingController = (function() {
 			}
 
 			const params = {
-				timings: timings,
+				timings,
 				expanded: expandTiming(timings),
-				stopcode: stopcode,
-				stopname: stopname
+				stopcode,
+				stopname
 			};
 			$('#timing-container').html(template(params));
 
