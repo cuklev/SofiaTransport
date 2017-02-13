@@ -19,6 +19,12 @@ const favouritesController = (function() {
 		localStorage.setItem('fav_stops', str);
 	}
 
+	function rename(target, id) {
+		favourites[id] = target.value.trim() || `(${id})`;
+		save();
+		get();
+	}
+
 	function get() {
 		templates.get('favourites')
 			.then(function(template) {
@@ -29,19 +35,17 @@ const favouritesController = (function() {
 					const $li = $(e.target).parent().parent();
 					const stop_id = $li.data('stopId');
 					const $name = $li.find('a[href]');
-					$li.html(`<input value="${$name.html().trim()}">`);
+					$li.html(`<input>`);
 					const $input = $li.find('input');
+					$input.val($name.html().trim());
 					$input.focus();
 
-					function rename() {
-						favourites[stop_id] = $input.val().trim() || `(${stop_id})`;
-						save();
-						get();
-					}
-					$input.on('blur', rename);
+					$input.on('blur', function(e) {
+						rename(e.target, stop_id)
+					});
 					$input.on('keyup', function(e) {
 						if(e.which === 13) {
-							rename();
+							rename(e.target, stop_id)
 						}
 					});
 				});
