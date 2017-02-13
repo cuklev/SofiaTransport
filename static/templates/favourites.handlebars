@@ -2,15 +2,15 @@
 <div class="scrollable">
 	<ol>
 		{{#each this}}
-			<li>
+			<li data-stop-id="{{@key}}">
 				<a href="#{{@key}}">
 					{{this}} ({{@key}})
 				</a>
 				&nbsp;
-				<a class="edit-favourite" data-stop-id="{{@key}}">
+				<a class="edit-favourite">
 					<img src="imgs/edit.png" width="20px" />
 				</a>
-				<a class="remove-favourite" data-stop-id="{{@key}}">
+				<a class="remove-favourite">
 					<img src="imgs/remove.png" width="20px" />
 				</a>
 			</li>

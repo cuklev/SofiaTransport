@@ -34,7 +34,7 @@ const favouritesController = (function() {
 
 				// TODO: use a single event
 				$('.remove-favourite').on('click', 'img', function(e) {
-					const stop_id = $(e.target).parent().data('stopId');
+					const stop_id = $(e.target).parent().parent().data('stopId');
 					remove(stop_id);
 				});
 			});
