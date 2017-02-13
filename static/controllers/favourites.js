@@ -1,17 +1,12 @@
 const favouritesController = (function() {
-	let favourites = {};
+	const favourites = {};
 
 	function load() {
 		const str = localStorage.getItem('fav_stops');
-
-		favourites = {};
-		if(str === null) {
+		if(!str) {
 			return;
 		}
 
-		if(str === '') {
-			return;
-		}
 		str.split(';').forEach(function(x) {
 			x = x.split('"');
 			favourites[x[0]] = x[1];
