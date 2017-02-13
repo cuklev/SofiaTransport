@@ -1,19 +1,17 @@
 <h2 class="centered">Favourites</h2>
-<div class="scrollable">
-	<ol>
-		{{#each this}}
-			<li data-stop-id="{{@key}}">
-				<a href="#{{@key}}">
-					{{this}}
-				</a>
-				&nbsp;
-				<a class="edit-favourite">
-					<img src="imgs/edit.png" width="20px" />
-				</a>
-				<a class="remove-favourite">
-					<img src="imgs/remove.png" width="20px" />
-				</a>
-			</li>
-		{{/each}}
-	</ol>
-</div>
+<ol>
+	{{#each this}}
+		<li class="fav-item" data-stop-id="{{@key}}">
+			<a class="remove-favourite">
+				<img src="imgs/remove.png" width="20px" />
+			</a>
+			<a class="edit-favourite">
+				<img src="imgs/edit.png" width="20px" />
+			</a>
+			<a href="#{{@key}}">
+				{{this}}
+			</a>
+			&nbsp;
+		</li>
+	{{/each}}
+</ol>

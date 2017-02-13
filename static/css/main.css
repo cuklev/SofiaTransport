@@ -7,7 +7,8 @@
 .trolley {
 	color: blue;
 }
-.tram, .bus, .trolley {
+
+a {
 	text-decoration: none;
 }
 
@@ -23,8 +24,20 @@
 	overflow: auto;
 }
 
-.remove-favourite {
+.fav-item {
+	line-height: 24px;
+}
+.fav-item a {
+	line-height: 100%;
+}
+.fav-item input {
+	border: none;
+	border-bottom: solid 1px;
+	width: 100%;
+}
+.edit-favourite, .remove-favourite {
 	cursor: pointer;
+	float: right;
 }
 
 @media(min-width:768px) {
