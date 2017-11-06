@@ -7,6 +7,8 @@ const dbapi = require('./routes/dbapi');
 const port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/static'));
+app.use('/libs/jquery', express.static(__dirname + '/node_modules/jquery'));
+app.use('/libs/handlebars', express.static(__dirname + '/node_modules/handlebars'));
 
 app.get('/sumcapi/timing', sumcapi.timingHandler);
 app.get('/sumcapi/timetable', sumcapi.timetableHandler);
