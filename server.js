@@ -10,11 +10,11 @@ app.use(express.static(__dirname + '/static'));
 app.use('/libs/jquery', express.static(__dirname + '/node_modules/jquery'));
 app.use('/libs/handlebars', express.static(__dirname + '/node_modules/handlebars'));
 
-app.get('/sumcapi/timing', sumcapi.timingHandler);
-app.get('/sumcapi/timetable', sumcapi.timetableHandler);
-app.get('/sumcapi/subway/routes', sumcapi.subwayRoutesHandler);
-app.get('/sumcapi/subway', sumcapi.subwayTimetableHandler);
-app.get('/sumcapi/datetime', sumcapi.datetimeHandler);
+app.get('/api/timing', sumcapi.timingHandler);
+app.get('/api/timetable', sumcapi.timetableHandler);
+app.get('/api/subway/routes', sumcapi.subwayRoutesHandler);
+app.get('/api/subway', sumcapi.subwayTimetableHandler);
+app.get('/api/datetime', sumcapi.datetimeHandler);
 
 app.get('/api/stopname', dbapi.stopname);
 app.get('/api/lines', dbapi.lines);

@@ -1,8 +1,8 @@
 const sumc = (function() {
-	const baseUrl = 'sumcapi';
+	const baseUrl = 'api';
 
 	const getTiming = (function() {
-		const url = baseUrl + '/timing';
+		const url = `${baseUrl}/timing`;
 
 		return function(stopCode) {
 			const data = {
@@ -20,7 +20,7 @@ const sumc = (function() {
 	}());
 
 	const getTimetable = (function() {
-		const url = baseUrl + '/timetable';
+		const url = `${baseUrl}/timetable`;
 
 		return function(stopCode) {
 			const data = {
@@ -38,7 +38,7 @@ const sumc = (function() {
 	}());
 
 	const getSubwayRoutes = (function() {
-		const url = baseUrl + '/subway/routes';
+		const url = `${baseUrl}/subway/routes`;
 
 		return function() {
 			const promise = new Promise(function(resolve, reject) {
@@ -52,7 +52,7 @@ const sumc = (function() {
 	}());
 
 	const getSubwayTimings = (function() {
-		const url = baseUrl + '/subway';
+		const url = `${baseUrl}/subway`;
 
 		return function(id) {
 			const data = {
@@ -68,7 +68,7 @@ const sumc = (function() {
 	}());
 
 	const getDatetime = (function() {
-		const url = baseUrl + '/datetime';
+		const url = `${baseUrl}/datetime`;
 
 		return function() {
 			const promise = new Promise(function(resolve, reject) {

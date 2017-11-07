@@ -28,7 +28,7 @@ database.forEach(function(x) {
 				stopname: x.stopname
 			});
 		}
-		
+
 //		points.routepoints.push({
 //			lat: x.lat,
 //			lon: x.lon,
