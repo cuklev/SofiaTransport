@@ -2,73 +2,40 @@ const request = require('request');
 
 const baseUrl = 'http://drone.sumc.bg/api/v1';
 
-const timingHandler = (function() {
-	const url = baseUrl + '/timing';
-
-	return function(req, res) {
-		const options = {
-			method: 'post',
-			body: req.query,
-			json: true,
-			url: url
-		};
-
-		// Maybe implement caching
-
-		request(options, function (err, res1, body) {
-			if(err) {
-				console.error('Error:', err);
-				return;
-			}
-
-			res.send(body);
-		});
+const forwardResponse = (options, send) => request(options, (err, res, body) => {
+	if(err) {
+		console.error(`Error: ${err}`);
+		return;
 	}
-}());
 
-const timetableHandler = (function() {
-	const url = baseUrl + '/timetable';
+	send(body);
+});
 
-	return function(req, res) {
-		const options = {
-			method: 'post',
-			body: req.query,
-			json: true,
-			url: url
-		};
-
-		// Maybe implement caching
-
-		request(options, function (err, res1, body) {
-			if(err) {
-				console.error('Error:', err);
-				return;
-			}
-
-			res.send(body);
-		});
-	}
-}());
-
-const subwayRoutesHandler = (function() {
-	const url = baseUrl + '/metro/all';
+const getToPost = (url) => (req, res) => {
 	const options = {
-		method: 'get',
-		url: url
+		method: 'post',
+		body: req.query,
+		json: true,
+		url
 	};
 
-	return function(req, res) {
-		request(options, function(err, res1, body) {
-			if(err) {
-				console.error('Error:', err);
-				return;
-			}
+	forwardResponse(options, res.send);
+};
 
-			res.send(body);
-		});
-	}
-}());
+const getToGet = (url) => (req, res) => {
+	const options = {
+		method: 'get',
+		url
+	};
 
+	forwardResponse(options, res.send);
+};
+
+const timingHandler = getToPost(`${baseUrl}/timing`);
+const timetableHandler = getToPost(`${baseUrl}/timetable`);
+const subwayRoutesHandler = getToGet(`${baseUrl}/metro/all`);
+
+// TODO: remove duplicated code
 const subwayTimetableHandler = (function() {
 	const url = baseUrl + '/metro/times/';
 
@@ -89,6 +56,7 @@ const subwayTimetableHandler = (function() {
 	}
 }());
 
+// TODO: remove duplicated code
 const datetimeHandler = (function() {
 	const url = baseUrl + '/config';
 	const options = {
