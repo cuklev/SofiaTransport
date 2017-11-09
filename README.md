@@ -1,5 +1,10 @@
 # Sofia Transport
 The aim of this project is to display schedules and ETAs of Sofia City Transport buses in a (hopefully) more meaningful way.
+Goals:
+- To work
+- To be useful
+- No captchas
+- Not to load unneeded heavy stuff (like photos of the subway or people with bikes)
 
 ## How to run
 - To start the app run:
