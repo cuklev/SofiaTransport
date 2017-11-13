@@ -2,7 +2,7 @@ const request = require('request');
 
 const baseUrl = 'https://www.sofiatraffic.bg/interactivecard';
 
-const get = (url, process) => {
+const get = (url) => {
 	const options = {
 		method: 'get',
 		url
@@ -11,28 +11,49 @@ const get = (url, process) => {
 	return new Promise((resolve, reject) => {
 		request(options, (err, res, body) => {
 			if(err) reject(err);
-			resolve(process(body));
+			resolve(body);
 		});
 	});
 };
 
-const getLines = (type) => get(`${baseUrl}/lines/${type}`, x => x.split(/<label for="line/g)
-																	.filter((_, i) => i)
-																	.map(x => x.split(/[^0-9]+/g))
-																	.map(([lineId, lineName]) => ({lineId, lineName})));
-const getRoutes = (id) => get(`${baseUrl}/lines/geo?line_id=${id}`, x => JSON.parse(x).features);
-const getStops = (id) => get(`${baseUrl}/lines/stops/geo?line_id=${id}`, x => JSON.parse(x).features);
+const getLines = (type) => get(`${baseUrl}/lines/${type}`)
+								.then(x => x.split(/<label for="line/g)
+												.filter((_, i) => i)
+												.map(x => x.split(/[^0-9]+/g)
+																.slice(0, 2)));
+const getRoutes = (id) => get(`${baseUrl}/lines/geo?line_id=${id}`)
+								.then(x => JSON.parse(x).features)
+								.catch(() => getRoutes(id)); // Abuse server
+const getStops = (id) => get(`${baseUrl}/lines/stops/geo?line_id=${id}`)
+								.then(x => JSON.parse(x).features)
+								.catch(() => getStops(id)); // Abuse server
 
-const load = () => Promise.all([1, 2, 3].map(getLines))
-		.then(([bus, tramway, trolley]) => ({bus, tramway, trolley}));
+const db = {};
 
-//load().then(x => console.log(x));
+const loadLine = (id) => Promise.all([
+	getRoutes(id).then(x => db.routes.push(x)),
+	getStops(id).then(stops => db.stops[id] = stops.map(x => ({
+		id: x.id,
+		code: x.properties.code,
+		name: x.properties.name,
+		coordinates: x.geometry.coordinates,
+	})))
+]);
 
+const loadTransport = (id) => getLines(id)
+	.then(lines => Promise.all(lines.map(x => loadLine(x[0])))
+			.then(() => lines));
 
-//getLines(3).then(console.log);
-getRoutes(4186).then(console.log);
-getStops(4186).then(console.log);
+const load = () => {
+	db.routes = [];
+	db.stops = [];
 
-// getLines(3)
-// 	.then(x => Promise.all(x.map(y => getRoutes(y.lineId))))
-// 	.then(x => console.log(x));
+	return Promise.all([1, 2, 3].map(loadTransport))
+		.then(([bus, tramway, trolley]) => db.lines = { bus, tramway, trolley });
+}
+
+load().then(() => {
+	console.log(db.stops[3614][0]);
+});
+
+module.exports = db;
