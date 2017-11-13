@@ -54,8 +54,7 @@ const load = () => {
 		.then(([bus, tramway, trolley]) => db.lines = { bus, tramway, trolley });
 }
 
-load().then(() => {
-	console.log(db.stops[3614][0]);
-});
-
-module.exports = db;
+module.exports = {
+	db,
+	load,
+};
