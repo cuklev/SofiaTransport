@@ -41,8 +41,10 @@ const loadLine = (id) => Promise.all([
 ]);
 
 const loadTransport = (id) => getLines(id)
-	.then(lines => Promise.all(lines.map(x => loadLine(x[0])))
-			.then(() => lines));
+	.then(async lines => {
+		await Promise.all(lines.map(x => loadLine(x[0])));
+		return lines;
+	});
 
 const load = () => {
 	db.routes = [];
