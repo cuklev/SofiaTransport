@@ -12,7 +12,6 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "download_db": "(cd database; ./extract_from_site.sh)",
     "start": "node server.js"
   },
   "repository": {

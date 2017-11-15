@@ -6,7 +6,6 @@ The aim of this project is to display schedules and ETAs of Sofia City Transport
 
 ```
 npm install
-npm download_db # Generates ./database/raw_database.js, might be buggy
 npm start
 ```
 
