@@ -39,6 +39,7 @@ const loadLine = (routes, stops, id) => Promise.all([
 ]);
 
 const load = async () => {
+	console.log('Loading DB...');
 	const lines = await Promise.all([1, 2, 3].map(getLines));
 
 	const db = {
@@ -54,6 +55,7 @@ const load = async () => {
 	await Promise.all([].concat(...lines)
 			.map(([id]) => loadLine(db.routes, db.stops, id)));
 
+	console.log('Loaded');
 	return db;
 };
 
