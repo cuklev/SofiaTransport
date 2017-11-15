@@ -1,60 +1,8 @@
-const database = require('./raw_database');
+const load = require('./load');
 
-// Will add points later
-const trams = {all: [], routes: []}, //, points: []},
-	buses = {all: [], routes: []}, //, points: []},
-	trolleys = {all: [], routes: []}, //, points: []},
-	stops = {};
-
-database.forEach(function(x) {
-	const route = {
-		routename: x.routename,
-		routestops: []
-	};
-//	var points = {
-//		routename: x.routename,
-//		routepoints: []
-//	};
-
-	x.stops.forEach(function(x) {
-		if(x.stopcode !== 0) {
-			stops[x.stopcode] = x.stopname;
-			// different stopnames may exist for one stopcode
-			// because someone's job is to make typos
-			// whatever
-
-			route.routestops.push({
-				stopcode: x.stopcode,
-				stopname: x.stopname
-			});
-		}
-
-//		points.routepoints.push({
-//			lat: x.lat,
-//			lon: x.lon,
-//			stopcode: x.stopcode,
-//			stopname: x.stopname
-//		});
-	});
-
-	const transport = [trams, buses, trolleys][x.linetype];
-
-	if(!transport.routes.hasOwnProperty(x.linename)) {
-		transport.routes[x.linename] = [];
-//		transport.points[x.linename] = [];
-	}
-
-	transport.routes[x.linename].push(route);
-//	transport.points[x.linename].push(points);
-});
-
-trams.all = Object.keys(trams.routes);
-buses.all = Object.keys(buses.routes);
-trolleys.all = Object.keys(trolleys.routes);
+const db = {};
+// Must move as a parameter ->
+load(db).setReload(24 * 60 * 60 * 10000); // A day
 
 module.exports = {
-	trams,
-	buses,
-	trolleys,
-	stops
 };

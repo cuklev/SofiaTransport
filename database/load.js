@@ -56,4 +56,14 @@ const load = async () => {
 	return db;
 };
 
-module.exports = load;
+const setReload = (db) => (timeout) => {
+	const reload = () => load()
+		.then(x => Object.assign(db, x))
+		.then(() => setTimeout(reload, timeout));
+	reload();
+};
+
+module.exports = (db) => ({
+	load,
+	setReload(db),
+});
