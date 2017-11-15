@@ -2,13 +2,13 @@ const request = require('request');
 
 const baseUrl = 'https://www.sofiatraffic.bg/interactivecard';
 
-const get = (url) => {
+const get = async (url) => {
 	const options = {
 		method: 'get',
 		url
 	};
 
-	return new Promise((resolve, reject) => {
+	return await new Promise((resolve, reject) => {
 		request(options, (err, res, body) => {
 			if(err) reject(err);
 			resolve(body);
@@ -28,11 +28,9 @@ const getStops = (id) => get(`${baseUrl}/lines/stops/geo?line_id=${id}`)
 								.then(x => JSON.parse(x).features)
 								.catch(() => getStops(id)); // Abuse server
 
-const db = {};
-
-const loadLine = (id) => Promise.all([
-	getRoutes(id).then(x => db.routes.push(x)),
-	getStops(id).then(stops => db.stops[id] = stops.map(x => ({
+const loadLine = (routes, stops, id) => Promise.all([
+	getRoutes(id).then(x => routes[id] = x),
+	getStops(id).then(x => stops[id] = x.map(x => ({
 		id: x.id,
 		code: x.properties.code,
 		name: x.properties.name,
@@ -40,21 +38,22 @@ const loadLine = (id) => Promise.all([
 	})))
 ]);
 
-const loadTransport = (id) => getLines(id)
-	.then(async lines => {
-		await Promise.all(lines.map(x => loadLine(x[0])));
-		return lines;
-	});
+const load = async () => {
+	const lines = await Promise.all([1, 2, 3].map(getLines));
 
-const load = () => {
-	db.routes = [];
-	db.stops = [];
+	const db = {
+		lines: {
+			bus: lines[0],
+			tramway: lines[1],
+			trolley: lines[2],
+		},
+		routes: {},
+		stops: {},
+	};
 
-	return Promise.all([1, 2, 3].map(loadTransport))
-		.then(([bus, tramway, trolley]) => db.lines = { bus, tramway, trolley });
-}
+	await Promise.all([].concat(...lines).map(x => loadLine(db.routes, db.stops, x[0])));
 
-module.exports = {
-	db,
-	load,
+	return db;
 };
+
+module.exports = load;
