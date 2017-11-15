@@ -44,26 +44,27 @@ const load = async () => {
 	const db = {
 		lines: {
 			bus: lines[0],
-			tramway: lines[1],
+			tram: lines[1],
 			trolley: lines[2],
 		},
 		routes: {},
 		stops: {},
 	};
 
-	await Promise.all([].concat(...lines).map(x => loadLine(db.routes, db.stops, x[0])));
+	await Promise.all([].concat(...lines)
+			.map(([id]) => loadLine(db.routes, db.stops, id)));
 
 	return db;
 };
 
-const setReload = (db) => (timeout) => {
+const setReload = (db, timeout) => {
 	const reload = () => load()
 		.then(x => Object.assign(db, x))
 		.then(() => setTimeout(reload, timeout));
 	reload();
 };
 
-module.exports = (db) => ({
+module.exports = {
 	load,
-	setReload(db),
-});
+	setReload,
+};

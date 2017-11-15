@@ -1,8 +1,8 @@
 const load = require('./load');
+const search = require('./search');
 
 const db = {};
-// Must move as a parameter ->
-load(db).setReload(24 * 60 * 60 * 10000); // A day
+// Must move timeout as a parameter ->
+load.setReload(db, 24 * 60 * 60 * 10000); // A day
 
-module.exports = {
-};
+module.exports = search(db);
