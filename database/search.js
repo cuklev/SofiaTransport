@@ -1,8 +1,8 @@
 const getAll = (lines) => lines.map(x => x.slice());
 const getAllLines = (db) => ({
-	bus: getAll(db.lines.bus),
-	tram: getAll(db.lines.tram),
-	trolley: getAll(db.lines.trolley),
+	buses: getAll(db.lines.buses),
+	trams: getAll(db.lines.trams),
+	trolleys: getAll(db.lines.trolleys),
 });
 
 module.exports = (db) => ({

@@ -3,7 +3,7 @@
 		<strong>Трамваи:</strong>
 		<div class="lines-wrapper">
 			{{#each lines.trams}}
-				<a class="tram" href="#{{../stopcode}}/0/{{this}}" data-line-name="{{this}}">{{this}}</a>
+				<a class="tram" href="#{{../stopcode}}/{{this.[0]}}" data-line-name="{{this.[0]}}">{{this.[1]}}</a>
 			{{/each}}
 		</div>
 	</li>
@@ -11,7 +11,7 @@
 		<strong>Автобуси:</strong>
 		<div class="lines-wrapper">
 			{{#each lines.buses}}
-				<a class="bus" href="#{{../stopcode}}/1/{{this}}" data-line-name="{{this}}">{{this}}</a>
+				<a class="bus" href="#{{../stopcode}}/{{this.[0]}}" data-line-name="{{this.[0]}}">{{this.[1]}}</a>
 			{{/each}}
 		</div>
 	</li>
@@ -19,7 +19,7 @@
 		<strong>Тролеи:</strong>
 		<div class="lines-wrapper">
 			{{#each lines.trolleys}}
-				<a class="trolley" href="#{{../stopcode}}/2/{{this}}" data-line-name="{{this}}">{{this}}</a>
+				<a class="trolley" href="#{{../stopcode}}/{{this.[0]}}" data-line-name="{{this.[0]}}">{{this.[1]}}</a>
 			{{/each}}
 		</div>
 	</li>

@@ -22,8 +22,7 @@ const linesController = (function() {
 
 			if(lineName.indexOf(prefix) === -1) {
 				$element.addClass('hidden');
-			}
-			else {
+			} else {
 				$element.removeClass('hidden');
 			}
 		});

@@ -44,9 +44,9 @@ const load = async () => {
 
 	const db = {
 		lines: {
-			bus: lines[0],
-			tram: lines[1],
-			trolley: lines[2],
+			buses: lines[0],
+			trams: lines[1],
+			trolleys: lines[2],
 		},
 		routes: {},
 		stops: {},

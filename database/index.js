@@ -3,9 +3,9 @@ const search = require('./search');
 
 const db = {
 	lines: {
-		bus: [],
-		tram: [],
-		trolley: [],
+		buses: [],
+		trams: [],
+		trolleys: [],
 	},
 	routes: {},
 	stops: {},
