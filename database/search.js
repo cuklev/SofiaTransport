@@ -7,6 +7,6 @@ const getAllLines = (db) => ({
 
 module.exports = (db) => ({
 	getAllLines: () => getAllLines(db),
-	getRoutes: (db) => (id) => db.routes[id],
-	getStops: (db) => (id) => db.stops[id],
+	getRoutes: (id) => db.routes[id],
+	getStops: (id) => db.stops[id],
 });
