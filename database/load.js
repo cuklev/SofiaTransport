@@ -19,7 +19,7 @@ const get = async (url) => {
 const getLines = (type) => get(`${baseUrl}/lines/${type}`)
 								.then(x => x.split(/<label for="line/g)
 												.filter((_, i) => i)
-												.map(x => x.split(/[^0-9]+/g)
+												.map(x => x.split(/">[^0-9]*|</g)
 																.slice(0, 2)));
 const getRoutes = (id) => get(`${baseUrl}/lines/geo?line_id=${id}`)
 								.then(x => JSON.parse(x).features)
