@@ -8,7 +8,7 @@ const get = async (url) => {
 		url
 	};
 
-	return await new Promise((resolve, reject) => {
+	return new Promise((resolve, reject) => {
 		request(options, (err, res, body) => {
 			if(err) reject(err);
 			resolve(body);
