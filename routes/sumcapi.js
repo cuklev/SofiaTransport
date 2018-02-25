@@ -19,7 +19,7 @@ const getToPost = (url) => (req, res) => {
 		url
 	};
 
-	forwardResponse(options, res.send);
+	forwardResponse(options, res.send.bind(res));
 };
 
 const getToGet = (url) => (req, res) => {
@@ -28,7 +28,7 @@ const getToGet = (url) => (req, res) => {
 		url
 	};
 
-	forwardResponse(options, res.send);
+	forwardResponse(options, res.send.bind(res));
 };
 
 const timingHandler = getToPost(`${baseUrl}/timing`);
