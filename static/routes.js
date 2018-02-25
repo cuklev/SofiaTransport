@@ -1,14 +1,15 @@
 const router = (function() {
-	function parse() {
-		return location.hash.match(/^#([0-9]*)\/?([0-9]*)\/?([0-9]*)/) || [];
-	}
+	const parse = () => location.hash
+		.substr(1)
+		.split(/\//g)
+		.map(Number);
 
 	function navigate() {
-		const [, stopcode, linetype, linename] = parse();
+		const [lineid, stopcode] = parse();
 
-		if(linetype && linename) {
-			routesController.get(+linetype, +linename);
-		}
+		// if(linetype && linename) {
+		// 	routesController.get(+linetype, +linename);
+		// }
 
 		if(stopcode) {
 			timingController.load(+stopcode);
@@ -20,8 +21,8 @@ const router = (function() {
 		return stopcode;
 	}
 	function getLine() {
-		const [, , linetype, linename] = parse();
-		return [linetype, linename];
+		const [lineid] = parse();
+		return lineid;
 	}
 
 	return {
