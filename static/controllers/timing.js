@@ -3,11 +3,12 @@ const timingController = (function() {
 		const listed = [];
 		grouped.forEach(function(line) {
 			line.arrivals.forEach(function(arrival) {
-				listed.push({
+				const item = {
 					name: line.name,
 					type: line.vehicle_type,
-					time: arrival.time,
-				});
+				};
+				Object.assign(item, arrival);
+				listed.push(item);
 			});
 		});
 		listed.sort(function(a, b) {

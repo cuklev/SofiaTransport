@@ -61,3 +61,10 @@ a {
 		width: 44%;
 	}
 }
+
+.features {
+	padding-left: 8px;
+}
+.features img {
+	height: 15px;
+}
