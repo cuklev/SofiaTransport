@@ -22,6 +22,7 @@ a {
 
 .scrollable {
 	overflow: auto;
+	height: 70vh;
 }
 
 .fav-item {

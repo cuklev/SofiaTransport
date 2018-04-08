@@ -1,6 +1,6 @@
 <h2>{{name}} ({{code}})</h2>
 <button onclick="favouritesController.add('{{code}}', '{{name}}')">Add to favourites</button>
-<ul class="times-grouped">
+<ul class="times-grouped scrollable">
 	{{#each grouped}}
 		<li>
 			<a class="{{vehicle_type}}" href="#{{../code}}/{{vehicle_type}}/{{name}}">{{name}}</a>
@@ -28,7 +28,7 @@
 		</li>
 	{{/each}}
 </ul>
-<ul class="times-listed">
+<ul class="times-listed scrollable">
 	{{#each listed}}
 		<li>
 			{{time}} &rarr;
