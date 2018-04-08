@@ -23,3 +23,31 @@ $(function() {
 		router.setStopcode(code);
 	});
 });
+
+
+(function() {
+	const autoPoll = document.querySelector('#auto-poll');
+
+	function schedulePoll() {
+		setTimeout(function() {
+			if(autoPoll.checked) {
+				if(document.hasFocus()) {
+					const code = router.getStopcode();
+					const [type, name] = router.getLine();
+					timingController.get(code, type, name);
+					schedulePoll();
+				} else {
+					autoPoll.checked = false;
+				}
+			}
+		}, 15000);
+	}
+
+	schedulePoll();
+
+	autoPoll.addEventListener('change', function() {
+		if(autoPoll.checked) {
+			schedulePoll();
+		}
+	});
+}();

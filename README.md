@@ -16,7 +16,7 @@ npm start
 
 ## TODO
 - Fix layout, write some css (this is always going to be here)
-- Auto poll remaining time
+- ~~Auto poll remaining time~~
 - ~~Keep list of favourite stops in `localStorage`~~
   - ~~Make it possible to rename favourite stops~~
   - ~~Make it possible to delete favourite stops~~

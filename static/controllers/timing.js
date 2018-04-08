@@ -67,6 +67,7 @@ const timingController = (function() {
 	$('#timing-format').on('change', setTimingFormat);
 
 	return {
+		get,
 		load,
 	};
 }());
