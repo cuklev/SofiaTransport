@@ -19,12 +19,14 @@ const router = (function() {
 		if(newCode || (code && newLine)) {
 			oldState.code = code;
 			timingController.load(code, type, name);
+			window.scrollTo(0, 0);
 		}
 
 		if(newLine) {
 			oldState.type = type;
 			oldState.name = name;
 			routesController.get(type, name);
+			window.scrollTo(0, document.querySelector('#routes-container').offsetTop);
 		}
 	}
 
