@@ -26,16 +26,15 @@ const timingController = (function() {
 		}
 	}
 
-	function get(stopcode) {
+	function get(code, type, name) {
 		Promise.all([
 			templates.get('timing'),
-			sumc.getTiming(stopcode),
+			sumc.getTiming(code),
 		]).then(function([template, timings]) {
 			let grouped = timings.lines;
 			const listed = listTimings(grouped);
 
-			const [linetype, linename] = router.getLine();
-			const index = grouped.findIndex(x => x.vehicle_type === linetype && x.name === linename);
+			const index = grouped.findIndex(x => x.vehicle_type === type && x.name === name);
 			if(index >= 0 && grouped.length > 0) {
 				const viewed = grouped.splice(index, 1);
 				viewed[0].separate = true;
@@ -54,9 +53,9 @@ const timingController = (function() {
 		});
 	}
 
-	function load(stopcode) {
-		$('#timing-container').prepend(`<h3>Loading timings for stop ${stopcode}</h3>`);
-		get(stopcode);
+	function load(code) {
+		$('#timing-container').prepend(`<h3>Loading timings for stop ${code}</h3>`);
+		get(code);
 	}
 
 	$('#timing-format').on('change', setTimingFormat);

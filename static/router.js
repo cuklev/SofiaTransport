@@ -18,7 +18,7 @@ const router = (function() {
 
 		if(newCode || (code && newLine)) {
 			oldState.code = code;
-			timingController.load(code);
+			timingController.load(code, type, name);
 		}
 
 		if(newLine) {
