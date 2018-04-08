@@ -12,7 +12,7 @@ const timingController = (function() {
 			});
 		});
 		listed.sort(function(a, b) {
-			return a.time > b.time;
+			return a.time.replace(/:/g, '') - b.time.replace(/:/g, '');
 		});
 		return listed;
 	}
@@ -34,6 +34,10 @@ const timingController = (function() {
 		]).then(function([template, timings]) {
 			let grouped = timings.lines;
 			const listed = listTimings(grouped);
+
+			grouped.sort(function(a, b) {
+				return a.name - b.name;
+			});
 
 			const index = grouped.findIndex(x => x.vehicle_type === type && x.name === name);
 			if(index >= 0 && grouped.length > 0) {
