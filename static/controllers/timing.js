@@ -49,6 +49,7 @@ const timingController = (function() {
 			const data = {
 				name: timings.name,
 				code: timings.code,
+				timestamp: timings.timestamp_calculated,
 				grouped,
 				listed,
 			};

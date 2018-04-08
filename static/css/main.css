@@ -69,3 +69,7 @@ a {
 .features img {
 	height: 15px;
 }
+
+.timestamp {
+	color: rgb(96, 96, 96);
+}
