@@ -50,4 +50,4 @@ $(function() {
 			schedulePoll();
 		}
 	});
-}();
+})();
