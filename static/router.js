@@ -14,6 +14,14 @@ const router = (function() {
 		}
 	}
 
+	function setStopcode(code) {
+		const [, linetype, linename] = parse();
+		if(linetype && linename) {
+			location.href = `#${code}/${linetype}/${linename}`;
+		} else {
+			location.href = `#${code}`;
+		}
+	}
 	function getStopcode() {
 		const [stopcode] = parse();
 		return stopcode;
@@ -25,6 +33,7 @@ const router = (function() {
 
 	return {
 		navigate,
+		setStopcode,
 		getStopcode,
 		getLine,
 	};
