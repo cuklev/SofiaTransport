@@ -1,82 +1,67 @@
 const timingController = (function() {
-	function get(stopcode) {
-		function expandTiming(timings) {
-			const expanded = [];
-			timings.forEach(function(line) {
-				line.timing.forEach(function(time) {
-					if(time === '') {
-						return;
-					}
-					expanded.push({
-						line: line.line,
-						type: line.type,
-						typename: line.typename,
-						time: time
-					});
+	function listTimings(grouped) {
+		const listed = [];
+		grouped.forEach(function(line) {
+			line.arrivals.forEach(function(arrival) {
+				listed.push({
+					name: line.name,
+					type: line.vehicle_type,
+					time: arrival.time,
 				});
 			});
-			expanded.sort(function(a, b) {
-				return a.time > b.time;
-			});
-			return expanded;
+		});
+		listed.sort(function(a, b) {
+			return a.time > b.time;
+		});
+		return listed;
+	}
+
+	function setTimingFormat() {
+		if($('#timing-format')[0].checked) {
+			$('.times-grouped').removeClass('hidden');
+			$('.times-listed').addClass('hidden');
+		} else {
+			$('.times-grouped').addClass('hidden');
+			$('.times-listed').removeClass('hidden');
 		}
+	}
 
-		function setTimingFormat() {
-			if($('#timing-format')[0].checked) {
-				$('.times-by-lines').addClass('hidden');
-				$('.times-expanded').removeClass('hidden');
-			}
-			else {
-				$('.times-by-lines').removeClass('hidden');
-				$('.times-expanded').addClass('hidden');
-			}
-		}
-
-		$('#timing-format').on('change', setTimingFormat);
-
+	function get(stopcode) {
 		Promise.all([
 			templates.get('timing'),
 			sumc.getTiming(stopcode),
-			db.getStopname(stopcode),
-		]).then(function([template, timings, stopname]) {
-			// this should be made async
-			if(!Array.isArray(timings)) {
-				timings = false;
-			}
-			else {
-				timings = timings.map(x => ({
-					line: +x.lineName,
-					type: ['tram', 'bus', 'trolley'][x.type],
-					timing: x.timing.split(',').sort()
-				})).sort(function(a, b) {
-					return a.line - b.line;
-				});
+		]).then(function([template, timings]) {
+			let grouped = timings.lines;
 
-				const [linetype, linename] = router.getLine();
-				const index = timings.findIndex(x => x.type === +linetype && x.line === +linename);
-				if(index >= 0) {
-					const wanted = timings.splice(index, 1);
-					wanted[0].separate = timings.length > 0;
-					timings = wanted.concat(timings);
-				}
+			const [linetype, linename] = router.getLine();
+			const index = grouped.findIndex(x => x.vehicle_type === linetype && x.name === linename);
+			if(index >= 0 && grouped.length > 0) {
+				const viewed = grouped.splice(index, 1);
+				viewed[0].separate = true;
+				grouped = viewed.concat(grouped);
 			}
 
-			const params = {
-				timings,
-				expanded: expandTiming(timings),
-				stopcode,
-				stopname
+			const listed = listTimings(grouped);
+
+			const data = {
+				name: timings.name,
+				code: timings.code,
+				grouped,
+				listed,
 			};
-			$('#timing-container').html(template(params));
+
+			$('#timing-container').html(template(data));
 
 			setTimingFormat();
 		});
 	}
 
 	function load(stopcode) {
-		$('#timing-container').prepend(`<h3>Loading timings for stop ${stopcode}</h3>`)
+		$('#timing-container').prepend(`<h3>Loading timings for stop ${stopcode}</h3>`);
 		get(stopcode);
 	}
+
+	$('#timing-format').on('change', setTimingFormat);
 
 	return {
 		load: load

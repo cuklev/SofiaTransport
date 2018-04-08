@@ -1,21 +1,18 @@
 const sumc = (function() {
 	const baseUrl = 'api';
 
-	const getTiming = (function() {
-		const url = `${baseUrl}/timing`;
-
-		return function(code) {
-			const data = { stopCode: code };
-			const promise = new Promise(function(resolve, reject) {
-				$.get(url, data, function(timings) {
-					resolve(timings);
-				});
+	const getTiming = function(code) {
+		const url = `${baseUrl}/timing/${code}`;
+		const promise = new Promise(function(resolve, reject) {
+			$.get(url, function(timings) {
+				resolve(JSON.parse(timings));
 			});
+		});
 
-			return promise;
-		};
-	}());
+		return promise;
+	};
 
+	// OLD API!!!
 	const getTimetable = (function() {
 		const url = `${baseUrl}/timetable`;
 
@@ -34,6 +31,7 @@ const sumc = (function() {
 		};
 	}());
 
+	// OLD API!!!
 	const getSubwayRoutes = (function() {
 		const url = `${baseUrl}/subway/routes`;
 
@@ -48,6 +46,7 @@ const sumc = (function() {
 		}
 	}());
 
+	// OLD API!!!
 	const getSubwayTimings = (function() {
 		const url = `${baseUrl}/subway`;
 
@@ -64,6 +63,7 @@ const sumc = (function() {
 		}
 	}());
 
+	// OLD API!!!
 	const getDatetime = (function() {
 		const url = `${baseUrl}/datetime`;
 

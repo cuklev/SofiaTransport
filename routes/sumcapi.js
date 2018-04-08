@@ -1,6 +1,6 @@
 const request = require('request');
 
-const baseUrl = 'http://drone.sumc.bg/api/v1';
+const oldBaseUrl = 'http://drone.sumc.bg/api/v1';
 
 const forwardResponse = (options, send) => request(options, (err, res, body) => {
 	if(err) {
@@ -31,13 +31,25 @@ const getToGet = (url) => (req, res) => {
 	forwardResponse(options, res.send.bind(res));
 };
 
-const timingHandler = getToPost(`${baseUrl}/timing`);
-const timetableHandler = getToPost(`${baseUrl}/timetable`);
-const subwayRoutesHandler = getToGet(`${baseUrl}/metro/all`);
+const timingUrl = 'https://api-arrivals.sofiatraffic.bg/api/v1/arrivals';
+const timingHandler = (req, res) => {
+	const code = req.params.code;
+	const options = {
+		method: 'get',
+		url: `${timingUrl}/${code}/`,
+	};
+	forwardResponse(options, res.send.bind(res));
+};
+
+// OLD API!!!
+const timetableHandler = getToPost(`${oldBaseUrl}/timetable`);
+// OLD API!!!
+const subwayRoutesHandler = getToGet(`${oldBaseUrl}/metro/all`);
 
 // TODO: remove duplicated code
+// OLD API!!!
 const subwayTimetableHandler = (function() {
-	const url = baseUrl + '/metro/times/';
+	const url = oldBaseUrl + '/metro/times/';
 
 	return function(req, res) {
 		const options = {
@@ -57,8 +69,9 @@ const subwayTimetableHandler = (function() {
 }());
 
 // TODO: remove duplicated code
+// OLD API!!!
 const datetimeHandler = (function() {
-	const url = baseUrl + '/config';
+	const url = oldBaseUrl + '/config';
 	const options = {
 		method: 'get',
 		url: url
@@ -78,7 +91,7 @@ const datetimeHandler = (function() {
 }());
 
 module.exports = (db, router) => router
-	.get('/timing', timingHandler)
+	.get('/timing/:code', timingHandler)
 	.get('/timetable', timetableHandler)
 	.get('/subway/routes', subwayRoutesHandler)
 	.get('/subway', subwayTimetableHandler)
