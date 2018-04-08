@@ -32,6 +32,7 @@ const timingController = (function() {
 			sumc.getTiming(stopcode),
 		]).then(function([template, timings]) {
 			let grouped = timings.lines;
+			const listed = listTimings(grouped);
 
 			const [linetype, linename] = router.getLine();
 			const index = grouped.findIndex(x => x.vehicle_type === linetype && x.name === linename);
@@ -41,8 +42,6 @@ const timingController = (function() {
 				grouped = viewed.concat(grouped);
 			}
 
-			const listed = listTimings(grouped);
-
 			const data = {
 				name: timings.name,
 				code: timings.code,
@@ -51,7 +50,6 @@ const timingController = (function() {
 			};
 
 			$('#timing-container').html(template(data));
-
 			setTimingFormat();
 		});
 	}
@@ -64,6 +62,6 @@ const timingController = (function() {
 	$('#timing-format').on('change', setTimingFormat);
 
 	return {
-		load: load
+		load,
 	};
 }());

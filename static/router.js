@@ -1,34 +1,48 @@
 const router = (function() {
+	const oldState = {};
+
 	const parse = () => location.hash
 		.substr(1)
 		.split(/\//g);
 
 	function navigate() {
-		const [stopcode, linetype, linename] = parse();
+		const [code, type, name] = parse();
 
-		if(stopcode) {
-			timingController.load(stopcode);
+		if(!type && !name && oldState.type && oldState.name) {
+			location.href = `#${code}/${oldState.type}/${oldState.name}`;
+			return;
 		}
-		if(linetype && linename) {
-			routesController.get(linetype, linename);
+
+		const newCode = code && oldState.code !== code;
+		const newLine = type && name && (oldState.type !== type || oldState.name !== name);
+
+		if(newCode || (code && newLine)) {
+			oldState.code = code;
+			timingController.load(code);
+		}
+
+		if(newLine) {
+			oldState.type = type;
+			oldState.name = name;
+			routesController.get(type, name);
 		}
 	}
 
 	function setStopcode(code) {
-		const [, linetype, linename] = parse();
-		if(linetype && linename) {
-			location.href = `#${code}/${linetype}/${linename}`;
+		const [, type, name] = parse();
+		if(type && name) {
+			location.href = `#${code}/${type}/${name}`;
 		} else {
 			location.href = `#${code}`;
 		}
 	}
 	function getStopcode() {
-		const [stopcode] = parse();
-		return stopcode;
+		const [code] = parse();
+		return code;
 	}
 	function getLine() {
-		const [, linetype, linename] = parse();
-		return [linetype, linename];
+		const [, type, name] = parse();
+		return [type, name];
 	}
 
 	return {

@@ -1,6 +1,13 @@
 router.navigate();
 $(window).on('hashchange', router.navigate);
 
+favouritesController.load();
+
+linesController.get();
+$('#enter-linename').on('keyup', function(e) {
+	linesController.filter();
+});
+
 $(function() {
 	const input = $('#enter-stopcode');
 	input.on('keyup', function(e) {
@@ -16,10 +23,3 @@ $(function() {
 		router.setStopcode(code);
 	});
 });
-
-linesController.get();
-$('#enter-linename').on('keyup', function(e) {
-	linesController.filter();
-});
-
-favouritesController.load();
