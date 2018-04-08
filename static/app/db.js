@@ -1,111 +1,27 @@
-const db = (function() {
-	const getStopname = (function() {
-		const url = 'api/stopname';
+const db = (() => {
+	const getAndCache = (() => {
 		const cache = {};
 
-		return function(stopcode) {
-			const promise = new Promise(function(resolve, reject) {
-				if(cache[stopcode]) {
-					resolve(cache[stopcode]);
-					return;
-				}
-
-				const data = {
-					stopcode: stopcode
-				};
-
-				$.get(url, data, function(stopname) {
-					cache[stopcode] = stopname;
-					resolve(stopname);
-				});
+		return (url) => new Promise((resolve, reject) => {
+			if(cache.hasOwnProperty(url)) {
+				resolve(cache[url]);
+				return;
+			}
+			$.get(url, res => {
+				cache[url] = res;
+				resolve(res);
 			});
+		});
+	})();
 
-			return promise;
-		}
-	}());
-
-	const getLines = (function() {
-		const url = 'api/lines';
-		let cache;
-
-		return function() {
-			const promise = new Promise(function(resolve, reject) {
-				if(cache) {
-					resolve(cache);
-					return;
-				}
-				$.get(url, function(lines) {
-					cache = lines;
-					resolve(lines);
-				});
-			});
-
-			return promise;
-		};
-	}());
-
-	const getRoutes = (function() {
-		const url = 'api/routes';
-		const cache = {}; // is array better?
-
-		return function(line) {
-			const promise = new Promise(function(resolve, reject) {
-				if(!cache[line.type]) {
-					cache[line.type] = {};
-				}
-				else if(cache[line.type][line.name]) {
-					resolve(cache[line.type][line.name]);
-					return;
-				}
-
-				const data = {
-					linetype: line.type,
-					linename: line.name
-				};
-
-				$.get(url, data, function(routes) {
-					cache[line.type][line.name] = routes;
-					resolve(routes);
-				});
-			});
-
-			return promise;
-		}
-	}());
-
-	const getPoints = (function(line) {
-		const url = 'api/points';
-		const cache = {}; // is array better?
-
-		return function() {
-			const promise = new Promise(function(resolve, reject) {
-				if(!cache[line.type]) {
-					cache[line.type] = {};
-				}
-				else if(cache[line.type][line.name]) {
-					resolve(cache[line.type][line.name]);
-					return;
-				}
-
-				const data = {
-					linetype: line.type,
-					linename: line.name
-				};
-
-				$.get(url, data, function(points) {
-					cache[line.type][line.name] = points;
-					resolve(points);
-				});
-			});
-
-			return promise;
-		}
-	}());
+	const getStopname = (stopcode) => getAndCache(`api/stopname/${stopcode}`);
+	const getLines = () => getAndCache('api/lines');
+	const getRoutes = (type, name) => getAndCache(`api/routes/${type}/${name}`);
+	// const getPoints = (function(line) {
 
 	return {
-		getStopname: getStopname,
-		getLines: getLines,
-		getRoutes: getRoutes,
-		getPoints: getPoints
+		getStopname,
+		getLines,
+		getRoutes,
 	};
-}());
+})();

@@ -1,13 +1,13 @@
-<h2 class="centered">{{transport}} {{linename}}</h2>
+<h2 class="centered">{{transport}} {{name}}</h2>
 {{#each routes}}
 	<div class="column">
 		<h3 class="centered">{{routename}}</h3>
 		<div class="scrollable">
 			<ol>
-				{{#each routestops}}
+				{{#each this}}
 					<li>
-						<a href="#{{stopcode}}/{{../../linetype}}/{{../../linename}}">
-							{{stopname}} ({{stopcode}})
+						<a href="#{{code}}/{{../../type}}/{{../../name}}">
+							{{name}} ({{code}})
 						</a>
 					</li>
 				{{/each}}

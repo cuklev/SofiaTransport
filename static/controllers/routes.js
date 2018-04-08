@@ -1,21 +1,23 @@
 const routesController = (function() {
-	function get(linetype, linename) {
-		const line = {
-			type: linetype,
-			name: linename
-		};
+	const transportType = {
+		tram: 'Трамвай',
+		bus: 'Автобус',
+		trolley: 'Тролейбус',
+	};
 
+	function get(type, name) {
 		Promise.all([
 			templates.get('routes'),
-			db.getRoutes(line)
+			db.getRoutes(type, name)
 		]).then(function([template, routes]) {
-			const params = {
+			routes.forEach(x => x.routename = x[0].name + ' - ' + x[x.length - 1].name);
+			const data = {
 				routes,
-				linetype,
-				linename,
-				transport: ['Трамвай', 'Автобус', 'Тролейбус'][linetype]
+				type,
+				transport: transportType[type],
+				name,
 			};
-			$('#routes-container').html(template(params));
+			$('#routes-container').html(template(data));
 		});
 	}
 

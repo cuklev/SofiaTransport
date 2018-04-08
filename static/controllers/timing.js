@@ -37,7 +37,7 @@ const timingController = (function() {
 		Promise.all([
 			templates.get('timing'),
 			sumc.getTiming(stopcode),
-			db.getStopname(stopcode)
+			db.getStopname(stopcode),
 		]).then(function([template, timings, stopname]) {
 			// this should be made async
 			if(!Array.isArray(timings)) {
@@ -46,8 +46,7 @@ const timingController = (function() {
 			else {
 				timings = timings.map(x => ({
 					line: +x.lineName,
-					type: x.type,
-					typename: ['tram', 'bus', 'trolley'][x.type],
+					type: ['tram', 'bus', 'trolley'][x.type],
 					timing: x.timing.split(',').sort()
 				})).sort(function(a, b) {
 					return a.line - b.line;
@@ -75,7 +74,7 @@ const timingController = (function() {
 	}
 
 	function load(stopcode) {
-		$('#timingContainer').prepend(`<h3>Loading timings for stop ${stopcode}</h3>`)
+		$('#timing-container').prepend(`<h3>Loading timings for stop ${stopcode}</h3>`)
 		get(stopcode);
 	}
 

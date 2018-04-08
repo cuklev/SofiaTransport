@@ -19,7 +19,7 @@ const getToPost = (url) => (req, res) => {
 		url
 	};
 
-	forwardResponse(options, res.send);
+	forwardResponse(options, res.send.bind(res));
 };
 
 const getToGet = (url) => (req, res) => {
@@ -28,7 +28,7 @@ const getToGet = (url) => (req, res) => {
 		url
 	};
 
-	forwardResponse(options, res.send);
+	forwardResponse(options, res.send.bind(res));
 };
 
 const timingHandler = getToPost(`${baseUrl}/timing`);
@@ -77,10 +77,9 @@ const datetimeHandler = (function() {
 	}
 }());
 
-module.exports = {
-	timingHandler,
-	timetableHandler,
-	subwayRoutesHandler,
-	subwayTimetableHandler,
-	datetimeHandler
-};
+module.exports = (db, router) => router
+	.get('/timing', timingHandler)
+	.get('/timetable', timetableHandler)
+	.get('/subway/routes', subwayRoutesHandler)
+	.get('/subway', subwayTimetableHandler)
+	.get('/datetime', datetimeHandler);

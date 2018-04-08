@@ -4,11 +4,8 @@ const sumc = (function() {
 	const getTiming = (function() {
 		const url = `${baseUrl}/timing`;
 
-		return function(stopCode) {
-			const data = {
-				stopCode: stopCode
-			};
-
+		return function(code) {
+			const data = { stopCode: code };
 			const promise = new Promise(function(resolve, reject) {
 				$.get(url, data, function(timings) {
 					resolve(timings);
