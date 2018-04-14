@@ -13,33 +13,8 @@ const routesController = routesInit(
 
 const timingController = timingInit(
 	document.querySelector('#timing-container'),
-	document.querySelector('#timing-format'));
+	document.querySelector('#enter-stopcode'),
+	document.querySelector('#timing-format'),
+	document.querySelector('#auto-poll'));
 
 router.navigate();
-
-(() => {
-	const autoPoll = document.querySelector('#auto-poll');
-	let timeout = false;
-
-	const pollNow = () => {
-		if(autoPoll.checked && document.hasFocus()) {
-			const code = router.getStopcode();
-			const [type, name] = router.getLine();
-			timingController.get(code, type, name);
-			timeout = setTimeout(pollNow, 15000);
-		} else {
-			timeout = false;
-		}
-	};
-
-	const schedulePoll = () => {
-		if(!timeout) {
-			pollNow();
-		}
-	};
-
-	schedulePoll();
-
-	autoPoll.addEventListener('change', schedulePoll);
-	document.addEventListener('focus', schedulePoll);
-})();

@@ -1,4 +1,4 @@
-const timingInit = (container, formatCheckbox) => {
+const timingInit = (container, inputStopcode, formatCheckbox, autoPoll) => {
 	const listTimings = (grouped) => {
 		const listed = [];
 		grouped.forEach((line) => {
@@ -67,19 +67,39 @@ const timingInit = (container, formatCheckbox) => {
 	};
 
 	formatCheckbox.addEventListener('change', setTimingFormat);
-	const input = document.querySelector('#enter-stopcode');
-	input.addEventListener('keyup', (e) => {
+	inputStopcode.addEventListener('keyup', (e) => {
 		if(e.which !== 13) {
 			return;
 		}
 
-		const val = input.val();
+		const val = inputStopcode.val();
 		if(!val.match(/^[0-9]{1,4}$/)) {
 			return;
 		}
 		const code = ('0000' + val).match(/[0-9]{4}$/)[0];
 		router.setStopcode(code);
 	});
+
+	let pollTimeout = false;
+	const pollNow = () => {
+		if(autoPoll.checked && document.hasFocus()) {
+			const code = router.getStopcode();
+			const [type, name] = router.getLine();
+			timingController.get(code, type, name);
+			pollTimeout = setTimeout(pollNow, 15000);
+		} else {
+			pollTimeout = false;
+		}
+	};
+	const schedulePoll = () => {
+		if(!pollTimeout) {
+			pollNow();
+		}
+	};
+
+	schedulePoll();
+	autoPoll.addEventListener('change', schedulePoll);
+	document.addEventListener('focus', schedulePoll);
 
 	return {
 		get,
