@@ -31,6 +31,15 @@ const routerInit = () => {
 			oldState.name = name;
 			routesController.get(type, name);
 			window.scrollTo(0, document.querySelector('#routes-container').offsetTop);
+
+			document.querySelectorAll('#lines-container a')
+				.forEach(x => {
+					if(x.classList.contains(type) && x.getAttribute('data-line-name') === name) {
+						x.classList.add('selected');
+					} else {
+						x.classList.remove('selected');
+					}
+				});
 		}
 	};
 
