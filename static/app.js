@@ -1,16 +1,15 @@
 router.navigate();
-$(window).on('hashchange', router.navigate);
+window.addEventListener('hashchange', router.navigate);
 
 favouritesController.load();
 
 linesController.get();
-$('#enter-linename').on('keyup', function(e) {
-	linesController.filter();
-});
+document.querySelector('#enter-linename')
+	.addEventListener('keyup', linesController.filter);
 
-$(function() {
-	const input = $('#enter-stopcode');
-	input.on('keyup', function(e) {
+(() => {
+	const input = document.querySelector('#enter-stopcode');
+	input.addEventListener('keyup', (e) => {
 		if(e.which !== 13) {
 			return;
 		}
@@ -22,14 +21,14 @@ $(function() {
 		const code = ('0000' + val).match(/[0-9]{4}$/)[0];
 		router.setStopcode(code);
 	});
-});
+})();
 
 
-(function() {
+(() => {
 	const autoPoll = document.querySelector('#auto-poll');
 	let timeout = false;
 
-	function pollNow() {
+	const pollNow = () => {
 		if(autoPoll.checked && document.hasFocus()) {
 			const code = router.getStopcode();
 			const [type, name] = router.getLine();
@@ -38,13 +37,13 @@ $(function() {
 		} else {
 			timeout = false;
 		}
-	}
+	};
 
-	function schedulePoll() {
+	const schedulePoll = () => {
 		if(!timeout) {
 			pollNow();
 		}
-	}
+	};
 
 	schedulePoll();
 
