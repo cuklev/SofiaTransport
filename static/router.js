@@ -1,11 +1,11 @@
-const router = (function() {
+const routerInit = () => {
 	const oldState = {};
 
 	const parse = () => location.hash
 		.substr(1)
 		.split(/\//g);
 
-	function navigate() {
+	const navigate = () => {
 		const [code, type, name] = parse();
 
 		if(!code && oldState.code) {
@@ -32,24 +32,26 @@ const router = (function() {
 			routesController.get(type, name);
 			window.scrollTo(0, document.querySelector('#routes-container').offsetTop);
 		}
-	}
+	};
 
-	function setStopcode(code) {
+	const setStopcode = (code) => {
 		const [, type, name] = parse();
 		if(type && name) {
 			location.href = `#${code}/${type}/${name}`;
 		} else {
 			location.href = `#${code}`;
 		}
-	}
-	function getStopcode() {
+	};
+	const getStopcode = () => {
 		const [code] = parse();
 		return code;
-	}
-	function getLine() {
+	};
+	const getLine = () => {
 		const [, type, name] = parse();
 		return [type, name];
-	}
+	};
+
+	window.addEventListener('hashchange', navigate);
 
 	return {
 		navigate,
@@ -57,4 +59,4 @@ const router = (function() {
 		getStopcode,
 		getLine,
 	};
-}());
+};

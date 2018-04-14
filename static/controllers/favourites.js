@@ -1,7 +1,4 @@
-const favouritesController = (() => {
-	const STORAGE_KEY = 'fav_stops';
-	const container = document.querySelector('#favourites-container');
-
+const favouritesInit = (container, STORAGE_KEY) => {
 	let favourites = {};
 
 	const render = async () => {
@@ -35,47 +32,44 @@ const favouritesController = (() => {
 		localStorage.setItem(STORAGE_KEY, str);
 	};
 
-	const load = () => {
-		const str = localStorage.getItem(STORAGE_KEY) || '';
+	const storageString = localStorage.getItem(STORAGE_KEY) || '';
 
-		try {
-			favourites = JSON.parse(str);
+	try {
+		favourites = JSON.parse(storageString);
+	}
+	catch(e) {
+		save();
+	}
+
+	render();
+
+	container.addEventListener('click', e => {
+		const target = e.target;
+
+		if(target.classList.contains('remove-favourite')) {
+			remove(target.parentNode.getAttribute('data-stop-id'));
+			return;
 		}
-		catch(e) {
-			save();
+
+		if(target.classList.contains('edit-favourite')) {
+			const li = target.parentNode;
+			const stopId = li.getAttribute('data-stop-id');
+			const input = document.createElement('input');
+			const ahref = li.querySelector('a[href]');
+			input.value = ahref.innerHTML.trim();
+
+			input.addEventListener('blur', e => rename(e.target, stopId));
+			input.addEventListener('keyup', e => {
+				if(e.which === 13) rename(e.target, stopId);
+			});
+
+			li.innerHTML = '';
+			li.appendChild(input);
+			input.focus();
 		}
-
-		render();
-
-		container.addEventListener('click', e => {
-			const target = e.target;
-
-			if(target.classList.contains('remove-favourite')) {
-				remove(target.parentNode.getAttribute('data-stop-id'));
-				return;
-			}
-
-			if(target.classList.contains('edit-favourite')) {
-				const li = target.parentNode;
-				const stopId = li.getAttribute('data-stop-id');
-				const input = document.createElement('input');
-				const ahref = li.querySelector('a[href]');
-				input.value = ahref.innerHTML.trim();
-
-				input.addEventListener('blur', e => rename(e.target, stopId));
-				input.addEventListener('keyup', e => {
-					if(e.which === 13) rename(e.target, stopId);
-				});
-
-				li.innerHTML = '';
-				li.appendChild(input);
-				input.focus();
-			}
-		});
-	};
+	});
 
 	return {
-		load,
 		add,
 	};
-})();
+};

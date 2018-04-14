@@ -1,7 +1,4 @@
-const linesController = (() => {
-	const container = document.querySelector('#lines-container');
-	const filterInput = document.querySelector('#enter-linename');
-
+const linesInit = (container, filterInput) => {
 	const get = async () => {
 		const [template, lines] = await Promise.all([
 			templates.get('lines'),
@@ -10,7 +7,7 @@ const linesController = (() => {
 		container.innerHTML = template(lines);
 	};
 
-	function filter() {
+	const filter = () => {
 		const prefix = filterInput.value;
 		const nodes = document.querySelectorAll('.lines a');
 		nodes.forEach(element => {
@@ -24,8 +21,6 @@ const linesController = (() => {
 		});
 	}
 
-	return {
-		get,
-		filter,
-	};
-})();
+	get();
+	filterInput.addEventListener('keyup', filter);
+};

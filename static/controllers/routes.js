@@ -1,6 +1,4 @@
-const routesController = (() => {
-	const container = document.querySelector('#routes-container');
-
+const routesInit = (container) => {
 	const transportType = {
 		tram: 'Трамвай',
 		bus: 'Автобус',
@@ -36,4 +34,4 @@ const routesController = (() => {
 		get,
 		getSubway,
 	};
-})();
+};

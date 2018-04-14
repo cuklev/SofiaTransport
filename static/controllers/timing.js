@@ -1,7 +1,4 @@
-const timingController = (() => {
-	const container = document.querySelector('#timing-container');
-	const formatCheckbox = document.querySelector('#timing-format');
-
+const timingInit = (container, formatCheckbox) => {
 	const listTimings = (grouped) => {
 		const listed = [];
 		grouped.forEach((line) => {
@@ -70,9 +67,22 @@ const timingController = (() => {
 	};
 
 	formatCheckbox.addEventListener('change', setTimingFormat);
+	const input = document.querySelector('#enter-stopcode');
+	input.addEventListener('keyup', (e) => {
+		if(e.which !== 13) {
+			return;
+		}
+
+		const val = input.val();
+		if(!val.match(/^[0-9]{1,4}$/)) {
+			return;
+		}
+		const code = ('0000' + val).match(/[0-9]{4}$/)[0];
+		router.setStopcode(code);
+	});
 
 	return {
 		get,
 		load,
 	};
-})();
+};
