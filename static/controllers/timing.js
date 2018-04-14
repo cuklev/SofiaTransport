@@ -2,10 +2,10 @@ const timingController = (() => {
 	const container = document.querySelector('#timing-container');
 	const formatCheckbox = document.querySelector('#timing-format');
 
-	function listTimings(grouped) {
+	const listTimings = (grouped) => {
 		const listed = [];
-		grouped.forEach(function(line) {
-			line.arrivals.forEach(function(arrival) {
+		grouped.forEach((line) => {
+			line.arrivals.forEach((arrival) => {
 				const item = {
 					name: line.name,
 					type: line.vehicle_type,
@@ -14,11 +14,9 @@ const timingController = (() => {
 				listed.push(item);
 			});
 		});
-		listed.sort(function(a, b) {
-			return a.time.replace(/:/g, '') - b.time.replace(/:/g, '');
-		});
-		return listed;
-	}
+
+		return listed.sort((a, b) => a.time.replace(/:/g, '') - b.time.replace(/:/g, ''));
+	};
 
 	const setTimingFormat = () => {
 		if(formatCheckbox.checked) {
