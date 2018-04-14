@@ -1,4 +1,7 @@
 const timingController = (function() {
+	const container = document.querySelector('#timing-container');
+	const formatCheckbox = document.querySelector('#timing-format');
+
 	function listTimings(grouped) {
 		const listed = [];
 		grouped.forEach(function(line) {
@@ -18,12 +21,16 @@ const timingController = (function() {
 	}
 
 	function setTimingFormat() {
-		if($('#timing-format')[0].checked) {
-			$('.times-grouped').removeClass('hidden');
-			$('.times-listed').addClass('hidden');
+		if(formatCheckbox.checked) {
+			document.querySelectorAll('.times-grouped')
+				.forEach(x => x.classList.remove('hidden'));
+			document.querySelectorAll('.times-listed')
+				.forEach(x => x.classList.add('hidden'));
 		} else {
-			$('.times-grouped').addClass('hidden');
-			$('.times-listed').removeClass('hidden');
+			document.querySelectorAll('.times-grouped')
+				.forEach(x => x.classList.add('hidden'));
+			document.querySelectorAll('.times-listed')
+				.forEach(x => x.classList.remove('hidden'));
 		}
 	}
 
@@ -54,17 +61,19 @@ const timingController = (function() {
 				listed,
 			};
 
-			$('#timing-container').html(template(data));
+			container.innerHTML = template(data);
 			setTimingFormat();
 		});
 	}
 
 	function load(code) {
-		$('#timing-container').prepend(`<h3>Loading timings for stop ${code}</h3>`);
+		const loading = document.createElement('H3');
+		loading.innerHTML = `Loading timings for stop ${code}`;
+		container.insertBefore(loading, container.firstChild);
 		get(code);
 	}
 
-	$('#timing-format').on('change', setTimingFormat);
+	formatCheckbox.addEventListener('change', setTimingFormat);
 
 	return {
 		get,
