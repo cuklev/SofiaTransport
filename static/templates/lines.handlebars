@@ -2,24 +2,24 @@
 	<li class="trolleys">
 		<strong>Тролеи:</strong>
 		<div class="lines-wrapper">
-			{{#each lines.trolleys}}
-				<a class="trolley" href="#{{../stopcode}}/trolley/{{this}}" data-line-name="{{this}}">{{this}}</a>
+			{{#each trolleys}}
+				<a class="trolley" href="#/trolley/{{this}}" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
 	<li class="trams">
 		<strong>Трамваи:</strong>
 		<div class="lines-wrapper">
-			{{#each lines.trams}}
-				<a class="tram" href="#{{../stopcode}}/tram/{{this}}" data-line-name="{{this}}">{{this}}</a>
+			{{#each trams}}
+				<a class="tram" href="#/tram/{{this}}" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
 	<li class="buses">
 		<strong>Автобуси:</strong>
 		<div class="lines-wrapper">
-			{{#each lines.buses}}
-				<a class="bus" href="#{{../stopcode}}/bus/{{this}}" data-line-name="{{this}}">{{this}}</a>
+			{{#each buses}}
+				<a class="bus" href="#/bus/{{this}}" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>

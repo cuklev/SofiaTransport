@@ -8,6 +8,10 @@ const router = (function() {
 	function navigate() {
 		const [code, type, name] = parse();
 
+		if(!code && oldState.code) {
+			location.href = `#${oldState.code}/${type}/${name}`;
+			return;
+		}
 		if(!type && !name && oldState.type && oldState.name) {
 			location.href = `#${code}/${oldState.type}/${oldState.name}`;
 			return;

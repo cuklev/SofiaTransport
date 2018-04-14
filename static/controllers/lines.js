@@ -5,11 +5,7 @@ const linesController = (function() {
 			db.getLines()
 		])
 		.then(function([template, lines]) {
-			const data = {
-				lines,
-				stopcode: router.getStopcode()
-			};
-			$('#lines-container').html(template(data));
+			$('#lines-container').html(template(lines));
 		});
 	}
 
