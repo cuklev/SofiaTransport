@@ -1,4 +1,4 @@
-const timingController = (function() {
+const timingController = (() => {
 	const container = document.querySelector('#timing-container');
 	const formatCheckbox = document.querySelector('#timing-format');
 
@@ -20,7 +20,7 @@ const timingController = (function() {
 		return listed;
 	}
 
-	function setTimingFormat() {
+	const setTimingFormat = () => {
 		if(formatCheckbox.checked) {
 			document.querySelectorAll('.times-grouped')
 				.forEach(x => x.classList.remove('hidden'));
@@ -32,46 +32,44 @@ const timingController = (function() {
 			document.querySelectorAll('.times-listed')
 				.forEach(x => x.classList.remove('hidden'));
 		}
-	}
+	};
 
-	function get(code, type, name) {
-		Promise.all([
+	const get = async (code, type, name) => {
+		const [template, timings] = await Promise.all([
 			templates.get('timing'),
-			sumc.getTiming(code),
-		]).then(function([template, timings]) {
-			let grouped = timings.lines;
-			const listed = listTimings(grouped);
+			sumc.getTiming(code)
+		]);
 
-			grouped.sort(function(a, b) {
-				return a.name - b.name;
-			});
+		const grouped = timings.lines;
+		const listed = listTimings(grouped);
 
-			const index = grouped.findIndex(x => x.vehicle_type === type && x.name === name);
-			if(index >= 0 && grouped.length > 0) {
-				const viewed = grouped.splice(index, 1);
-				viewed[0].separate = true;
-				grouped = viewed.concat(grouped);
-			}
+		grouped.sort((a, b) => a.name - b.name);
 
-			const data = {
-				name: timings.name,
-				code: timings.code,
-				timestamp: timings.timestamp_calculated,
-				grouped,
-				listed,
-			};
+		const index = grouped.findIndex(x => x.vehicle_type === type && x.name === name);
+		if(index >= 0 && grouped.length > 0) {
+			const viewed = grouped.splice(index, 1);
+			viewed[0].separate = true;
+			grouped = viewed.concat(grouped);
+		}
 
-			container.innerHTML = template(data);
-			setTimingFormat();
-		});
-	}
+		const data = {
+			name: timings.name,
+			code: timings.code,
+			timestamp: timings.timestamp_calculated,
+			grouped,
+			listed,
+		};
 
-	function load(code) {
+		container.innerHTML = template(data);
+		setTimingFormat();
+	};
+
+	const load = (code) => {
 		const loading = document.createElement('H3');
 		loading.innerHTML = `Loading timings for stop ${code}`;
 		container.insertBefore(loading, container.firstChild);
 		get(code);
-	}
+	};
 
 	formatCheckbox.addEventListener('change', setTimingFormat);
 
@@ -79,4 +77,4 @@ const timingController = (function() {
 		get,
 		load,
 	};
-}());
+})();
