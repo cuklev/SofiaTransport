@@ -72,7 +72,7 @@ const timingInit = (container, inputStopcode, formatCheckbox, autoPoll) => {
 			return;
 		}
 
-		const val = inputStopcode.val();
+		const val = inputStopcode.value;
 		if(!val.match(/^[0-9]{1,4}$/)) {
 			return;
 		}
@@ -85,7 +85,7 @@ const timingInit = (container, inputStopcode, formatCheckbox, autoPoll) => {
 		if(autoPoll.checked && document.hasFocus()) {
 			const code = router.getStopcode();
 			const [type, name] = router.getLine();
-			timingController.get(code, type, name);
+			get(code, type, name);
 			pollTimeout = setTimeout(pollNow, 15000);
 		} else {
 			pollTimeout = false;
@@ -102,7 +102,6 @@ const timingInit = (container, inputStopcode, formatCheckbox, autoPoll) => {
 	document.addEventListener('focus', schedulePoll);
 
 	return {
-		get,
 		load,
 	};
 };

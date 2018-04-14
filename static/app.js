@@ -16,5 +16,3 @@ const timingController = timingInit(
 	document.querySelector('#enter-stopcode'),
 	document.querySelector('#timing-format'),
 	document.querySelector('#auto-poll'));
-
-router.navigate();
