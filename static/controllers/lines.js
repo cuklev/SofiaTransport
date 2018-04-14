@@ -1,31 +1,31 @@
-const linesController = (function() {
-	function get() {
-		Promise.all([
+const linesController = (() => {
+	const container = document.querySelector('#lines-container');
+	const filterInput = document.querySelector('#enter-linename');
+
+	const get = async () => {
+		const [template, lines] = await Promise.all([
 			templates.get('lines'),
 			db.getLines()
-		])
-		.then(function([template, lines]) {
-			$('#lines-container').html(template(lines));
-		});
-	}
+		]);
+		container.innerHTML = template(lines);
+	};
 
 	function filter() {
-		const prefix = $('#enter-linename').val();
-
-		$('.lines a').each(function (index, element) {
-			const $element = $(element),
-				lineName = $element.attr('data-line-name') || '';
+		const prefix = filterInput.value;
+		const nodes = document.querySelectorAll('.lines a');
+		nodes.forEach(element => {
+			const lineName = element.getAttribute('data-line-name') || '';
 
 			if(lineName.indexOf(prefix) === -1) {
-				$element.addClass('hidden');
+				element.classList.add('hidden');
 			} else {
-				$element.removeClass('hidden');
+				element.classList.remove('hidden');
 			}
 		});
 	}
 
 	return {
-		get: get,
-		filter: filter
+		get,
+		filter,
 	};
-}());
+})();
