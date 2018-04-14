@@ -1,40 +1,39 @@
-const routesController = (function() {
+const routesController = (() => {
+	const container = document.querySelector('#routes-container');
+
 	const transportType = {
 		tram: 'Трамвай',
 		bus: 'Автобус',
 		trolley: 'Тролейбус',
 	};
 
-	function get(type, name) {
-		Promise.all([
+	const get = async (type, name) => {
+		const [template, routes] = await Promise.all([
 			templates.get('routes'),
 			db.getRoutes(type, name)
-		]).then(function([template, routes]) {
-			routes.forEach(x => x.routename = x[0].name + ' - ' + x[x.length - 1].name);
-			const data = {
-				routes,
-				type,
-				transport: transportType[type],
-				name,
-			};
-			$('#routes-container').html(template(data));
-		});
-	}
+		]);
 
-	function getSubway() {
-		Promise.all([
+		routes.forEach(x => x.routename = x[0].name + ' - ' + x[x.length - 1].name);
+		const data = {
+			routes,
+			type,
+			transport: transportType[type],
+			name,
+		};
+		container.innerHTML = template(data);
+	};
+
+	// not really sure what this does ATM
+	const getSubway = async () => {
+		const [template, stations] = await Promise.all([
 			templates.get('subwayRoutes'),
 			sumc.getSubwayRoutes()
-		]).then(function([template, stations]) {
-			const data = {
-				stations: stations
-			};
-			$('#routes-container').html(template(data));
-		});
-	}
+		]);
+		container.innerHTML = template({stations});
+	};
 
 	return {
-		get: get,
-		getSubway: getSubway
+		get,
+		getSubway,
 	};
-}());
+})();
