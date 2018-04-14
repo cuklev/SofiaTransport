@@ -38,7 +38,7 @@ const timingController = (() => {
 			sumc.getTiming(code)
 		]);
 
-		const grouped = timings.lines;
+		let grouped = timings.lines;
 		const listed = listTimings(grouped);
 
 		grouped.sort((a, b) => a.name - b.name);
