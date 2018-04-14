@@ -27,27 +27,27 @@ $(function() {
 
 (function() {
 	const autoPoll = document.querySelector('#auto-poll');
+	let timeout = false;
+
+	function pollNow() {
+		if(autoPoll.checked && document.hasFocus()) {
+			const code = router.getStopcode();
+			const [type, name] = router.getLine();
+			timingController.get(code, type, name);
+			timeout = setTimeout(pollNow, 15000);
+		} else {
+			timeout = false;
+		}
+	}
 
 	function schedulePoll() {
-		setTimeout(function() {
-			if(autoPoll.checked) {
-				if(document.hasFocus()) {
-					const code = router.getStopcode();
-					const [type, name] = router.getLine();
-					timingController.get(code, type, name);
-					schedulePoll();
-				} else {
-					autoPoll.checked = false;
-				}
-			}
-		}, 15000);
+		if(!timeout) {
+			pollNow();
+		}
 	}
 
 	schedulePoll();
 
-	autoPoll.addEventListener('change', function() {
-		if(autoPoll.checked) {
-			schedulePoll();
-		}
-	});
+	autoPoll.addEventListener('change', schedulePoll);
+	document.addEventListener('focus', schedulePoll);
 })();
