@@ -2,16 +2,14 @@ const db = (() => {
 	const getAndCache = (() => {
 		const cache = {};
 
-		return (url) => new Promise((resolve, reject) => {
+		return async (url) => {
 			if(cache.hasOwnProperty(url)) {
-				resolve(cache[url]);
-				return;
+				return cache[url];
 			}
-			$.get(url, res => {
-				cache[url] = res;
-				resolve(res);
-			});
-		});
+			const res = await request.getJSON(url);
+			cache[url] = res;
+			return res;
+		};
 	})();
 
 	const getStopname = (stopcode) => getAndCache(`api/stopname/${stopcode}`);

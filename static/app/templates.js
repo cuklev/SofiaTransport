@@ -1,27 +1,19 @@
 const templates = (function() {
 	const cache = {};
-	const handlebars = Handlebars;
+	const handlebars = window.Handlebars || window.handlebars;
 
-	function get(name) {
-		const promise = new Promise(function(resolve, reject) {
-			if(cache[name]) {
-				resolve(cache[name]);
-				return;
-			}
+	const get = async (name) => {
+		if(cache[name]) {
+			return cache[name];
+		}
 
-			const url = `./templates/${name}.handlebars`;
-
-			$.get(url, function(hb) {
-				const html = handlebars.compile(hb);
-				cache[name] = html;
-				resolve(html);
-			});
-		});
-
-		return promise;
-	}
+		const hb = await request.get(`./templates/${name}.handlebars`);
+		const hbCompiled = handlebars.compile(hb);
+		cache[name] = hbCompiled;
+		return hbCompiled;
+	};
 
 	return {
-		get: get
+		get,
 	};
 }());

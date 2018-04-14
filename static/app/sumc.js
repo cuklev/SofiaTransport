@@ -1,16 +1,7 @@
 const sumc = (function() {
 	const baseUrl = 'api';
 
-	const getTiming = function(code) {
-		const url = `${baseUrl}/timing/${code}`;
-		const promise = new Promise(function(resolve, reject) {
-			$.get(url, function(timings) {
-				resolve(JSON.parse(timings));
-			});
-		});
-
-		return promise;
-	};
+	const getTiming = (code) => request.getJSON(`${baseUrl}/timing/${code}`);
 
 	// OLD API!!!
 	const getTimetable = (function() {
@@ -32,19 +23,7 @@ const sumc = (function() {
 	}());
 
 	// OLD API!!!
-	const getSubwayRoutes = (function() {
-		const url = `${baseUrl}/subway/routes`;
-
-		return function() {
-			const promise = new Promise(function(resolve, reject) {
-				$.getJSON(url, function(routes) {
-					resolve(routes);
-				});
-			});
-
-			return promise;
-		}
-	}());
+	const getSubwayRoutes = () => request.getJSON(`${baseUrl}/subway/routes`);
 
 	// OLD API!!!
 	const getSubwayTimings = (function() {
