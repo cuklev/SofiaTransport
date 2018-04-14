@@ -73,3 +73,11 @@ a {
 .timestamp {
 	color: rgb(96, 96, 96);
 }
+
+a:hover {
+	background-color: lightgray;
+	color: black;
+}
+.selected a {
+	font-weight: bold;
+}

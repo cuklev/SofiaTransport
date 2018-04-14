@@ -47,20 +47,20 @@ const favouritesInit = (container, STORAGE_KEY) => {
 		const target = e.target;
 
 		if(target.classList.contains('remove-favourite')) {
-			remove(target.parentNode.getAttribute('data-stop-id'));
+			remove(target.parentNode.getAttribute('data-stop-code'));
 			return;
 		}
 
 		if(target.classList.contains('edit-favourite')) {
 			const li = target.parentNode;
-			const stopId = li.getAttribute('data-stop-id');
+			const stopcode = li.getAttribute('data-stop-code');
 			const input = document.createElement('input');
 			const ahref = li.querySelector('a[href]');
 			input.value = ahref.innerHTML.trim();
 
-			input.addEventListener('blur', e => rename(e.target, stopId));
+			input.addEventListener('blur', e => rename(e.target, stopcode));
 			input.addEventListener('keyup', e => {
-				if(e.which === 13) rename(e.target, stopId);
+				if(e.which === 13) rename(e.target, stopcode);
 			});
 
 			li.innerHTML = '';

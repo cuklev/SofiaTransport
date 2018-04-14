@@ -24,6 +24,11 @@ const routerInit = () => {
 			oldState.code = code;
 			timingController.load(code, type, name);
 			window.scrollTo(0, 0);
+
+			document.querySelectorAll(`li[data-stop-code].selected`)
+				.forEach(x => x.classList.remove('selected'));
+			document.querySelectorAll(`li[data-stop-code="${code}"]`)
+				.forEach(x => x.classList.add('selected'));
 		}
 
 		if(newLine) {
@@ -32,14 +37,10 @@ const routerInit = () => {
 			routesController.get(type, name);
 			window.scrollTo(0, document.querySelector('#routes-container').offsetTop);
 
-			document.querySelectorAll('#lines-container a')
-				.forEach(x => {
-					if(x.classList.contains(type) && x.getAttribute('data-line-name') === name) {
-						x.classList.add('selected');
-					} else {
-						x.classList.remove('selected');
-					}
-				});
+			document.querySelectorAll(`a[data-line-name].selected`)
+				.forEach(x => x.classList.remove('selected'));
+			document.querySelectorAll(`a[data-line-name="${name}"].${type}`)
+				.forEach(x => x.classList.add('selected'));
 		}
 	};
 
