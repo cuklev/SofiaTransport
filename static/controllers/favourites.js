@@ -1,7 +1,39 @@
 const favouritesController = (() => {
 	const STORAGE_KEY = 'fav_stops';
+	const container = document.querySelector('#favourites-container');
 
 	let favourites = {};
+
+	const render = async () => {
+		const template = await templates.get('favourites');
+		container.innerHTML = template(favourites);
+	};
+
+	const add = (stopcode, stopname) => {
+		if(favourites.hasOwnProperty(stopcode)) {
+			return;
+		}
+		favourites[stopcode] = `${stopname} (${stopcode})`;
+		save();
+		render();
+	};
+
+	const rename = (target, id) => {
+		favourites[id] = target.value.trim() || `(${id})`;
+		save();
+		render();
+	};
+
+	const remove = (stopcode) => {
+		delete favourites[stopcode];
+		save();
+		render();
+	};
+
+	const save = () => {
+		const str = JSON.stringify(favourites);
+		localStorage.setItem(STORAGE_KEY, str);
+	};
 
 	const load = () => {
 		const str = localStorage.getItem(STORAGE_KEY) || '';
@@ -13,60 +45,33 @@ const favouritesController = (() => {
 			save();
 		}
 
-		get();
-	};
+		render();
 
-	const save = () => {
-		const str = JSON.stringify(favourites);
-		localStorage.setItem(STORAGE_KEY, str);
-	};
+		container.addEventListener('click', e => {
+			const target = e.target;
 
-	const rename = (target, id) => {
-		favourites[id] = target.value.trim() || `(${id})`;
-		save();
-		get();
-	};
+			if(target.classList.contains('remove-favourite')) {
+				remove(target.parentNode.getAttribute('data-stop-id'));
+				return;
+			}
 
-	const get = async () => {
-		const template = await templates.get('favourites');
-		$('#favourites-container').html(template(favourites));
+			if(target.classList.contains('edit-favourite')) {
+				const li = target.parentNode;
+				const stopId = li.getAttribute('data-stop-id');
+				const input = document.createElement('input');
+				const ahref = li.querySelector('a[href]');
+				input.value = ahref.innerHTML.trim();
 
-		// TODO: use a single event
-		$('.edit-favourite').on('click', 'img', (e) => {
-			const $li = $(e.target).parent().parent();
-			const stop_id = $li.data('stopId');
-			const $name = $li.find('a[href]');
-			$li.html(`<input>`);
-			const $input = $li.find('input');
-			$input.val($name.html().trim());
-			$input.focus();
+				input.addEventListener('blur', e => rename(e.target, stopId));
+				input.addEventListener('keyup', e => {
+					if(e.which === 13) rename(e.target, stopId);
+				});
 
-			$input.on('blur', (e) => rename(e.target, stop_id));
-			$input.on('keyup', (e) => {
-				if(e.which === 13) {
-					rename(e.target, stop_id)
-				}
-			});
+				li.innerHTML = '';
+				li.appendChild(input);
+				input.focus();
+			}
 		});
-		$('.remove-favourite').on('click', 'img', (e) => {
-			const stop_id = $(e.target).parent().parent().data('stopId');
-			remove(stop_id);
-		});
-	};
-
-	const add = (stopcode, stopname) => {
-		if(favourites.hasOwnProperty(stopcode)) {
-			return;
-		}
-		favourites[stopcode] = `${stopname} (${stopcode})`;
-		save();
-		get();
-	};
-
-	const remove = (stopcode) => {
-		delete favourites[stopcode];
-		save();
-		get();
 	};
 
 	return {

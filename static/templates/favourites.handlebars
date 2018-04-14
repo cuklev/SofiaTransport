@@ -2,12 +2,8 @@
 <ol>
 	{{#each this}}
 		<li class="fav-item" data-stop-id="{{@key}}">
-			<a class="remove-favourite">
-				<img src="imgs/remove.png" width="20px" />
-			</a>
-			<a class="edit-favourite">
-				<img src="imgs/edit.png" width="20px" />
-			</a>
+			<img class="remove-favourite" src="imgs/remove.png" width="20px" />
+			<img class="edit-favourite" src="imgs/edit.png" width="20px" />
 			<a href="#{{@key}}">
 				{{this}}
 			</a>
