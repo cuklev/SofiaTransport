@@ -23,7 +23,7 @@ const routerInit = () => {
 		if(newCode || (code && newLine)) {
 			oldState.code = code;
 			timingController.load(code, type, name);
-			window.scrollTo(0, 0);
+			window.scrollTo(0, document.querySelector('#timing-container').offsetTop);
 
 			document.querySelectorAll(`li[data-stop-code].selected`)
 				.forEach(x => x.classList.remove('selected'));
