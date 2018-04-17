@@ -39,8 +39,11 @@ const load = async () => {
 	routesList.forEach(({type, lines}) => routes[type] = collectRoutes(lines));
 	stopsList.forEach(({c, ...rest}) => stops[c] = rest);
 
-	console.log('Loaded');
-	return {routes, stops};
+	const routesCount = [].concat(...Object.values(routesList).map(x => x.lines)).length;
+	const stopsCount = stopsList.length;
+
+	console.log(`Loaded ${routesCount} routes and ${stopsCount} stops`);
+	return {routes, stops, stopsList};
 };
 
 const setReload = (db, timeout) => {

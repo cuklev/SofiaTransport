@@ -3,6 +3,7 @@ const load = require('./load');
 const db = {
 	routes: {},
 	stops: {},
+	stopsList: [],
 };
 
 // Must move timeout as a parameter ->
