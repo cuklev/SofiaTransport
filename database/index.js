@@ -6,6 +6,6 @@ const db = {
 };
 
 // Must move timeout as a parameter ->
-load.setReload(db, 24 * 60 * 60 * 10000); // A day
+load.setReload(db, 24 * 60 * 60 * 1000); // A day
 
 module.exports = db;
