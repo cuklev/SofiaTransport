@@ -31,9 +31,13 @@ const collectRoutes = (routes) => {
 
 const load = async () => {
 	console.log('Loading DB...');
+	const [routesList, stopsList] = await Promise.all([
+		getRoutes(),
+		getStops()
+	]);
 	const routes = {}, stops = {};
-	(await getRoutes()).forEach(({type, lines}) => routes[type] = collectRoutes(lines));
-	(await getStops()).forEach(({c, ...rest}) => stops[c] = rest);
+	routesList.forEach(({type, lines}) => routes[type] = collectRoutes(lines));
+	stopsList.forEach(({c, ...rest}) => stops[c] = rest);
 
 	console.log('Loaded');
 	return {routes, stops};
