@@ -1,4 +1,4 @@
-const templates = (function() {
+const templates = (() => {
 	const cache = {};
 	const handlebars = window.Handlebars || window.handlebars;
 
@@ -16,4 +16,4 @@ const templates = (function() {
 	return {
 		get,
 	};
-}());
+})();
