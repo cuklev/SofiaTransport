@@ -22,9 +22,10 @@ module.exports = (db, router) => {
 	const searchStops = (searchString) => {
 		const words = searchString.match(/\S+/g)
 			.map(w => w.toUpperCase());
-		return db.stopsList.filter(({n}) => {
+		return db.stopsList.filter(({n, c}) => {
 			const nu = n.toUpperCase();
-			return words.every(w => nu.indexOf(w) >= 0);
+			return c.indexOf(searchString) >= 0
+				|| words.every(w => nu.indexOf(w) >= 0);
 		});
 	};
 
