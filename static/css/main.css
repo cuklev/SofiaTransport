@@ -20,11 +20,6 @@ a {
 	display: none;
 }
 
-.scrollable {
-	overflow: auto;
-	height: 70vh;
-}
-
 .fav-item {
 	line-height: 24px;
 }
@@ -60,6 +55,11 @@ a {
 	}
 	.column-routes {
 		width: 44%;
+	}
+
+	.scrollable {
+		overflow: auto;
+		height: 70vh;
 	}
 }
 
