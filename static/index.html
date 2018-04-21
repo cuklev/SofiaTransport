@@ -11,14 +11,14 @@
 	</head>
 
 	<body>
-		<input id="global-search" />
+		<section class="search-wrapper">
+			<label for="global-search">
+				Search:
+			</label>
+			<input id="global-search" />
+		</section>
+
 		<section class="column-lines">
-			<div class="filter-lines-wrapper">
-				<label for="enter-linename">
-					Enter line number:
-				</label>
-				<input id="enter-linename" type="text" />
-			</div>
 			<div id="lines-container"></div>
 			<div id="favourites-container"></div>
 		</section>
@@ -28,10 +28,6 @@
 		</section>
 
 		<section class="column-timing">
-			<label for="enter-stopcode">
-				Enter stop code:
-			</label>
-			<input id="enter-stopcode" />
 			<br /><input type="checkbox" id="timing-format" checked />
 			<label for="timing-format">Групиране по линия</label>
 			<br /><input type="checkbox" id="auto-poll" checked />

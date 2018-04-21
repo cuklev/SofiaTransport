@@ -28,19 +28,6 @@
 	color: white;
 }
 
-.filter-lines-wrapper label {
-	display: block;
-}
-
-.filter-lines-wrapper > label::before {
-	content: '';
-	display: inline-block;
-	background-size: cover;
-	background-image: url('../imgs/search.ico');
-	height: 24px;
-	width: 24px;
-}
-
 .lines strong::before {
 	content: '';
 	display: inline-block;

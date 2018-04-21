@@ -1,4 +1,4 @@
-const timingInit = (container, inputStopcode, formatCheckbox, autoPoll) => {
+const timingInit = (container, formatCheckbox, autoPoll) => {
 	const listTimings = (grouped) => {
 		const listed = [];
 		grouped.forEach((line) => {
@@ -67,18 +67,6 @@ const timingInit = (container, inputStopcode, formatCheckbox, autoPoll) => {
 	};
 
 	formatCheckbox.addEventListener('change', setTimingFormat);
-	inputStopcode.addEventListener('keyup', (e) => {
-		if(e.which !== 13) {
-			return;
-		}
-
-		const val = inputStopcode.value;
-		if(!val.match(/^[0-9]{1,4}$/)) {
-			return;
-		}
-		const code = ('0000' + val).match(/[0-9]{4}$/)[0];
-		router.setStopcode(code);
-	});
 
 	let pollTimeout = false;
 	const pollNow = () => {
