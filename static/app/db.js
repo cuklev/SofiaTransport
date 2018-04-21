@@ -16,10 +16,12 @@ const db = (() => {
 	const getLines = () => getAndCache('api/lines');
 	const getRoutes = (type, name) => getAndCache(`api/routes/${type}/${name}`);
 	// const getPoints = (function(line) {
+	const searchStops = (str) => request.getJSON(`api/stops?s=${str}`);
 
 	return {
 		getStopname,
 		getLines,
 		getRoutes,
+		searchStops,
 	};
 })();

@@ -1,3 +1,22 @@
+.search-wrapper {
+	padding: 0 25px;
+}
+.search-wrapper label {
+	display: block;
+}
+.search-wrapper > label::before {
+	content: '';
+	display: inline-block;
+	background-size: cover;
+	background-image: url('../imgs/search.ico');
+	height: 24px;
+	width: 24px;
+}
+.search-wrapper input {
+	display: block;
+	width: 100%;
+}
+
 .tram {
 	color: orange;
 }
