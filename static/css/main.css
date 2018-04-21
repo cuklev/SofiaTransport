@@ -1,3 +1,6 @@
+.search-wrapper {
+	padding: 0 25px;
+}
 .search-wrapper label {
 	display: block;
 }
@@ -10,7 +13,8 @@
 	width: 24px;
 }
 .search-wrapper input {
-	width: 20%;
+	display: block;
+	width: 100%;
 }
 
 .tram {
