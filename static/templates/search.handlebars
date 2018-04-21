@@ -1,14 +1,16 @@
-{{#if this}}
-	<h2 class="centered">Results</h2>
-	<ol>
-		{{#each this}}
-			<li data-stop-code="{{c}}">
-				<a href="#{{c}}">
-					{{n}} ({{c}})
-				</a>
-			</li>
-		{{/each}}
-	</ol>
-{{else}}
-	<h2 class="centered">No results</h2>
+{{#if input}}
+	{{#if results}}
+		<h2 class="centered">Results for "{{input}}"</h2>
+		<ol>
+			{{#each results}}
+				<li data-stop-code="{{c}}">
+					<a href="#{{c}}">
+						{{n}} ({{c}})
+					</a>
+				</li>
+			{{/each}}
+		</ol>
+	{{else}}
+		<h2 class="centered">No results for "{{input}}"</h2>
+	{{/if}}
 {{/if}}
