@@ -90,7 +90,7 @@ const datetimeHandler = (function() {
 	}
 }());
 
-module.exports = (db, router) => router
+module.exports = router => router
 	.get('/timing/:code', timingHandler)
 	.get('/timetable', timetableHandler)
 	.get('/subway/routes', subwayRoutesHandler)

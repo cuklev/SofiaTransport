@@ -1,7 +1,6 @@
 const router = require('express').Router();
 
-module.exports = (db) => {
-	require('./dbapi')(db, router);
-	require('./sumcapi')(db, router);
+module.exports = () => {
+	require('./sumcapi')(router);
 	return router;
 };
