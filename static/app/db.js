@@ -62,8 +62,21 @@ const db = (() => {
 		});
 	};
 
+	const timeToInt = time => {
+		const [hours, minutes] = time.split(':');
+		return hours * 60 + +minutes;
+	};
+	const nowInt = () => {
+		// if your clock is wrong... sorry
+		const now = new Date();
+		return now.getHours() * 60 + now.getMinutes();
+	};
+
 	const transformTimes = ([route, times]) => {
-		const arrivals = times.map(time => ({time}));
+		const now = nowInt();
+		const startIndex = times.findIndex(t => now <= timeToInt(t));
+		const arrivals = times.slice(startIndex, startIndex + 8)
+			.map(time => ({time}));
 		const name = subway.routesList.find(x => x.routeId === route).routeName;
 		return {
 			arrivals,
