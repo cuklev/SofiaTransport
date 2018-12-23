@@ -3,20 +3,20 @@
 	padding: 0;
 }
 
-.lines li {
-	margin-top: 5%;
-}
-
 .lines .lines-wrapper {
 	overflow: hidden;
 }
 
-.lines .lines-wrapper a {
+.lines .lines-wrapper a.blocks {
 	float: left;
 	width: 10%;
 	min-width: 30px;
 	padding: 5px 0;
 	text-align: center;
+}
+
+.lines .lines-wrapper a.subway {
+	display: block;
 }
 
 .lines .lines-wrapper a:hover {
