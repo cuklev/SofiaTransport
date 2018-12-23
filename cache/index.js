@@ -1,8 +1,6 @@
 const request = require('request');
 const fs = require('fs').promises;
 
-const baseUrl = 'https://routes.sofiatraffic.bg/resources';
-
 const get = async (url) => {
 	const options = {
 		method: 'get',
@@ -17,10 +15,23 @@ const get = async (url) => {
 	});
 };
 
-const cacheFile = async (file) => {
-	const response = await get(`${baseUrl}/${file}`);
-	await fs.writeFile(`static/cache/${file}`, response);
-};
+const cacheFile = (() => {
+	const baseUrl = 'https://routes.sofiatraffic.bg/resources';
+	return async (file) => {
+		const response = await get(`${baseUrl}/${file}`);
+		await fs.writeFile(`static/cache/${file}`, response);
+	};
+})();
+
+const loadSubwayStopTimetable = (() => {
+	// TODO: 6621 means weekday, support everything
+	const baseUrl = 'https://schedules.sofiatraffic.bg/server/html/schedule_load/6621';
+	return async (route, stopCode) => {
+		const response = await get(`${baseUrl}/${route}/${stopCode}`);
+		const timetable = response.match(/[0-9]{1,2}:[0-9]{2}/g);
+		return timetable;
+	};
+})();
 
 const loadSubway = async () => {
 	const response = await get(`https://schedules.sofiatraffic.bg/metro/1`);
@@ -45,7 +56,18 @@ const loadSubway = async () => {
 		}
 	}
 
-	return {routesList, routes};
+	const timetables = {};
+	for(const route in routes) {
+		for(const stopCode of routes[route]) {
+			console.log(`Downloading subway timetable for ${route}/${stopCode}`);
+			if(!timetables.hasOwnProperty(stopCode)) {
+				timetables[stopCode] = {};
+			}
+			timetables[stopCode][route] = await loadSubwayStopTimetable(route, stopCode);
+		}
+	}
+
+	return {routesList, routes, timetables};
 };
 
 const load = async () => {
