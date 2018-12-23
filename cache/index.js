@@ -22,12 +22,42 @@ const cacheFile = async (file) => {
 	await fs.writeFile(`static/cache/${file}`, response);
 };
 
+const loadSubway = async () => {
+	const response = await get(`https://schedules.sofiatraffic.bg/metro/1`);
+
+	let match;
+
+	const routesList = [];
+	const routeRegex = /href="\/metro\/1#direction\/([0-9]*)[^>]*>\s*<span>([^<]*)/g;
+	while(match = routeRegex.exec(response)) {
+		const [, routeId, routeName] = match;
+		routesList.push({routeId, routeName});
+	}
+
+	const routes = {};
+	const stopRegex = /href="\/metro\/1#sign\/([0-9]*)\/([0-9]*)"[^>]*>([^<]*)/g;
+	while(match = stopRegex.exec(response)) {
+		const [, routeId, stopCode, stopName] = match;
+		if(routes.hasOwnProperty(routeId)) {
+			routes[routeId].push(stopCode);
+		} else {
+			routes[routeId] = [stopCode];
+		}
+	}
+
+	return {routesList, routes};
+};
+
 const load = async () => {
 	await fs.mkdir('static/cache', {recursive: true});
-	console.log('Caching routes.json');
 	await cacheFile('routes.json');
-	console.log('Caching stops-bg.json');
+	console.log('Cached routes.json');
 	await cacheFile('stops-bg.json');
+	console.log('Cached stops-bg.json');
+
+	const subway = await loadSubway();
+	await fs.writeFile(`static/cache/subway.json`, JSON.stringify(subway));
+	console.log('Cached subway.json');
 };
 
 const setReload = (timeout) => {
