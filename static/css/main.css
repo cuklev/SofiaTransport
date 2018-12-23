@@ -59,11 +59,6 @@ a {
 }
 
 @media(min-width:768px) {
-	.column {
-		float: left;
-		width: 50%;
-	}
-
 	.column-timing, .column-lines, .column-routes {
 		float: left;
 		padding: 1%;
@@ -77,6 +72,13 @@ a {
 	}
 	.column-routes {
 		width: 44%;
+	}
+
+	.route-columns {
+		display: flex;
+	}
+	.route-column {
+		flex: auto;
 	}
 
 	.scrollable {
