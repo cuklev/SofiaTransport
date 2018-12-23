@@ -62,10 +62,34 @@ const db = (() => {
 		});
 	};
 
+	const transformTimes = ([route, times]) => {
+		const arrivals = times.map(time => ({time}));
+		const name = subway.routesList.find(x => x.routeId === route).routeName;
+		return {
+			arrivals,
+			name,
+			vehicle_type: 'subway',
+		};
+	};
+	const getSubwayTimetable = async (code) => {
+		await Promise.all([cacheStops(), cacheSubway()]);
+		if(!subway.timetables.hasOwnProperty(code)) {
+			return;
+		}
+		const lines = Object.entries(subway.timetables[code])
+			.map(transformTimes);
+		return {
+			name: stops[code].n,
+			code,
+			lines,
+		};
+	};
+
 	return {
 		getStopname,
 		getLines,
 		getRoutes,
 		searchStops,
+		getSubwayTimetable,
 	};
 })();

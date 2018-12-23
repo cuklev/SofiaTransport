@@ -29,10 +29,17 @@ const timingInit = (container, formatCheckbox, autoPoll) => {
 		}
 	};
 
+	const getTiming = async (code) => {
+		const subwayTimetable = await db.getSubwayTimetable(code);
+		// subway does not stop where other transport types do
+		if(subwayTimetable) return subwayTimetable;
+		return sumc.getTiming(code);
+	};
+
 	const get = async (code, type, name) => {
 		const [template, timings] = await Promise.all([
 			templates.get('timing'),
-			sumc.getTiming(code)
+			getTiming(code)
 		]);
 
 		let grouped = timings.lines;
