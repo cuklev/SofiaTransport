@@ -24,10 +24,11 @@
 		</div>
 	</li>
 	<li class="subway">
+		<strong>Метро:</strong>
 		<div class="lines-wrapper">
-			<strong>
-				<a class="subway">Метро</a>
-			</strong>
+			{{#each subway}}
+				<a class="subway" href="#/subway/{{routeId}}" data-line-name="{{routeId}}">{{routeName}}</a>
+			{{/each}}
 		</div>
 	</li>
 </ul>

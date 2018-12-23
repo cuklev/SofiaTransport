@@ -1,7 +1,11 @@
 const db = (() => {
 	let routesList, stopsList;
 	const routes = {}, stops = {};
+	let subway;
 
+	const cacheSubway = async () => {
+		subway = await request.getJSON('cache/subway.json');
+	};
 	const collectRoutes = (routes) => {
 		const result = {};
 		routes.forEach(({name, routes}) => result[name] = routes);
@@ -10,6 +14,10 @@ const db = (() => {
 	const cacheRoutes = async () => {
 		routesList = await request.getJSON('cache/routes.json');
 		routesList.forEach(({type, lines}) => routes[type] = collectRoutes(lines));
+		await cacheSubway();
+		routes.subway = {};
+		Object.entries(subway.routes)
+			.forEach(([route, codes]) => routes.subway[route] = [{codes}]);
 	};
 	const cacheStops = async () => {
 		stopsList = await request.getJSON('cache/stops-bg.json');
@@ -23,16 +31,16 @@ const db = (() => {
 		return stops[code].n;
 	};
 	const getLines = async () => {
-		await cacheRoutes();
+		await Promise.all([cacheRoutes(), cacheSubway()]);
 		return {
 			buses: Object.keys(routes.bus),
 			trams: Object.keys(routes.tram),
 			trolleys: Object.keys(routes.trolley),
+			subway: subway.routesList
 		};
 	};
 	const getRoutes = async (type, number) => {
-		await cacheRoutes();
-		await cacheStops();
+		await Promise.all([cacheRoutes(), cacheStops(), cacheSubway()]);
 		const pairWithName = (code) => ({
 			code,
 			name: stops[code].n,
