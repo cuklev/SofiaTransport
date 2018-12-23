@@ -21,7 +21,7 @@ npm start
   - ~~Make it possible to rename favourite stops~~
   - ~~Make it possible to delete favourite stops~~
     - Delete all option
-- Support subway stops
+- ~~Support subway stops~~
 - Add map for route visualization
   - Probably [openstreetmap](http://www.openstreetmap.org/)
   - Map shouldn't load by default
