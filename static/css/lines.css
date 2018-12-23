@@ -40,11 +40,12 @@
 .lines .trams strong::before {
 	background-image: url('../imgs/tram.png');
 }
-
 .lines .buses strong::before {
 	background-image: url('../imgs/bus.png');
 }
-
 .lines .trolleys strong::before {
 	background-image: url('../imgs/trolleybus.png');
+}
+.lines .subways strong::before {
+	background-image: url('../imgs/subway.png');
 }
