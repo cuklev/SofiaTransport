@@ -105,3 +105,8 @@ a:hover {
 .selected a {
 	font-weight: bold;
 }
+
+#timing-container > ul {
+	list-style: none;
+	padding: 0;
+}
