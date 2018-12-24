@@ -64,8 +64,7 @@ a {
 	.columns {
 		display: flex;
 	}
-
-	.column-timing, .column-lines, .column-routes, .route-column {
+	.column {
 		padding: 1%;
 		flex: auto;
 	}

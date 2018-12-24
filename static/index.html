@@ -19,22 +19,21 @@
 		</section>
 
 		<div class="columns">
-			<section class="column-lines">
-				<div id="lines-container"></div>
-				<div id="favourites-container"></div>
-			</section>
+			<div class="column">
+				<section id="lines-container"></section>
+				<section id="favourites-container"></section>
+			</div>
 
-			<section class="column-routes">
-				<div id="routes-container"></div>
-			</section>
+			<section class="column" id="routes-container"></section>
 
-			<section class="column-timing">
-				<br /><input type="checkbox" id="timing-format" checked />
+			<div class="column">
+				<input type="checkbox" id="timing-format" checked />
 				<label for="timing-format">Групиране по линия</label>
-				<br /><input type="checkbox" id="auto-poll" checked />
+				<br>
+				<input type="checkbox" id="auto-poll" checked />
 				<label for="auto-poll">Auto poll</label>
-				<div id="timing-container"></div>
-			</section>
+				<section id="timing-container"></section>
+			</div>
 		</div>
 
 		<!-- scripts -->
