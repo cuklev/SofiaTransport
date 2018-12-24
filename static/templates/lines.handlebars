@@ -3,7 +3,7 @@
 		<strong>Тролеи:</strong>
 		<div class="lines-wrapper">
 			{{#each trolleys}}
-				<a class="trolley" href="#/trolley/{{this}}" data-line-name="{{this}}">{{this}}</a>
+				<a class="blocks trolley" href="#/trolley/{{this}}" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
@@ -11,7 +11,7 @@
 		<strong>Трамваи:</strong>
 		<div class="lines-wrapper">
 			{{#each trams}}
-				<a class="tram" href="#/tram/{{this}}" data-line-name="{{this}}">{{this}}</a>
+				<a class="blocks tram" href="#/tram/{{this}}" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
@@ -19,15 +19,16 @@
 		<strong>Автобуси:</strong>
 		<div class="lines-wrapper">
 			{{#each buses}}
-				<a class="bus" href="#/bus/{{this}}" data-line-name="{{this}}">{{this}}</a>
+				<a class="blocks bus" href="#/bus/{{this}}" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
-	<li class="subway">
+	<li class="subways">
+		<strong>Метро:</strong>
 		<div class="lines-wrapper">
-			<strong>
-				<a class="subway">Метро</a>
-			</strong>
+			{{#each subway}}
+				<a class="subway" href="#/subway/{{id}}" data-line-name="{{id}}">{{name}}</a>
+			{{/each}}
 		</div>
 	</li>
 </ul>

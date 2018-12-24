@@ -1,17 +1,19 @@
 <h2 class="centered">{{transport}} {{name}}</h2>
-{{#each routes}}
-	<div class="column">
-		<h3 class="centered">{{routename}}</h3>
-		<div class="scrollable">
-			<ol>
-				{{#each this}}
-					<li data-stop-code="{{code}}">
-						<a href="#{{code}}/{{../../type}}/{{../../name}}">
-							{{name}} ({{code}})
-						</a>
-					</li>
-				{{/each}}
-			</ol>
+<div class="route-columns">
+	{{#each routes}}
+		<div class="route-column">
+			<h3 class="centered">{{routename}}</h3>
+			<div class="scrollable">
+				<ol>
+					{{#each this}}
+						<li data-stop-code="{{code}}">
+							<a href="#{{code}}/{{../../type}}/{{../../name}}">
+								{{name}} ({{code}})
+							</a>
+						</li>
+					{{/each}}
+				</ol>
+			</div>
 		</div>
-	</div>
-{{/each}}
+	{{/each}}
+</div>

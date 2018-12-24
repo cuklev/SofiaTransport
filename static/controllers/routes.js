@@ -3,6 +3,7 @@ const routesInit = (container) => {
 		tram: 'Трамвай',
 		bus: 'Автобус',
 		trolley: 'Тролейбус',
+		subway: 'Метро',
 	};
 
 	const get = async (type, name) => {
@@ -21,17 +22,7 @@ const routesInit = (container) => {
 		container.innerHTML = template(data);
 	};
 
-	// not really sure what this does ATM
-	const getSubway = async () => {
-		const [template, stations] = await Promise.all([
-			templates.get('subwayRoutes'),
-			sumc.getSubwayRoutes()
-		]);
-		container.innerHTML = template({stations});
-	};
-
 	return {
 		get,
-		getSubway,
 	};
 };

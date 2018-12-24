@@ -26,6 +26,9 @@
 .trolley {
 	color: blue;
 }
+.subway {
+	color: green;
+}
 
 a {
 	text-decoration: none;
@@ -56,11 +59,6 @@ a {
 }
 
 @media(min-width:768px) {
-	.column {
-		float: left;
-		width: 50%;
-	}
-
 	.column-timing, .column-lines, .column-routes {
 		float: left;
 		padding: 1%;
@@ -74,6 +72,13 @@ a {
 	}
 	.column-routes {
 		width: 44%;
+	}
+
+	.route-columns {
+		display: flex;
+	}
+	.route-column {
+		flex: auto;
 	}
 
 	.scrollable {
@@ -99,4 +104,9 @@ a:hover {
 }
 .selected a {
 	font-weight: bold;
+}
+
+#timing-container > ul {
+	list-style: none;
+	padding: 0;
 }
