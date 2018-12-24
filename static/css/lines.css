@@ -14,7 +14,6 @@
 	padding: 5px 0;
 	text-align: center;
 }
-
 .lines .lines-wrapper a.subway {
 	display: block;
 }
@@ -24,8 +23,19 @@
 	color: white;
 }
 .lines .lines-wrapper a.selected {
-	background-color: green;
 	color: white;
+}
+.lines .lines-wrapper a.trolley.selected {
+	background-color: blue;
+}
+.lines .lines-wrapper a.tram.selected {
+	background-color: orange;
+}
+.lines .lines-wrapper a.bus.selected {
+	background-color: red;
+}
+.lines .lines-wrapper a.subway.selected {
+	background-color: green;
 }
 
 .lines strong::before {
