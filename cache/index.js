@@ -15,59 +15,54 @@ const get = async (url) => {
 	});
 };
 
-const cacheFile = (() => {
-	const baseUrl = 'https://routes.sofiatraffic.bg/resources';
-	return async (file) => {
-		const response = await get(`${baseUrl}/${file}`);
-		await fs.writeFile(`static/cache/${file}`, response);
-	};
-})();
+const cacheFile = async (file) => {
+	const response = await get(`https://routes.sofiatraffic.bg/resources/${file}`);
+	await fs.writeFile(`static/cache/${file}`, response);
+};
 
-const loadSubwayStopTimetable = (() => {
-	// TODO: 6621 means weekday, support everything
-	const baseUrl = 'https://schedules.sofiatraffic.bg/server/html/schedule_load/6621';
-	return async (route, stopCode) => {
-		const response = await get(`${baseUrl}/${route}/${stopCode}`);
-		const timetable = response.match(/[0-9]{1,2}:[0-9]{2}/g);
-		return timetable;
-	};
-})();
+const loadSubwayStopTimetable = async (schedule, route, stopCode) => {
+	const response = await get(`https://schedules.sofiatraffic.bg/server/html/schedule_load/${schedule}/${route}/${stopCode}`);
+	return response.match(/[0-9]{1,2}:[0-9]{2}/g);
+};
 
 const loadSubway = async () => {
 	const response = await get(`https://schedules.sofiatraffic.bg/metro/1`);
 
 	let match;
 
-	const routesList = [];
+	const routes = {};
 	const routeRegex = /href="\/metro\/1#direction\/([0-9]*)[^>]*>\s*<span>([^<]*)/g;
 	while(match = routeRegex.exec(response)) {
-		const [, routeId, routeName] = match;
-		routesList.push({routeId, routeName});
+		const [, id, name] = match;
+		routes[id] = {name};
 	}
 
-	const routes = {};
 	const stopRegex = /href="\/metro\/1#sign\/([0-9]*)\/([0-9]*)"[^>]*>([^<]*)/g;
 	while(match = stopRegex.exec(response)) {
-		const [, routeId, stopCode, stopName] = match;
-		if(routes.hasOwnProperty(routeId)) {
-			routes[routeId].push(stopCode);
+		const [, route, stopCode, stopName] = match;
+		if(!routes.hasOwnProperty(route)) {
+			console.error(`Subway has no route ${route}!`);
+		} else if(routes[route].hasOwnProperty('codes')) {
+			routes[route].codes.push(stopCode);
 		} else {
-			routes[routeId] = [stopCode];
+			routes[route].codes = [stopCode];
 		}
 	}
 
+	// TODO: keep 2 timetables
 	const timetables = {};
 	for(const route in routes) {
-		for(const stopCode of routes[route]) {
+		for(const stopCode of routes[route].codes) {
 			console.log(`Downloading subway timetable for ${route}/${stopCode}`);
 			if(!timetables.hasOwnProperty(stopCode)) {
 				timetables[stopCode] = {};
 			}
-			timetables[stopCode][route] = await loadSubwayStopTimetable(route, stopCode);
+			// 6621 is for weekdays at the moment
+			timetables[stopCode][route] = await loadSubwayStopTimetable(6621, route, stopCode);
 		}
 	}
 
-	return {routesList, routes, timetables};
+	return {routes, timetables};
 };
 
 const load = async () => {

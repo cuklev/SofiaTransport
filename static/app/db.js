@@ -19,7 +19,7 @@ const db = (() => {
 		await cacheSubway();
 		routes.subway = {};
 		Object.entries(subway.routes)
-			.forEach(([route, codes]) => routes.subway[route] = [{codes}]);
+			.forEach(([route, {codes}]) => routes.subway[route] = [{codes}]);
 	};
 	const cacheStops = async () => {
 		if(stopsList) return;
@@ -39,7 +39,8 @@ const db = (() => {
 			buses: Object.keys(routes.bus),
 			trams: Object.keys(routes.tram),
 			trolleys: Object.keys(routes.trolley),
-			subway: subway.routesList
+			subway: Object.entries(subway.routes)
+				.map(([id, {name}]) => ({id, name})),
 		};
 	};
 	const getRoutes = async (type, number) => {
@@ -77,7 +78,7 @@ const db = (() => {
 		const startIndex = times.findIndex(t => now <= timeToInt(t));
 		const arrivals = times.slice(startIndex, startIndex + 8)
 			.map(time => ({time}));
-		const name = subway.routesList.find(x => x.routeId === route).routeName;
+		const {name} = subway.routes[route];
 		return {
 			arrivals,
 			name,
