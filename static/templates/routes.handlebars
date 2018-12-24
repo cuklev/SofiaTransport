@@ -1,9 +1,9 @@
 <h2 class="centered">{{transport}} {{name}}</h2>
-<div class="columns">
+<div class="block columns">
 	{{#each routes}}
-		<div class="column">
+		<div class="block rows">
 			<h3 class="centered">{{routename}}</h3>
-			<div class="scrollable">
+			<div class="padded block scrollable">
 				<ol>
 					{{#each this}}
 						<li data-stop-code="{{code}}">

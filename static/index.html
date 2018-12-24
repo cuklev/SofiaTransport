@@ -10,29 +10,32 @@
 		<link rel="stylesheet" href="./css/lines.css">
 	</head>
 
-	<body>
-		<section class="search-wrapper">
+	<body class="rows">
+		<section class="padded search-wrapper columns">
 			<label for="global-search">
 				Търсене:
 			</label>
-			<input id="global-search" autofocus />
+			<input id="global-search" class="block" autofocus />
 		</section>
 
-		<div class="columns">
-			<div class="column">
+		<div class="block columns">
+			<div class="padded block">
 				<section id="lines-container"></section>
 				<section id="favourites-container"></section>
 			</div>
 
-			<section class="column" id="routes-container"></section>
+			<section id="routes-container" class="padded block rows"></section>
 
-			<div class="column">
-				<input type="checkbox" id="timing-format" checked />
-				<label for="timing-format">Групиране по линия</label>
-				<br>
-				<input type="checkbox" id="auto-poll" checked />
-				<label for="auto-poll">Auto poll</label>
-				<section id="timing-container"></section>
+			<div class="padded block rows">
+				<div>
+					<input type="checkbox" id="timing-format" checked />
+					<label for="timing-format">Групиране по линия</label>
+				</div>
+				<div>
+					<input type="checkbox" id="auto-poll" checked />
+					<label for="auto-poll">Auto poll</label>
+				</div>
+				<section id="timing-container" class="block rows"></section>
 			</div>
 		</div>
 

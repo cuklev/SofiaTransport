@@ -1,8 +1,22 @@
-.search-wrapper {
-	padding: 0 25px;
+body {
+	height: 100vh;
+	margin: 0;
 }
+.padded {
+	padding: 15px;
+}
+.centered {
+	text-align: center;
+}
+.hidden {
+	display: none;
+}
+.nowrap {
+	white-space: nowrap;
+}
+
 .search-wrapper label {
-	display: block;
+	margin-right: 15px;
 }
 .search-wrapper > label::before {
 	content: '';
@@ -11,10 +25,6 @@
 	background-image: url('../imgs/search.ico');
 	height: 24px;
 	width: 24px;
-}
-.search-wrapper input {
-	display: block;
-	width: 100%;
 }
 
 .tram {
@@ -33,15 +43,12 @@
 a {
 	text-decoration: none;
 }
-
-.centered {
-	text-align: center;
+a:hover {
+	background-color: lightgray;
+	color: black;
 }
-.hidden {
-	display: none;
-}
-.nowrap {
-	white-space: nowrap;
+.selected a {
+	font-weight: bold;
 }
 
 .fav-item {
@@ -61,17 +68,20 @@ a {
 }
 
 @media(min-width:768px) {
+	.rows {
+		display: flex;
+		flex-direction: column;
+	}
 	.columns {
 		display: flex;
 	}
-	.column {
-		padding: 1%;
+	.block {
 		flex: auto;
 	}
 
 	.scrollable {
 		overflow: auto;
-		height: 65vh;
+		height: 0;
 	}
 }
 
@@ -84,14 +94,6 @@ a {
 
 .timestamp {
 	color: rgb(96, 96, 96);
-}
-
-a:hover {
-	background-color: lightgray;
-	color: black;
-}
-.selected a {
-	font-weight: bold;
 }
 
 #timing-container > ul {
