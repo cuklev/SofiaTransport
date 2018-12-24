@@ -42,9 +42,12 @@ const loadSubway = async () => {
 		routes[id] = {name};
 	}
 
-	const stopRegex = /href="\/metro\/1#sign\/([0-9]*)\/([0-9]*)"[^>]*>([^<]*)/g;
+	const stopRegex = /id="schedule_([0-9]*)_direction_([0-9]*)_sign_([0-9]*)_stop"/g;
 	while(match = stopRegex.exec(response)) {
-		const [, route, stopCode, stopName] = match;
+		const [, schedule, route, stopCode] = match;
+		if(schedule !== schedules.weekday) {
+			continue;
+		}
 		if(!routes.hasOwnProperty(route)) {
 			console.error(`Subway has no route ${route}!`);
 		} else if(routes[route].hasOwnProperty('codes')) {
