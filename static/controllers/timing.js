@@ -81,6 +81,7 @@ const timingInit = (container, formatCheckbox, autoPoll) => {
 	const pollNow = () => {
 		if(autoPoll.checked && document.hasFocus()) {
 			const code = router.getStopcode();
+			if(!code) return;
 			const [type, name] = router.getLine();
 			get(code, type, name);
 			pollTimeout = setTimeout(pollNow, 15000);
