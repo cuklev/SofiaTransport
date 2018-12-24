@@ -69,14 +69,16 @@ const db = (() => {
 	};
 	const getSubwayTimetable = async (code) => {
 		await Promise.all([cacheStops(), cacheSubway()]);
-		if(!subway.timetables.hasOwnProperty(code)) {
-			return;
-		}
 
 		const now = new Date();
 		const nowInt = now.getHours() * 60 + now.getMinutes();
 
-		const lines = Object.entries(subway.timetables[code])
+		const timetableVariant = (now.getDay() === 0 || now.getDay() === 6) ? 'weekend' : 'weekday';
+		if(!subway.timetables[timetableVariant].hasOwnProperty(code)) {
+			return;
+		}
+
+		const lines = Object.entries(subway.timetables[timetableVariant][code])
 			.map(([route, times]) => {
 				const startIndex = times.findIndex(t => nowInt <= timeToInt(t));
 				const arrivals = times.slice(startIndex, startIndex + 8) // I like 8

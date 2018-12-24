@@ -30,6 +30,11 @@ const loadSubway = async () => {
 
 	let match;
 
+	const schedules = {
+		weekday: response.match(/id="schedule_([0-9]*)_content"[^>]*>\n\s*<h3>делник/)[1],
+		weekend: response.match(/id="schedule_([0-9]*)_content"[^>]*>\n\s*<h3>предпразник/)[1],
+	};
+
 	const routes = {};
 	const routeRegex = /href="\/metro\/1#direction\/([0-9]*)[^>]*>\s*<span>([^<]*)/g;
 	while(match = routeRegex.exec(response)) {
@@ -49,16 +54,16 @@ const loadSubway = async () => {
 		}
 	}
 
-	// TODO: keep 2 timetables
-	const timetables = {};
-	for(const route in routes) {
-		for(const stopCode of routes[route].codes) {
-			console.log(`Downloading subway timetable for ${route}/${stopCode}`);
-			if(!timetables.hasOwnProperty(stopCode)) {
-				timetables[stopCode] = {};
+	const timetables = {weekday: {}, weekend: {}};
+	for(const schedName in schedules) {
+		for(const route in routes) {
+			for(const stopCode of routes[route].codes) {
+				console.log(`Downloading subway timetable for ${schedName}/${route}/${stopCode}`);
+				if(!timetables[schedName].hasOwnProperty(stopCode)) {
+					timetables[schedName][stopCode] = {};
+				}
+				timetables[schedName][stopCode][route] = await loadSubwayStopTimetable(schedules[schedName], route, stopCode);
 			}
-			// 6621 is for weekdays at the moment
-			timetables[stopCode][route] = await loadSubwayStopTimetable(6621, route, stopCode);
 		}
 	}
 
