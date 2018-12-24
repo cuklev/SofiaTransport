@@ -1,5 +1,15 @@
 const request = require('request');
-const fs = require('fs').promises;
+const fs = (() => {
+	const fs1 = require('fs');
+	if(fs1.promises) {
+		return fs1.promises;
+	}
+	// Node < 10 does not have fs.promises
+	return {
+		writeFile: (file, body) => new Promise((resolve, reject) => fs1.writeFile(file, body, err => err ? reject(err) : resolve())),
+		mkdir: (dir, opts) => new Promise((resolve, reject) => fs1.mkdir(dir, opts, err => err ? reject(err) : resolve())),
+	};
+})();
 
 const get = async (url) => {
 	const options = {
