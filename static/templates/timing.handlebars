@@ -1,9 +1,9 @@
 <h2>{{name}} ({{code}})</h2>
 <button onclick="favouritesController.add('{{code}}', '{{name}}')">Add to favourites</button>
-<div class="timestamp">Calculated at {{timestamp}}</div>
+<div class="timestamp nowrap">Calculated at {{timestamp}}</div>
 <ul class="times-grouped scrollable">
 	{{#each grouped}}
-		<li>
+		<li class="nowrap">
 			<a class="{{vehicle_type}}" href="#{{../code}}/{{vehicle_type}}/{{name}}">{{name}}</a>
 			<ul>
 				{{#each arrivals}}
@@ -31,7 +31,7 @@
 </ul>
 <ul class="times-listed scrollable">
 	{{#each listed}}
-		<li>
+		<li class="nowrap">
 			{{time}} &rarr;
 			<a class="{{type}}" href="#{{../code}}/{{type}}/{{name}}">{{name}}</a>
 			<span class="features">

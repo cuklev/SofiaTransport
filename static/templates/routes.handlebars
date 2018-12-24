@@ -1,5 +1,5 @@
 <h2 class="centered">{{transport}} {{name}}</h2>
-<div class="route-columns">
+<div class="columns">
 	{{#each routes}}
 		<div class="route-column">
 			<h3 class="centered">{{routename}}</h3>
@@ -7,7 +7,7 @@
 				<ol>
 					{{#each this}}
 						<li data-stop-code="{{code}}">
-							<a href="#{{code}}/{{../../type}}/{{../../name}}">
+							<a class="nowrap" href="#{{code}}/{{../../type}}/{{../../name}}">
 								{{name}} ({{code}})
 							</a>
 						</li>

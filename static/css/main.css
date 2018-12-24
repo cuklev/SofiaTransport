@@ -37,9 +37,11 @@ a {
 .centered {
 	text-align: center;
 }
-
 .hidden {
 	display: none;
+}
+.nowrap {
+	white-space: nowrap;
 }
 
 .fav-item {
@@ -59,25 +61,12 @@ a {
 }
 
 @media(min-width:768px) {
-	.column-timing, .column-lines, .column-routes {
-		float: left;
-		padding: 1%;
-	}
-
-	.column-timing {
-		width: 20%;
-	}
-	.column-lines {
-		width: 30%;
-	}
-	.column-routes {
-		width: 44%;
-	}
-
-	.route-columns {
+	.columns {
 		display: flex;
 	}
-	.route-column {
+
+	.column-timing, .column-lines, .column-routes, .route-column {
+		padding: 1%;
 		flex: auto;
 	}
 

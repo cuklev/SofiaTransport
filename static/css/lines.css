@@ -9,8 +9,7 @@
 
 .lines .lines-wrapper a.blocks {
 	float: left;
-	width: 10%;
-	min-width: 30px;
+	width: 50px;
 	padding: 5px 0;
 	text-align: center;
 }
