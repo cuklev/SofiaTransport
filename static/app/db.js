@@ -70,18 +70,25 @@ const db = (() => {
 	const getSubwayTimetable = async (code) => {
 		await Promise.all([cacheStops(), cacheSubway()]);
 
-		const now = new Date();
+		// if your clock is wrong... sorry
+		const now = new Date;
+		// get yesterday's timetable if it is before 2:00
+		const earlierDay = new Date(now - 1000 * 3600 * 2).getDay();
 		const nowInt = now.getHours() * 60 + now.getMinutes();
+		const laterInt = nowInt + 60; // Show timetable for one hour from now
 
-		const timetableVariant = (now.getDay() === 0 || now.getDay() === 6) ? 'weekend' : 'weekday';
+		const timetableVariant = (earlierDay === 0 || earlierDay === 6) ? 'weekend' : 'weekday';
 		if(!subway.timetables[timetableVariant].hasOwnProperty(code)) {
 			return;
 		}
 
 		const lines = Object.entries(subway.timetables[timetableVariant][code])
 			.map(([route, times]) => {
-				const startIndex = times.findIndex(t => nowInt <= timeToInt(t));
-				const arrivals = times.slice(startIndex, startIndex + 8) // I like 8
+				const timesAsInt = times
+					.map(timeToInt)
+					// Adjust times after 23:59
+					.map((t, i, ts) => (i > 0 && ts[i - 1] > t) ? t + 24 * 60 : t);
+				const arrivals = times.filter((_, i) => nowInt <= timesAsInt[i] && timesAsInt[i] < laterInt)
 					.map(time => ({time}));
 				const {name} = subway.routes[route];
 				return {
