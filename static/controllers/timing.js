@@ -32,7 +32,9 @@ const timingInit = (container, formatCheckbox, autoPoll) => {
 	const getTiming = async (code) => {
 		const subwayTimetable = await db.getSubwayTimetable(code);
 		// subway does not stop where other transport types do
-		if(subwayTimetable) return subwayTimetable;
+		if(subwayTimetable) {
+			return subwayTimetable;
+		}
 		return sumc.getTiming(code);
 	};
 

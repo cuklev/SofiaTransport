@@ -67,35 +67,32 @@ const db = (() => {
 		const [hours, minutes] = time.split(':');
 		return hours * 60 + +minutes;
 	};
-	const nowInt = () => {
-		// if your clock is wrong... sorry
-		const now = new Date();
-		return now.getHours() * 60 + now.getMinutes();
-	};
-
-	const transformTimes = ([route, times]) => {
-		const now = nowInt();
-		const startIndex = times.findIndex(t => now <= timeToInt(t));
-		const arrivals = times.slice(startIndex, startIndex + 8)
-			.map(time => ({time}));
-		const {name} = subway.routes[route];
-		return {
-			arrivals,
-			name,
-			vehicle_type: 'subway',
-		};
-	};
 	const getSubwayTimetable = async (code) => {
 		await Promise.all([cacheStops(), cacheSubway()]);
 		if(!subway.timetables.hasOwnProperty(code)) {
 			return;
 		}
+
+		const now = new Date();
+		const nowInt = now.getHours() * 60 + now.getMinutes();
+
 		const lines = Object.entries(subway.timetables[code])
-			.map(transformTimes);
+			.map(([route, times]) => {
+				const startIndex = times.findIndex(t => nowInt <= timeToInt(t));
+				const arrivals = times.slice(startIndex, startIndex + 8) // I like 8
+					.map(time => ({time}));
+				const {name} = subway.routes[route];
+				return {
+					arrivals,
+					name,
+					vehicle_type: 'subway',
+				};
+			});
 		return {
 			name: stops[code].n,
 			code,
 			lines,
+			timestamp_calculated: now.toISOString().replace(/T/, ' ').replace(/\..*/, ''),
 		};
 	};
 
