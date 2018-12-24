@@ -2,7 +2,7 @@ const searchInit = (input, container) => {
 	const loadStops = async (str) => {
 		const [template, stops] = await Promise.all([
 			templates.get('search'),
-			(str.length > 0 ? db.searchStops(str) : [])
+			db.searchStops(str)
 		]);
 		const data = {
 			results: stops,
@@ -12,6 +12,15 @@ const searchInit = (input, container) => {
 	};
 
 	input.addEventListener('keyup', (e) => {
-		loadStops(input.value);
+		if(input.value.length > 0) {
+			loadStops(input.value);
+		} else {
+			const [type, name] = router.getLine();
+			if(type && name) {
+				routesController.get(type, name);
+			} else {
+				container.innerHTML = '';
+			}
+		}
 	});
 };
