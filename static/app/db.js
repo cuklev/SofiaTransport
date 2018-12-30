@@ -1,40 +1,52 @@
 const db = (() => {
-	let routesList, stopsList;
-	const routes = {}, stops = {};
-	let subway;
-
-	const cacheSubway = async () => {
-		if(subway) return;
-		subway = await request.getJSON('cache/subway.json');
-	};
-	const collectRoutes = (routes) => {
-		const result = {};
-		routes.forEach(({name, routes}) => result[name] = routes);
-		return result;
-	};
-	const cacheRoutes = async () => {
-		if(routesList) return;
-		routesList = await request.getJSON('cache/routes.json');
-		routesList.forEach(({type, lines}) => routes[type] = collectRoutes(lines));
-		await cacheSubway();
-		routes.subway = {};
-		Object.entries(subway.routes)
-			.forEach(([route, {codes}]) => routes.subway[route] = [{codes}]);
-	};
-	const cacheStops = async () => {
-		if(stopsList) return;
-		stopsList = await request.getJSON('cache/stops-bg.json');
-		stopsList.forEach(({c, ...rest}) => stops[c] = rest);
-	};
+	const getSubway = (() => {
+		let subway;
+		return async () => {
+			if(!subway) {
+				subway = await request.getJSON('cache/subway.json');
+			}
+			return subway;
+		};
+	})();
+	const getRoutes = (() => {
+		let routes;
+		const collectRoutes = (routes) => {
+			const result = {};
+			routes.forEach(({name, routes}) => result[name] = routes);
+			return result;
+		};
+		return async () => {
+			if(!routes) {
+				const routesList = await request.getJSON('cache/routes.json');
+				routes = {subway: {}};
+				routesList.forEach(({type, lines}) => routes[type] = collectRoutes(lines));
+				const subway = await getSubway();
+				Object.entries(subway.routes)
+					.forEach(([route, {codes}]) => routes.subway[route] = [{codes}]);
+			}
+			return routes;
+		};
+	})();
+	const getStops = (() => {
+		let stops;
+		return async () => {
+			if(!stops) {
+				const stopsList = await request.getJSON('cache/stops-bg.json');
+				stops = {};
+				stopsList.forEach(({c, ...rest}) => stops[c] = rest);
+			}
+			return stops;
+		};
+	})();
 
 	const getStopname = async (code) => {
-		await cacheStops();
+		const stops = await getStops();
 		while(code.length < 4)
 			code = '0' + code;
 		return stops[code].n;
 	};
 	const getLines = async () => {
-		await Promise.all([cacheRoutes(), cacheSubway()]);
+		const [routes, subway] = await Promise.all([getRoutes(), getSubway()]);
 		return {
 			buses: Object.keys(routes.bus),
 			trams: Object.keys(routes.tram),
@@ -43,8 +55,8 @@ const db = (() => {
 				.map(([id, {name}]) => ({id, name})),
 		};
 	};
-	const getRoutes = async (type, number) => {
-		await Promise.all([cacheRoutes(), cacheStops(), cacheSubway()]);
+	const getLineRoutes = async (type, number) => {
+		const [routes, stops] = await Promise.all([getRoutes(), getStops()]);
 		const pairWithName = (code) => ({
 			code,
 			name: stops[code].n,
@@ -53,10 +65,12 @@ const db = (() => {
 	};
 	// const getPoints = (function(line) {
 	const searchStops = async (searchString) => {
-		await cacheStops();
+		const stops = await getStops();
 		const words = searchString.match(/\S+/g)
 			.map(w => w.toUpperCase());
-		return stopsList.filter(({n, c}) => {
+		return Object.entries(stops)
+			.map(([c, {n}]) => ({c, n}))
+			.filter(({n, c}) => {
 			const nu = n.toUpperCase();
 			return c.indexOf(searchString) >= 0
 				|| words.every(w => nu.indexOf(w) >= 0);
@@ -68,7 +82,7 @@ const db = (() => {
 		return hours * 60 + +minutes;
 	};
 	const getSubwayTimetable = async (code) => {
-		await Promise.all([cacheStops(), cacheSubway()]);
+		const [routes, subway] = await Promise.all([getRoutes(), getSubway()]);
 
 		// if your clock is wrong... sorry
 		const now = new Date;
@@ -108,7 +122,7 @@ const db = (() => {
 	return {
 		getStopname,
 		getLines,
-		getRoutes,
+		getLineRoutes,
 		searchStops,
 		getSubwayTimetable,
 	};
