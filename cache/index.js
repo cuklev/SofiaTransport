@@ -30,12 +30,7 @@ const cacheFile = async (file) => {
 	await fs.writeFile(`static/cache/${file}`, response);
 };
 
-const loadSubwayStopTimetable = async (schedule, route, stopCode) => {
-	const response = await get(`https://schedules.sofiatraffic.bg/server/html/schedule_load/${schedule}/${route}/${stopCode}`);
-	return response.match(/[0-9]{1,2}:[0-9]{2}/g);
-};
-
-const loadSubway = async () => {
+const loadSubwayRoutes = async () => {
 	const response = await get(`https://schedules.sofiatraffic.bg/metro/1`);
 
 	let match;
@@ -67,6 +62,10 @@ const loadSubway = async () => {
 		}
 	}
 
+	return {schedules, routes};
+};
+
+const loadSubwayTimetables = async (schedules, routes) => {
 	const timetables = {weekday: {}, weekend: {}};
 	for(const schedName in schedules) {
 		for(const route in routes) {
@@ -75,12 +74,13 @@ const loadSubway = async () => {
 				if(!timetables[schedName].hasOwnProperty(stopCode)) {
 					timetables[schedName][stopCode] = {};
 				}
-				timetables[schedName][stopCode][route] = await loadSubwayStopTimetable(schedules[schedName], route, stopCode);
+				const response = await get(`https://schedules.sofiatraffic.bg/server/html/schedule_load/${schedules[schedName]}/${route}/${stopCode}`);
+				timetables[schedName][stopCode][route] = response.match(/[0-9]{1,2}:[0-9]{2}/g);
 			}
 		}
 	}
 
-	return {routes, timetables};
+	return timetables;
 };
 
 const load = async () => {
@@ -90,7 +90,11 @@ const load = async () => {
 	await cacheFile('stops-bg.json');
 	console.log('Cached stops-bg.json');
 
-	const subway = await loadSubway();
+	const {schedules: subwaySchedules, routes: subwayRoutes} = await loadSubwayRoutes();
+	const subway = {
+		routes: subwayRoutes,
+		timetables: await loadSubwayTimetables(subwaySchedules, subwayRoutes),
+	};
 	await fs.writeFile(`static/cache/subway.json`, JSON.stringify(subway));
 	console.log('Cached subway.json');
 };
