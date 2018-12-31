@@ -3,26 +3,16 @@ const db = (() => {
 		let subway;
 		return async () => {
 			if(!subway) {
-				subway = await request.getJSON('cache/subway.json');
+				subway = await request.getJSON('cache/subway-timetables.json');
 			}
 			return subway;
 		};
 	})();
 	const getRoutes = (() => {
 		let routes;
-		const collectRoutes = (routes) => {
-			const result = {};
-			routes.forEach(({name, routes}) => result[name] = routes);
-			return result;
-		};
 		return async () => {
 			if(!routes) {
-				const routesList = await request.getJSON('cache/routes.json');
-				routes = {subway: {}};
-				routesList.forEach(({type, lines}) => routes[type] = collectRoutes(lines));
-				const subway = await getSubway();
-				Object.entries(subway.routes)
-					.forEach(([route, {codes}]) => routes.subway[route] = [{codes}]);
+				routes = await request.getJSON('cache/routes.json');
 			}
 			return routes;
 		};
@@ -46,13 +36,13 @@ const db = (() => {
 		return stops[code].n;
 	};
 	const getLines = async () => {
-		const [routes, subway] = await Promise.all([getRoutes(), getSubway()]);
+		const routes = await getRoutes();
 		return {
 			buses: Object.keys(routes.bus),
 			trams: Object.keys(routes.tram),
 			trolleys: Object.keys(routes.trolley),
-			subway: Object.entries(subway.routes)
-				.map(([id, {name}]) => ({id, name})),
+			subway: Object.entries(routes.subwayNames)
+				.map(([id, name]) => ({id, name})),
 		};
 	};
 	const getLineRoutes = async (type, number) => {
@@ -82,7 +72,7 @@ const db = (() => {
 		return hours * 60 + +minutes;
 	};
 	const getSubwayTimetable = async (code) => {
-		const [routes, subway] = await Promise.all([getRoutes(), getSubway()]);
+		const [routes, stops, subway] = await Promise.all([getRoutes(), getStops(), getSubway()]);
 
 		// if your clock is wrong... sorry
 		const now = new Date;
@@ -92,11 +82,11 @@ const db = (() => {
 		const laterInt = nowInt + 60; // Show timetable for one hour from now
 
 		const timetableVariant = (earlierDay === 0 || earlierDay === 6) ? 'weekend' : 'weekday';
-		if(!subway.timetables[timetableVariant].hasOwnProperty(code)) {
+		if(!subway[timetableVariant].hasOwnProperty(code)) {
 			return;
 		}
 
-		const lines = Object.entries(subway.timetables[timetableVariant][code])
+		const lines = Object.entries(subway[timetableVariant][code])
 			.map(([route, times]) => {
 				const timesAsInt = times
 					.map(timeToInt)
@@ -104,10 +94,9 @@ const db = (() => {
 					.map((t, i, ts) => (i > 0 && ts[i - 1] > t) ? t + 24 * 60 : t);
 				const arrivals = times.filter((_, i) => nowInt <= timesAsInt[i] && timesAsInt[i] < laterInt)
 					.map(time => ({time}));
-				const {name} = subway.routes[route];
 				return {
 					arrivals,
-					name,
+					name: routes.subwayNames[route],
 					vehicle_type: 'subway',
 				};
 			});
