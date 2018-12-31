@@ -9,7 +9,7 @@ const routesInit = (container) => {
 	const get = async (type, name) => {
 		const [template, routes] = await Promise.all([
 			templates.get('routes'),
-			db.getRoutes(type, name)
+			db.getLineRoutes(type, name)
 		]);
 
 		routes.forEach(x => x.routename = x[0].name + ' - ' + x[x.length - 1].name);

@@ -1,50 +1,35 @@
 const db = (() => {
-	let routesList, stopsList;
-	const routes = {}, stops = {};
-	let subway;
-
-	const cacheSubway = async () => {
-		if(subway) return;
-		subway = await request.getJSON('cache/subway.json');
+	const getAndCache = (url) => {
+		let cache;
+		return async () => {
+			if(!cache) {
+				cache = await request.getJSON(url);
+			}
+			return cache;
+		};
 	};
-	const collectRoutes = (routes) => {
-		const result = {};
-		routes.forEach(({name, routes}) => result[name] = routes);
-		return result;
-	};
-	const cacheRoutes = async () => {
-		if(routesList) return;
-		routesList = await request.getJSON('cache/routes.json');
-		routesList.forEach(({type, lines}) => routes[type] = collectRoutes(lines));
-		await cacheSubway();
-		routes.subway = {};
-		Object.entries(subway.routes)
-			.forEach(([route, {codes}]) => routes.subway[route] = [{codes}]);
-	};
-	const cacheStops = async () => {
-		if(stopsList) return;
-		stopsList = await request.getJSON('cache/stops-bg.json');
-		stopsList.forEach(({c, ...rest}) => stops[c] = rest);
-	};
+	const getRoutes = getAndCache('cache/routes.json');
+	const getStops = getAndCache('cache/stops-bg.json');
+	const getSubway = getAndCache('cache/subway-timetables.json');
 
 	const getStopname = async (code) => {
-		await cacheStops();
+		const stops = await getStops();
 		while(code.length < 4)
 			code = '0' + code;
 		return stops[code].n;
 	};
 	const getLines = async () => {
-		await Promise.all([cacheRoutes(), cacheSubway()]);
+		const routes = await getRoutes();
 		return {
 			buses: Object.keys(routes.bus),
 			trams: Object.keys(routes.tram),
 			trolleys: Object.keys(routes.trolley),
-			subway: Object.entries(subway.routes)
-				.map(([id, {name}]) => ({id, name})),
+			subway: Object.entries(routes.subwayNames)
+				.map(([id, name]) => ({id, name})),
 		};
 	};
-	const getRoutes = async (type, number) => {
-		await Promise.all([cacheRoutes(), cacheStops(), cacheSubway()]);
+	const getLineRoutes = async (type, number) => {
+		const [routes, stops] = await Promise.all([getRoutes(), getStops()]);
 		const pairWithName = (code) => ({
 			code,
 			name: stops[code].n,
@@ -53,10 +38,12 @@ const db = (() => {
 	};
 	// const getPoints = (function(line) {
 	const searchStops = async (searchString) => {
-		await cacheStops();
+		const stops = await getStops();
 		const words = searchString.match(/\S+/g)
 			.map(w => w.toUpperCase());
-		return stopsList.filter(({n, c}) => {
+		return Object.entries(stops)
+			.map(([c, {n}]) => ({c, n}))
+			.filter(({n, c}) => {
 			const nu = n.toUpperCase();
 			return c.indexOf(searchString) >= 0
 				|| words.every(w => nu.indexOf(w) >= 0);
@@ -68,7 +55,7 @@ const db = (() => {
 		return hours * 60 + +minutes;
 	};
 	const getSubwayTimetable = async (code) => {
-		await Promise.all([cacheStops(), cacheSubway()]);
+		const [routes, stops, subway] = await Promise.all([getRoutes(), getStops(), getSubway()]);
 
 		// if your clock is wrong... sorry
 		const now = new Date;
@@ -78,11 +65,11 @@ const db = (() => {
 		const laterInt = nowInt + 60; // Show timetable for one hour from now
 
 		const timetableVariant = (earlierDay === 0 || earlierDay === 6) ? 'weekend' : 'weekday';
-		if(!subway.timetables[timetableVariant].hasOwnProperty(code)) {
+		if(!subway[timetableVariant].hasOwnProperty(code)) {
 			return;
 		}
 
-		const lines = Object.entries(subway.timetables[timetableVariant][code])
+		const lines = Object.entries(subway[timetableVariant][code])
 			.map(([route, times]) => {
 				const timesAsInt = times
 					.map(timeToInt)
@@ -90,10 +77,9 @@ const db = (() => {
 					.map((t, i, ts) => (i > 0 && ts[i - 1] > t) ? t + 24 * 60 : t);
 				const arrivals = times.filter((_, i) => nowInt <= timesAsInt[i] && timesAsInt[i] < laterInt)
 					.map(time => ({time}));
-				const {name} = subway.routes[route];
 				return {
 					arrivals,
-					name,
+					name: routes.subwayNames[route],
 					vehicle_type: 'subway',
 				};
 			});
@@ -108,7 +94,7 @@ const db = (() => {
 	return {
 		getStopname,
 		getLines,
-		getRoutes,
+		getLineRoutes,
 		searchStops,
 		getSubwayTimetable,
 	};
