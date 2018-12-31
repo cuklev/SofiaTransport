@@ -1,31 +1,16 @@
 const db = (() => {
-	const getSubway = (() => {
-		let subway;
+	const getAndCache = (url) => {
+		let cache;
 		return async () => {
-			if(!subway) {
-				subway = await request.getJSON('cache/subway-timetables.json');
+			if(!cache) {
+				cache = await request.getJSON(url);
 			}
-			return subway;
+			return cache;
 		};
-	})();
-	const getRoutes = (() => {
-		let routes;
-		return async () => {
-			if(!routes) {
-				routes = await request.getJSON('cache/routes.json');
-			}
-			return routes;
-		};
-	})();
-	const getStops = (() => {
-		let stops;
-		return async () => {
-			if(!stops) {
-				stops = await request.getJSON('cache/stops-bg.json');
-			}
-			return stops;
-		};
-	})();
+	};
+	const getRoutes = getAndCache('cache/routes.json');
+	const getStops = getAndCache('cache/stops-bg.json');
+	const getSubway = getAndCache('cache/subway-timetables.json');
 
 	const getStopname = async (code) => {
 		const stops = await getStops();
