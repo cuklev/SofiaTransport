@@ -21,9 +21,7 @@ const db = (() => {
 		let stops;
 		return async () => {
 			if(!stops) {
-				const stopsList = await request.getJSON('cache/stops-bg.json');
-				stops = {};
-				stopsList.forEach(({c, ...rest}) => stops[c] = rest);
+				stops = await request.getJSON('cache/stops-bg.json');
 			}
 			return stops;
 		};

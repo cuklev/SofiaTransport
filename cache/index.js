@@ -94,7 +94,10 @@ const load = async () => {
 		const response = await get(`https://routes.sofiatraffic.bg/resources/${file}`);
 		await fs.writeFile(`static/cache/${file}`, response);
 	};
-	await cacheFile('stops-bg.json');
+
+	const stops = JSON.parse(await get(`https://routes.sofiatraffic.bg/resources/stops-bg.json`))
+		.reduce((r, {c, ...rest}) => Object.assign(r, {[c]: rest}), {});
+	await fs.writeFile(`static/cache/stops-bg.json`, JSON.stringify(stops));
 	console.log('Cached stops-bg.json');
 
 	const subwayTimetables = await loadSubwayTimetables(subway.schedules, subway.routes);
