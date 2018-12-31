@@ -105,13 +105,4 @@ const load = async () => {
 	console.log('Cached subway-timetables.json');
 };
 
-const setReload = (timeout) => {
-	const reload = () => load()
-		.then(() => setTimeout(reload, timeout));
-	reload();
-};
-
-module.exports = {
-	load,
-	setReload,
-};
+module.exports = load;
