@@ -81,19 +81,17 @@ const loadSubwayTimetables = async (schedules, routes) => {
 
 const load = async () => {
 	await fs.mkdir('static/cache', {recursive: true});
-	const routesList = JSON.parse(await get(`https://routes.sofiatraffic.bg/resources/routes.json`));
+
 	const collect = routes => routes.reduce((r, {name, routes}) => Object.assign(r, {[name]: routes}), {});
-	const routes = routesList.reduce((r, {type, lines}) => Object.assign(r, {[type]: collect(lines)}), {});
+	const routes = JSON.parse(await get(`https://routes.sofiatraffic.bg/resources/routes.json`))
+		.reduce((r, {type, lines}) => Object.assign(r, {[type]: collect(lines)}), {});
+
 	const subway = await loadSubwayRoutes();
 	routes.subway = subway.routes;
 	routes.subwayNames = subway.routeNames;
+
 	await fs.writeFile(`static/cache/routes.json`, JSON.stringify(routes));
 	console.log('Cached routes.json');
-
-	const cacheFile = async (file) => {
-		const response = await get(`https://routes.sofiatraffic.bg/resources/${file}`);
-		await fs.writeFile(`static/cache/${file}`, response);
-	};
 
 	const stops = JSON.parse(await get(`https://routes.sofiatraffic.bg/resources/stops-bg.json`))
 		.reduce((r, {c, ...rest}) => Object.assign(r, {[c]: rest}), {});
