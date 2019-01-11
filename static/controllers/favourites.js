@@ -56,7 +56,7 @@ const favouritesInit = (container, STORAGE_KEY) => {
 			const stopcode = li.getAttribute('data-stop-code');
 			const input = document.createElement('input');
 			const ahref = li.querySelector('a[href]');
-			input.value = ahref.innerHTML.trim();
+			input.value = ahref.innerText.trim();
 
 			input.addEventListener('blur', e => rename(e.target, stopcode));
 			input.addEventListener('keyup', e => {
