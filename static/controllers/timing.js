@@ -12,7 +12,7 @@ const timingInit = (container, formatCheckbox, autoPoll) => {
 			});
 		});
 
-		const rank(time) = () => {
+		const rank = (time) => {
 			time = time.replace(/:/g, '');
 			return time.startsWith('0') ? `9${time}` : time;
 		};
