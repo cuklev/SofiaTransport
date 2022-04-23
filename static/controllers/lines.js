@@ -8,10 +8,10 @@ const linesInit = (container, filterInput) => {
 	};
 
 	const filter = () => {
-		const prefix = filterInput.value;
+		const prefix = filterInput.value.toUpperCase();
 		const nodes = document.querySelectorAll('.lines a');
 		nodes.forEach(element => {
-			const lineName = element.getAttribute('data-line-name') || '';
+			const lineName = element.innerHTML.toUpperCase();
 
 			if(lineName.indexOf(prefix) === -1) {
 				element.classList.add('hidden');
