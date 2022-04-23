@@ -12,7 +12,11 @@ const timingInit = (container, formatCheckbox, autoPoll) => {
 			});
 		});
 
-		return listed.sort((a, b) => a.time.replace(/:/g, '') - b.time.replace(/:/g, ''));
+		const rank(time) = () => {
+			time = time.replace(/:/g, '');
+			return time.startsWith('0') ? `9${time}` : time;
+		};
+		return listed.sort((a, b) => rank(a.time) - rank(b.time));
 	};
 
 	const setTimingFormat = () => {
