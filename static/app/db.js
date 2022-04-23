@@ -32,9 +32,9 @@ const db = (() => {
 		const [routes, stops] = await Promise.all([getRoutes(), getStops()]);
 		const pairWithName = (code) => ({
 			code,
-			name: stops[code].n,
+			name: stops[code] ? stops[code].n : 0,
 		});
-		return routes[type][number].map(x => x.codes.map(pairWithName));
+		return routes[type][number].map(x => x.codes.map(pairWithName).filter(x => x.name));
 	};
 	// const getPoints = (function(line) {
 	const searchStops = async (searchString) => {
