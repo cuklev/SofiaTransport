@@ -85,6 +85,17 @@ const loadSubway = async (subwayLine) => {
 	return subway;
 }
 
+const getAllSubwayLines = async () => {
+	const response = await get(`https://schedules.sofiatraffic.bg/`);
+	const regex = /href="metro\/([^"]*)"/g;
+	const lines = new Set;
+	let match;
+	while(match = regex.exec(response)) {
+		lines.add(match[1]);
+	}
+	return lines;
+}
+
 const load = async () => {
 	await fs.mkdir('static/cache', {recursive: true});
 
@@ -95,7 +106,8 @@ const load = async () => {
 	routes.subway = {};
 	routes.subwayNames = {};
 	const subwayTimetables = {weekday: {}, weekend: {}};
-	for(const subwayLine of ['M1-M2', 'M3']) {
+	const subwayLines = await getAllSubwayLines();
+	for(const subwayLine of subwayLines) {
 		const subway = await loadSubway(subwayLine);
 		Object.assign(routes.subway, subway.routes);
 		Object.assign(routes.subwayNames, subway.routeNames);
