@@ -1,6 +1,6 @@
 const cache = require('./cache');
 const loadCache = () => cache()
-	.then(() => setTimeout(reload, 24 * 60 * 60 * 1000)) // 1 day
+	.then(() => setTimeout(loadCache, 24 * 60 * 60 * 1000)) // 1 day
 	.catch(() => setTimeout(loadCache, 10 * 60 * 1000)); // 10 minutes
 loadCache();
 
