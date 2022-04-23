@@ -26,7 +26,8 @@ const get = async (url) => {
 };
 
 const loadSubwayRoutes = async () => {
-	const response = await get(`https://schedules.sofiatraffic.bg/metro/1`);
+	const subwayName = 'M1-M2';
+	const response = await get(`https://schedules.sofiatraffic.bg/metro/${subwayName}`);
 
 	let match;
 
@@ -37,7 +38,7 @@ const loadSubwayRoutes = async () => {
 
 	const routes = {};
 	const routeNames = {};
-	const routeRegex = /href="\/metro\/1#direction\/([0-9]*)[^>]*>\s*<span>([^<]*)/g;
+	const routeRegex = RegExp(`href="\/metro\/${subwayName}#direction\/([0-9]*)[^>]*>\\s*<span>([^<]*)`, 'g');
 	while(match = routeRegex.exec(response)) {
 		const [, id, name] = match;
 		routes[id] = [{codes: []}];
