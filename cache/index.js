@@ -25,8 +25,7 @@ const get = async (url) => {
 	});
 };
 
-const loadSubwayRoutes = async () => {
-	const subwayName = 'M1-M2';
+const loadSubwayRoutes = async (subwayName) => {
 	const response = await get(`https://schedules.sofiatraffic.bg/metro/${subwayName}`);
 
 	let match;
@@ -80,6 +79,12 @@ const loadSubwayTimetables = async (schedules, routes) => {
 	return timetables;
 };
 
+const loadSubway = async (subwayLine) => {
+	const subway = await loadSubwayRoutes(subwayLine);
+	subway.timetables = await loadSubwayTimetables(subway.schedules, subway.routes);
+	return subway;
+}
+
 const load = async () => {
 	await fs.mkdir('static/cache', {recursive: true});
 
@@ -87,9 +92,16 @@ const load = async () => {
 	const routes = JSON.parse(await get(`https://routes.sofiatraffic.bg/resources/routes.json`))
 		.reduce((r, {type, lines}) => Object.assign(r, {[type]: collect(lines)}), {});
 
-	const subway = await loadSubwayRoutes();
-	routes.subway = subway.routes;
-	routes.subwayNames = subway.routeNames;
+	routes.subway = {};
+	routes.subwayNames = {};
+	const subwayTimetables = {weekday: {}, weekend: {}};
+	for(const subwayLine of ['M1-M2', 'M3']) {
+		const subway = await loadSubway(subwayLine);
+		Object.assign(routes.subway, subway.routes);
+		Object.assign(routes.subwayNames, subway.routeNames);
+		Object.assign(subwayTimetables.weekday, subway.timetables.weekday);
+		Object.assign(subwayTimetables.weekend, subway.timetables.weekend);
+	}
 
 	await fs.writeFile(`static/cache/routes.json`, JSON.stringify(routes));
 	console.log('Cached routes.json');
@@ -99,7 +111,6 @@ const load = async () => {
 	await fs.writeFile(`static/cache/stops-bg.json`, JSON.stringify(stops));
 	console.log('Cached stops-bg.json');
 
-	const subwayTimetables = await loadSubwayTimetables(subway.schedules, subway.routes);
 	await fs.writeFile(`static/cache/subway-timetables.json`, JSON.stringify(subwayTimetables));
 	console.log('Cached subway-timetables.json');
 };
