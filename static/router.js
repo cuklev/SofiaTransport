@@ -3,7 +3,8 @@ const routerInit = () => {
 
 	const parse = () => location.hash
 		.substr(1)
-		.split(/\//g);
+		.split(/\//g)
+		.map(decodeURIComponent);
 
 	const navigate = () => {
 		const [code, type, name] = parse();
