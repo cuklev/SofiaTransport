@@ -62,7 +62,7 @@ const db = (() => {
 		// get yesterday's timetable if it is before 2:00
 		const earlierDay = new Date(now - 1000 * 3600 * 2).getDay();
 		const nowInt = now.getHours() * 60 + now.getMinutes();
-		const laterInt = nowInt + 60; // Show timetable for one hour from now
+		const laterInt = nowInt + 240; // Show timetable for 4 hours from now
 
 		const timetableVariant = (earlierDay === 0 || earlierDay === 6) ? 'weekend' : 'weekday';
 		if(!subway[timetableVariant].hasOwnProperty(code)) {
