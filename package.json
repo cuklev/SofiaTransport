@@ -4,11 +4,10 @@
   "description": "The aim of this project is to display schedules and ETAs of Sofia City Transport busses in a (hopefully) more meaningful way.",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.13.4",
-    "handlebars": "^4.0.11",
-    "request": "^2.72.0"
+    "express": "^4.18.3",
+    "handlebars": "^4.7.8",
+    "request": "^2.88.2"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
