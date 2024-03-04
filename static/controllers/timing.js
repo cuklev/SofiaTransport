@@ -1,4 +1,13 @@
 const timingInit = (container, formatCheckbox, autoPoll) => {
+	const timeRank = (time, has2) => {
+		time = time.replace(/:/g, '');
+		return has2 && time.startsWith('0') ? `9${time}` : time;
+	};
+	const sortByTime = (arrivals) => {
+		const has2 = arrivals.some(x => x.time.startsWith('2'));
+		arrivals.sort((a, b) => timeRank(a.time, has2) - timeRank(b.time, has2));
+	};
+
 	const listTimings = (grouped) => {
 		const listed = [];
 		grouped.forEach((line) => {
@@ -12,11 +21,8 @@ const timingInit = (container, formatCheckbox, autoPoll) => {
 			});
 		});
 
-		const rank = (time) => {
-			time = time.replace(/:/g, '');
-			return time.startsWith('0') ? `9${time}` : time;
-		};
-		return listed.sort((a, b) => rank(a.time) - rank(b.time));
+		sortByTime(listed);
+		return listed;
 	};
 
 	const setTimingFormat = () => {
@@ -52,6 +58,7 @@ const timingInit = (container, formatCheckbox, autoPoll) => {
 		const listed = listTimings(grouped);
 
 		grouped.sort((a, b) => a.id - b.id);
+		grouped.forEach(line => sortByTime(line.arrivals));
 
 		const index = grouped.findIndex(x => x.vehicle_type === type && x.id === id);
 		if(index >= 0 && grouped.length > 0) {
