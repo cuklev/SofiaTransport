@@ -42,7 +42,7 @@ const timingInit = (container, formatCheckbox, autoPoll) => {
 		return sumc.getTiming(code);
 	};
 
-	const get = async (code, type, name) => {
+	const get = async (code, type, id) => {
 		const [template, timings] = await Promise.all([
 			templates.get('timing'),
 			getTiming(code)
@@ -51,9 +51,9 @@ const timingInit = (container, formatCheckbox, autoPoll) => {
 		let grouped = timings.lines;
 		const listed = listTimings(grouped);
 
-		grouped.sort((a, b) => a.name - b.name);
+		grouped.sort((a, b) => a.id - b.id);
 
-		const index = grouped.findIndex(x => x.vehicle_type === type && x.name === name);
+		const index = grouped.findIndex(x => x.vehicle_type === type && x.id === id);
 		if(index >= 0 && grouped.length > 0) {
 			const viewed = grouped.splice(index, 1);
 			viewed[0].separate = true;
@@ -72,11 +72,11 @@ const timingInit = (container, formatCheckbox, autoPoll) => {
 		setTimingFormat();
 	};
 
-	const load = (code, type, name) => {
+	const load = (code, type, id) => {
 		const loading = document.createElement('H3');
 		loading.innerHTML = `Loading timings for stop ${code}`;
 		container.insertBefore(loading, container.firstChild);
-		get(code, type, name);
+		get(code, type, id);
 	};
 
 	formatCheckbox.addEventListener('change', setTimingFormat);

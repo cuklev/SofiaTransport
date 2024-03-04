@@ -4,7 +4,7 @@
 <ul class="times-grouped scrollable block">
 	{{#each grouped}}
 		<li class="nowrap">
-			<a class="{{vehicle_type}}" href="#{{../code}}/{{vehicle_type}}/{{name}}">{{name}}</a>
+			<a class="{{vehicle_type}}" href="#{{../code}}/{{vehicle_type}}/{{id}}">{{name}}</a>
 			<ul>
 				{{#each arrivals}}
 					{{#if this}}
@@ -33,7 +33,7 @@
 	{{#each listed}}
 		<li class="nowrap">
 			{{time}} &rarr;
-			<a class="{{type}}" href="#{{../code}}/{{type}}/{{name}}">{{name}}</a>
+			<a class="{{type}}" href="#{{../code}}/{{type}}/{{id}}">{{name}}</a>
 			<span class="features">
 				{{#if is_wheelchair_accessible}}
 					<img src="https://www.sofiatraffic.bg/svg/wheelchair.svg" title="Инвалидна количка" />

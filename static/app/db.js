@@ -79,6 +79,7 @@ const db = (() => {
 					.map(time => ({time}));
 				return {
 					arrivals,
+					id: route,
 					name: routes.subwayNames[route],
 					vehicle_type: 'subway',
 				};
