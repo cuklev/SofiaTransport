@@ -1,4 +1,3 @@
-const request = require('request');
 const fs = (() => {
 	const fs1 = require('fs');
 	if(fs1.promises) {
@@ -12,21 +11,25 @@ const fs = (() => {
 })();
 
 const get = async (url) => {
-	const options = {
-		method: 'get',
-		url
-	};
+	const res = await fetch(url);
+	if (!res.ok) {
+		throw res.statusText;
+	}
+	return res;
+};
 
-	return new Promise((resolve, reject) => {
-		request(options, (err, res, body) => {
-			if(err) reject(err);
-			resolve(body);
-		});
-	});
+const getText = async (url) => {
+	const res = await get(url);
+	return res.text();
+};
+
+const getJson = async (url) => {
+	const res = await get(url);
+	return res.json();
 };
 
 const loadSubwayRoutes = async (subwayName) => {
-	const response = await get(`https://schedules.sofiatraffic.bg/metro/${subwayName}`);
+	const response = await getText(`https://schedules.sofiatraffic.bg/metro/${subwayName}`);
 
 	let match;
 
@@ -70,7 +73,7 @@ const loadSubwayTimetables = async (schedules, routes) => {
 				if(!timetables[schedName].hasOwnProperty(stopCode)) {
 					timetables[schedName][stopCode] = {};
 				}
-				const response = await get(`https://schedules.sofiatraffic.bg/server/html/schedule_load/${schedules[schedName]}/${routeId}/${stopCode}`);
+				const response = await getText(`https://schedules.sofiatraffic.bg/server/html/schedule_load/${schedules[schedName]}/${routeId}/${stopCode}`);
 				timetables[schedName][stopCode][routeId] = response.match(/[0-9]{1,2}:[0-9]{2}/g);
 			}
 		}
@@ -86,7 +89,7 @@ const loadSubway = async (subwayLine) => {
 }
 
 const getAllSubwayLines = async () => {
-	const response = await get(`https://schedules.sofiatraffic.bg/`);
+	const response = await getText(`https://schedules.sofiatraffic.bg/`);
 	const regex = /href="metro\/([^"]*)"/g;
 	const lines = new Set;
 	let match;
@@ -100,7 +103,7 @@ const load = async () => {
 	await fs.mkdir('static/cache', {recursive: true});
 
 	const collect = routes => routes.reduce((r, {name, routes}) => Object.assign(r, {[name]: routes}), {});
-	const routes = JSON.parse(await get(`https://routes.sofiatraffic.bg/resources/routes.json`))
+	const routes = await getJson(`https://routes.sofiatraffic.bg/resources/routes.json`)
 		.reduce((r, {type, lines}) => Object.assign(r, {[type]: collect(lines)}), {});
 
 	routes.subway = {};
@@ -118,7 +121,7 @@ const load = async () => {
 	await fs.writeFile(`static/cache/routes.json`, JSON.stringify(routes));
 	console.log('Cached routes.json');
 
-	const stops = JSON.parse(await get(`https://routes.sofiatraffic.bg/resources/stops-bg.json`))
+	const stops = await getJson(`https://routes.sofiatraffic.bg/resources/stops-bg.json`)
 		.reduce((r, {c, ...rest}) => Object.assign(r, {[c]: rest}), {});
 	await fs.writeFile(`static/cache/stops-bg.json`, JSON.stringify(stops));
 	console.log('Cached stops-bg.json');
