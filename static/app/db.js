@@ -8,6 +8,7 @@ const db = (() => {
 			return cache;
 		};
 	};
+	const getLines = getAndCache('cache/lines.json');
 	const getRoutes = getAndCache('cache/routes.json');
 	const getStops = getAndCache('cache/stops-bg.json');
 	const getSubway = getAndCache('cache/subway-timetables.json');
@@ -17,16 +18,6 @@ const db = (() => {
 		while(code.length < 4)
 			code = '0' + code;
 		return stops[code].n;
-	};
-	const getLines = async () => {
-		const routes = await getRoutes();
-		return {
-			buses: Object.keys(routes.bus),
-			trams: Object.keys(routes.tram),
-			trolleys: Object.keys(routes.trolley),
-			subway: Object.entries(routes.subwayNames)
-				.map(([id, name]) => ({id, name})),
-		};
 	};
 	const getLineRoutes = async (type, number) => {
 		const [routes, stops] = await Promise.all([getRoutes(), getStops()]);
