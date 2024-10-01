@@ -11,14 +11,7 @@ const db = (() => {
 	const getLines = getAndCache('cache/lines.json');
 	const getStops = getAndCache('cache/stops.json');
 	const getRoutes = getAndCache('cache/routes.json');
-	const getSubway = getAndCache('cache/subway-timetables.json');
 
-	const getStopname = async (code) => {
-		const stops = await getStops();
-		while(code.length < 4)
-			code = '0' + code;
-		return stops[code].n;
-	};
 	const getLineRoutes = async (type, number) => {
 		const [routes, stops] = await Promise.all([getRoutes(), getStops()]);
 		const pairWithName = (code) => ({
@@ -28,53 +21,9 @@ const db = (() => {
 		return routes[type][number].map(x => x.codes.map(pairWithName).filter(x => x.name));
 	};
 
-	const timeToInt = time => {
-		const [hours, minutes] = time.split(':');
-		return hours * 60 + +minutes;
-	};
-	const getSubwayTimetable = async (code) => {
-		const [routes, stops, subway] = await Promise.all([getRoutes(), getStops(), getSubway()]);
-
-		// if your clock is wrong... sorry
-		const now = new Date;
-		// get yesterday's timetable if it is before 2:00
-		const earlierDay = new Date(now - 1000 * 3600 * 2).getDay();
-		const nowInt = now.getHours() * 60 + now.getMinutes();
-		const laterInt = nowInt + 240; // Show timetable for 4 hours from now
-
-		const timetableVariant = (earlierDay === 0 || earlierDay === 6) ? 'weekend' : 'weekday';
-		if(!subway[timetableVariant].hasOwnProperty(code)) {
-			return;
-		}
-
-		const lines = Object.entries(subway[timetableVariant][code])
-			.map(([route, times]) => {
-				const timesAsInt = times
-					.map(timeToInt)
-					// Adjust times after 23:59
-					.map((t, i, ts) => (i > 0 && ts[i - 1] > t) ? t + 24 * 60 : t);
-				const arrivals = times.filter((_, i) => nowInt <= timesAsInt[i] && timesAsInt[i] < laterInt)
-					.map(time => ({time}));
-				return {
-					arrivals,
-					id: route,
-					name: routes.subwayNames[route],
-					vehicle_type: 'subway',
-				};
-			});
-		return {
-			name: stops[code].n,
-			code,
-			lines,
-			timestamp_calculated: now.toISOString().replace(/T/, ' ').replace(/\..*/, ''),
-		};
-	};
-
 	return {
 		getLines,
 		getStops,
-		getStopname,
 		getLineRoutes,
-		getSubwayTimetable,
 	};
 })();
