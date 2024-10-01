@@ -28,10 +28,18 @@ const getJson = async (url) => {
 	return res.json();
 };
 
+const tokens = {};
+
 const getCache = async () => {
 	await fs.mkdir('static/cache', {recursive: true});
 
-	const html = await getText('https://www.sofiatraffic.bg/bg/public-transport');
+	const response = await get('https://www.sofiatraffic.bg/bg/public-transport');
+	const cookies = response.headers.get('set-cookie');
+	tokens.xsrf = cookies.match(/XSRF-TOKEN=([^;]*)/)[1];
+	tokens.session = cookies.match(/sofia_traffic_session=([^;]*)/)[1];
+	console.log('Obtained cookies');
+
+	const html = await response.text();
 	const dataPage = html.split('data-page="')[1].split('"')[0];
 	const data = JSON.parse(dataPage.replace(/&quot;/g, '"'));
 
@@ -48,9 +56,9 @@ const getCache = async () => {
 	await fs.writeFile('static/cache/lines.json', JSON.stringify(transports));
 	console.log('Updated lines cache');
 
-	const stops = [];
+	const stops = {};
 	for (const {name, code} of data.props.stops) {
-		stops.push({name, code});
+		stops[code] = name;
 	}
 
 	await fs.writeFile('static/cache/stops.json', JSON.stringify(stops));
@@ -67,4 +75,12 @@ const init = async () => {
 	}
 };
 
-module.exports = { init };
+const getSessionHeaders = () => {
+	return {
+		'Content-Type': 'application/json',
+		'X-XSRF-TOKEN': decodeURIComponent(tokens.xsrf),
+		'Cookie': `sofia_traffic_session=${tokens.session}`
+	};
+};
+
+module.exports = { init, getSessionHeaders };

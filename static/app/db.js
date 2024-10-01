@@ -27,18 +27,6 @@ const db = (() => {
 		});
 		return routes[type][number].map(x => x.codes.map(pairWithName).filter(x => x.name));
 	};
-	// const getPoints = (function(line) {
-	const searchStops = async (searchString) => {
-		const stops = await getStops();
-		const words = searchString.match(/\S+/g)
-			.map(w => w.toUpperCase());
-		return stops
-			.filter(({name, code}) => {
-			const nu = name.toUpperCase();
-			return code.indexOf(searchString) >= 0
-				|| words.every(w => nu.indexOf(w) >= 0);
-		});
-	};
 
 	const timeToInt = time => {
 		const [hours, minutes] = time.split(':');
@@ -83,10 +71,10 @@ const db = (() => {
 	};
 
 	return {
-		getStopname,
 		getLines,
+		getStops,
+		getStopname,
 		getLineRoutes,
-		searchStops,
 		getSubwayTimetable,
 	};
 })();
