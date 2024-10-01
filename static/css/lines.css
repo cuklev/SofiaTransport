@@ -33,6 +33,9 @@
 .lines .lines-wrapper a.bus.selected {
 	background-color: red;
 }
+.lines .lines-wrapper a.nightbus.selected {
+	background-color: purple;
+}
 .lines .lines-wrapper a.subway.selected {
 	background-color: green;
 }

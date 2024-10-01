@@ -29,6 +29,7 @@ const getJson = async (url) => {
 };
 
 const tokens = {};
+const extIds = new Map;
 
 const getCache = async () => {
 	await fs.mkdir('static/cache', {recursive: true});
@@ -43,12 +44,14 @@ const getCache = async () => {
 	const dataPage = html.split('data-page="')[1].split('"')[0];
 	const data = JSON.parse(dataPage.replace(/&quot;/g, '"'));
 
+	extIds.clear();
 	const transports = {};
 	for (const type of data.props.transportTypes) {
 		const lines = [];
 		transports[type.name] = lines;
 
 		for (const transport of data.props.linesByType[type.id]) {
+			extIds.set(`${type.id}@${transport.name}`, transport.ext_id);
 			lines.push(transport.name);
 		}
 	}
@@ -83,4 +86,12 @@ const getSessionHeaders = () => {
 	};
 };
 
-module.exports = { init, getSessionHeaders };
+const getExtId = (type, name) => {
+	return extIds.get(`${type}@${name}`);
+};
+
+module.exports = {
+	init,
+	getSessionHeaders,
+	getExtId
+};

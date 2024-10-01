@@ -1,11 +1,13 @@
 const sumc = (() => {
-	const baseUrl = 'api';
-
 	const getTiming = async (code) => {
-		return await request.getJSON(`${baseUrl}/timing/${code}`);
+		return await request.getJSON(`api/timing/${code}`);
+	};
+	const getRoute = async (type, name) => {
+		return await request.getJSON(`api/route/${type}/${name}`);
 	};
 
 	return {
 		getTiming,
+		getRoute
 	};
 })();

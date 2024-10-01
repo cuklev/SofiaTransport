@@ -2,22 +2,29 @@ const routesInit = (container) => {
 	const transportType = {
 		tram: 'Трамвай',
 		bus: 'Автобус',
+		nightbus: 'Нощен автобус',
 		trolley: 'Тролейбус',
 		subway: 'Метро',
 	};
 
 	const get = async (type, name) => {
-		const [template, routes] = await Promise.all([
+		const [template, routes, stops] = await Promise.all([
 			templates.get('routes'),
-			db.getLineRoutes(type, name)
+			sumc.getRoute(type, name),
+			db.getStops()
 		]);
 
-		routes.forEach(x => x.routename = x[0].name + ' - ' + x[x.length - 1].name);
 		const data = {
-			routes,
 			type,
-			transport: transportType[type],
+			typeName: transportType[type],
 			name,
+			routes: routes.map(route => ({
+				name: route.name,
+				stops: route.stops.map(code => ({
+					code,
+					name: stops[code]
+				}))
+			}))
 		};
 		container.innerHTML = template(data);
 	};
