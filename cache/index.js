@@ -47,6 +47,14 @@ const getCache = async () => {
 
 	await fs.writeFile('static/cache/lines.json', JSON.stringify(transports));
 	console.log('Updated lines cache');
+
+	const stops = [];
+	for (const {name, code} of data.props.stops) {
+		stops.push({name, code});
+	}
+
+	await fs.writeFile('static/cache/stops.json', JSON.stringify(stops));
+	console.log('Updated stops cache');
 };
 
 const init = async () => {

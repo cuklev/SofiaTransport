@@ -9,8 +9,8 @@ const db = (() => {
 		};
 	};
 	const getLines = getAndCache('cache/lines.json');
+	const getStops = getAndCache('cache/stops.json');
 	const getRoutes = getAndCache('cache/routes.json');
-	const getStops = getAndCache('cache/stops-bg.json');
 	const getSubway = getAndCache('cache/subway-timetables.json');
 
 	const getStopname = async (code) => {
@@ -32,11 +32,10 @@ const db = (() => {
 		const stops = await getStops();
 		const words = searchString.match(/\S+/g)
 			.map(w => w.toUpperCase());
-		return Object.entries(stops)
-			.map(([c, {n}]) => ({c, n}))
-			.filter(({n, c}) => {
-			const nu = n.toUpperCase();
-			return c.indexOf(searchString) >= 0
+		return stops
+			.filter(({name, code}) => {
+			const nu = name.toUpperCase();
+			return code.indexOf(searchString) >= 0
 				|| words.every(w => nu.indexOf(w) >= 0);
 		});
 	};
