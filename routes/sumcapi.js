@@ -1,4 +1,4 @@
-const {getSessionHeaders, getExtId} = require('../cache');
+const {getSessionHeaders, getExtId, getStopType} = require('../cache');
 
 const timingUrl = 'https://www.sofiatraffic.bg/bg/trip/getVirtualTable';
 const timingHandler = async (req, res) => {
@@ -8,7 +8,7 @@ const timingHandler = async (req, res) => {
 		headers: getSessionHeaders(),
 		body: JSON.stringify({
 			stop: code,
-			type: 1
+			type: getStopType(code)
 		})
 	});
 	if (!result.ok) {

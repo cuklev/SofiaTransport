@@ -30,6 +30,7 @@ const getJson = async (url) => {
 
 const tokens = {};
 const extIds = new Map;
+const stopTypes = new Map;
 
 const getCache = async () => {
 	await fs.mkdir('static/cache', {recursive: true});
@@ -60,8 +61,10 @@ const getCache = async () => {
 	console.log('Updated lines cache');
 
 	const stops = {};
-	for (const {name, code} of data.props.stops) {
+	stopTypes.clear();
+	for (const {name, code, type} of data.props.stops) {
 		stops[code] = name;
+		stopTypes.set(code, type);
 	}
 
 	await fs.writeFile('static/cache/stops.json', JSON.stringify(stops));
@@ -90,8 +93,13 @@ const getExtId = (type, name) => {
 	return extIds.get(`${type}@${name}`);
 };
 
+const getStopType = (code) => {
+	return stopTypes.get(code) || 1;
+};
+
 module.exports = {
 	init,
 	getSessionHeaders,
-	getExtId
+	getExtId,
+	getStopType
 };
