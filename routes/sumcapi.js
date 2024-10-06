@@ -21,6 +21,7 @@ const timingHandler = async (req, res) => {
 };
 
 const schedulesUrl = 'https://www.sofiatraffic.bg/bg/trip/getSchedule'
+
 const transportTypes = {
 	bus: 1,
 	tram: 2,
@@ -28,27 +29,37 @@ const transportTypes = {
 	trolley: 4,
 	nightbus: 5
 };
+
+const routesCache = new Map;
+setInterval(() => routesCache.clear(), 191*60*1000); // clear routes cache every ~3 hours
+
 const routesHandler = async (req, res) => {
 	const {type, name} = req.params;
 	const typeNum = transportTypes[type] || type;
-	const result = await fetch(schedulesUrl, {
-		method: 'POST',
-		headers: getSessionHeaders(),
-		body: JSON.stringify({
-			ext_id: getExtId(typeNum, name)
-		})
-	});
-	if (!result.ok) {
-		console.error(`Error: ${result.statusText}`);
-		throw res.statusText;
-	}
 
-	const data = await result.json();
-	const routes = data.routes.map(route => ({
-		name: route.name,
-		stops: route.segments.map(segment => segment.stop.code)
-	}));
-	res.send(JSON.stringify(routes));
+	const key = `${typeNum}@${name}`;
+	if (!routesCache.has(key)) {
+		const result = await fetch(schedulesUrl, {
+			method: 'POST',
+			headers: getSessionHeaders(),
+			body: JSON.stringify({
+				ext_id: getExtId(typeNum, name)
+			})
+		});
+		if (!result.ok) {
+			console.error(`Error: ${result.statusText}`);
+			throw res.statusText;
+		}
+
+		const data = await result.json();
+		const routes = data.routes.map(route => ({
+			name: route.name,
+			stops: route.segments.map(segment => segment.stop.code)
+		}));
+
+		routesCache.set(key, JSON.stringify(routes));
+	}
+	res.send(routesCache.get(key));
 };
 
 module.exports = router => router
