@@ -18,16 +18,6 @@ const get = async (url) => {
 	return res;
 };
 
-const getText = async (url) => {
-	const res = await get(url);
-	return res.text();
-};
-
-const getJson = async (url) => {
-	const res = await get(url);
-	return res.json();
-};
-
 const tokens = {};
 const extIds = new Map;
 const stopTypes = new Map;
