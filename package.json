@@ -4,7 +4,7 @@
   "description": "The aim of this project is to display schedules and ETAs of Sofia City Transport busses in a (hopefully) more meaningful way.",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.18.3",
+    "express": "^4.21.0",
     "handlebars": "^4.7.8"
   },
   "scripts": {
