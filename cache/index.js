@@ -45,6 +45,18 @@ const getCache = async () => {
 			extIds.set(`${type.id}@${transport.name}`, transport.ext_id);
 			lines.push(transport.name);
 		}
+
+		lines.sort((a, b) => {
+			const aLetters = a.replace(/[0-9]/g, '');
+			const bLetters = b.replace(/[0-9]/g, '');
+			const letterCmp = aLetters.localeCompare(bLetters);
+			if (letterCmp !== 0) {
+				return letterCmp;
+			}
+			const aNum = a.replace(/[^0-9]/g, '');
+			const bNum = b.replace(/[^0-9]/g, '');
+			return aNum - bNum;
+		});
 	}
 
 	await fs.writeFile('static/cache/lines.json', JSON.stringify(transports));
