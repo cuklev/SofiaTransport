@@ -52,10 +52,18 @@ const routesHandler = async (req, res) => {
 		}
 
 		const data = await result.json();
-		const routes = data.routes.map(route => ({
-			name: route.name,
-			stops: route.segments.map(segment => segment.stop.code)
-		}));
+		const routes = data.routes.map(route => {
+			let {name} = route;
+			if (typeNum == transportTypes.subway) {
+				const firstStop = route.segments[0].stop.name;
+				const lastStop = route.segments[route.segments.length-1].stop.name;
+				name = `${firstStop} - ${lastStop}`;
+			}
+			return {
+				name,
+				stops: route.segments.map(segment => segment.stop.code)
+			};
+		});
 
 		routesCache.set(key, JSON.stringify(routes));
 	}
