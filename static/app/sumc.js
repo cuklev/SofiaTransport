@@ -1,13 +1,13 @@
 const sumc = (() => {
-	const baseUrl = 'api';
-
 	const getTiming = async (code) => {
-		const timings = await request.getJSON(`${baseUrl}/timing/${code}`);
-		timings.lines.forEach(x => x.id = x.name);
-		return timings;
+		return await request.getJSON(`api/timing/${code}`);
+	};
+	const getRoute = async (type, name) => {
+		return await request.getJSON(`api/route/${type}/${name}`);
 	};
 
 	return {
 		getTiming,
+		getRoute
 	};
 })();

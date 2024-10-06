@@ -18,116 +18,90 @@ const get = async (url) => {
 	return res;
 };
 
-const getText = async (url) => {
-	const res = await get(url);
-	return res.text();
-};
+const tokens = {};
+const extIds = new Map;
+const stopTypes = new Map;
 
-const getJson = async (url) => {
-	const res = await get(url);
-	return res.json();
-};
-
-const loadSubwayRoutes = async (subwayName) => {
-	const response = await getText(`https://schedules.sofiatraffic.bg/metro/${subwayName}`);
-
-	let match;
-
-	const schedules = {
-		weekday: response.match(/id="schedule_([0-9]*)_content"[^>]*>\n\s*<h3>делник/)[1],
-		weekend: response.match(/id="schedule_([0-9]*)_content"[^>]*>\n\s*<h3>предпразник/)[1],
-	};
-
-	const routes = {};
-	const routeNames = {};
-	const routeRegex = RegExp(`href="\/metro\/${subwayName}#direction\/([0-9]*)[^>]*>\\s*<span>([^<]*)`, 'g');
-	while(match = routeRegex.exec(response)) {
-		const [, id, name] = match;
-		routes[id] = [{codes: []}];
-		routeNames[id] = name;
-	}
-
-	const stopRegex = /id="schedule_([0-9]*)_direction_([0-9]*)_sign_([0-9]*)_stop"/g;
-	while(match = stopRegex.exec(response)) {
-		const [, schedule, route, stopCode] = match;
-		if(schedule !== schedules.weekday) {
-			continue;
-		}
-		if(!routes.hasOwnProperty(route)) {
-			console.error(`Subway has no route ${route}!`);
-		} else {
-			routes[route][0].codes.push(stopCode);
-		}
-	}
-
-	return {schedules, routes, routeNames};
-};
-
-const loadSubwayTimetables = async (schedules, routes) => {
-	const timetables = {weekday: {}, weekend: {}};
-	for(const schedName in schedules) {
-		for(const route in routes) {
-			const routeId = route.replace(/;.*/, '');
-			for(const stopCode of routes[route][0].codes) {
-				console.log(`Downloading subway timetable for ${schedName}/${routeId}/${stopCode}`);
-				if(!timetables[schedName].hasOwnProperty(stopCode)) {
-					timetables[schedName][stopCode] = {};
-				}
-				const response = await getText(`https://schedules.sofiatraffic.bg/server/html/schedule_load/${schedules[schedName]}/${routeId}/${stopCode}`);
-				timetables[schedName][stopCode][routeId] = response.match(/[0-9]{1,2}:[0-9]{2}/g);
-			}
-		}
-	}
-
-	return timetables;
-};
-
-const loadSubway = async (subwayLine) => {
-	const subway = await loadSubwayRoutes(subwayLine);
-	subway.timetables = await loadSubwayTimetables(subway.schedules, subway.routes);
-	return subway;
-}
-
-const getAllSubwayLines = async () => {
-	const response = await getText(`https://schedules.sofiatraffic.bg/`);
-	const regex = /href="metro\/([^"]*)"/g;
-	const lines = new Set;
-	let match;
-	while(match = regex.exec(response)) {
-		lines.add(match[1]);
-	}
-	return lines;
-}
-
-const load = async () => {
+const getCache = async () => {
 	await fs.mkdir('static/cache', {recursive: true});
 
-	const collect = routes => routes.reduce((r, {name, routes}) => Object.assign(r, {[name]: routes}), {});
-	const routes = await getJson(`https://routes.sofiatraffic.bg/resources/routes.json`)
-		.reduce((r, {type, lines}) => Object.assign(r, {[type]: collect(lines)}), {});
+	const response = await get('https://www.sofiatraffic.bg/bg/public-transport');
+	const cookies = response.headers.get('set-cookie');
+	tokens.xsrf = cookies.match(/XSRF-TOKEN=([^;]*)/)[1];
+	tokens.session = cookies.match(/sofia_traffic_session=([^;]*)/)[1];
+	console.log('Obtained cookies');
 
-	routes.subway = {};
-	routes.subwayNames = {};
-	const subwayTimetables = {weekday: {}, weekend: {}};
-	const subwayLines = await getAllSubwayLines();
-	for(const subwayLine of subwayLines) {
-		const subway = await loadSubway(subwayLine);
-		Object.assign(routes.subway, subway.routes);
-		Object.assign(routes.subwayNames, subway.routeNames);
-		Object.assign(subwayTimetables.weekday, subway.timetables.weekday);
-		Object.assign(subwayTimetables.weekend, subway.timetables.weekend);
+	const html = await response.text();
+	const dataPage = html.split('data-page="')[1].split('"')[0];
+	const data = JSON.parse(dataPage.replace(/&quot;/g, '"'));
+
+	extIds.clear();
+	const transports = {};
+	for (const type of data.props.transportTypes) {
+		const lines = [];
+		transports[type.name] = lines;
+
+		for (const transport of data.props.linesByType[type.id]) {
+			extIds.set(`${type.id}@${transport.name}`, transport.ext_id);
+			lines.push(transport.name);
+		}
+
+		lines.sort((a, b) => {
+			const aLetters = a.replace(/[0-9]/g, '');
+			const bLetters = b.replace(/[0-9]/g, '');
+			const letterCmp = aLetters.localeCompare(bLetters);
+			if (letterCmp !== 0) {
+				return letterCmp;
+			}
+			const aNum = a.replace(/[^0-9]/g, '');
+			const bNum = b.replace(/[^0-9]/g, '');
+			return aNum - bNum;
+		});
 	}
 
-	await fs.writeFile(`static/cache/routes.json`, JSON.stringify(routes));
-	console.log('Cached routes.json');
+	await fs.writeFile('static/cache/lines.json', JSON.stringify(transports));
+	console.log('Updated lines cache');
 
-	const stops = await getJson(`https://routes.sofiatraffic.bg/resources/stops-bg.json`)
-		.reduce((r, {c, ...rest}) => Object.assign(r, {[c]: rest}), {});
-	await fs.writeFile(`static/cache/stops-bg.json`, JSON.stringify(stops));
-	console.log('Cached stops-bg.json');
+	const stops = {};
+	stopTypes.clear();
+	for (const {name, code, type} of data.props.stops) {
+		stops[code] = name;
+		stopTypes.set(code, type);
+	}
 
-	await fs.writeFile(`static/cache/subway-timetables.json`, JSON.stringify(subwayTimetables));
-	console.log('Cached subway-timetables.json');
+	await fs.writeFile('static/cache/stops.json', JSON.stringify(stops));
+	console.log('Updated stops cache');
 };
 
-module.exports = load;
+const init = async () => {
+	try {
+		await getCache();
+		setTimeout(init, 24*60*60*1000); // 1 day
+	} catch(e) {
+		console.error(e);
+		setTimeout(init, 10*60*1000); // 10 minutes
+	}
+};
+
+const getSessionHeaders = () => {
+	return {
+		'Content-Type': 'application/json',
+		'X-XSRF-TOKEN': decodeURIComponent(tokens.xsrf),
+		'Cookie': `sofia_traffic_session=${tokens.session}`
+	};
+};
+
+const getExtId = (type, name) => {
+	return extIds.get(`${type}@${name}`);
+};
+
+const getStopType = (code) => {
+	return stopTypes.get(code) || 1;
+};
+
+module.exports = {
+	init,
+	getSessionHeaders,
+	getExtId,
+	getStopType
+};

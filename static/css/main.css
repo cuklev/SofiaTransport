@@ -33,6 +33,9 @@ body {
 .bus {
 	color: red;
 }
+.nightbus {
+	color: purple;
+}
 .trolley {
 	color: blue;
 }

@@ -1,48 +1,45 @@
 <h2>{{name}} ({{code}})</h2>
 <button onclick="favouritesController.add('{{code}}', '{{name}}')">Запази</button>
-<div class="timestamp nowrap">Calculated at {{timestamp}}</div>
 <ul class="times-grouped scrollable block">
 	{{#each grouped}}
 		<li class="nowrap">
-			<a class="{{vehicle_type}}" href="#{{../code}}/{{vehicle_type}}/{{id}}">{{name}}</a>
+			<a class="{{type}}" href="#{{../code}}/{{type}}/{{name}}">{{name}} ({{route}})</a>
 			<ul>
 				{{#each arrivals}}
-					{{#if this}}
-						<li>
-							{{time}}
-							<span class="features">
-								{{#if is_wheelchair_accessible}}
-									<img src="https://www.sofiatraffic.bg/svg/wheelchair.svg" title="Инвалидна количка" />
-								{{/if}}
-								{{#if has_air_conditioning}}
-									<img src="https://www.sofiatraffic.bg/svg/air-conditioning.svg" title="Климатик" />
-								{{/if}}
-								{{#if has_wifi}}
-									<img src="https://www.sofiatraffic.bg/svg/wifi.svg" title="WiFi" />
-								{{/if}}
-							</span>
-						</li>
-					{{/if}}
+					<li>
+						{{t}} мин
+						<span class="features">
+							{{#if wheelchairs}}
+								<img src="https://www.sofiatraffic.bg/images/wheel.svg" title="Инвалидна количка" />
+							{{/if}}
+							{{#if ac}}
+								<img src="https://www.sofiatraffic.bg/images/snow.svg" title="Климатик" />
+							{{/if}}
+							{{#if bikes}}
+								<img src="https://www.sofiatraffic.bg/images/bike.svg" title="Място за велосипеди" />
+							{{/if}}
+						</span>
+					</li>
 				{{/each}}
 			</ul>
-			{{#if separate}}<hr/>{{/if}}
+			{{#if selected}}<hr/>{{/if}}
 		</li>
 	{{/each}}
 </ul>
 <ul class="times-listed scrollable block">
 	{{#each listed}}
 		<li class="nowrap">
-			{{time}} &rarr;
-			<a class="{{type}}" href="#{{../code}}/{{type}}/{{id}}">{{name}}</a>
+			{{t}} мин &rarr;
+			<a class="{{type}}" href="#{{../code}}/{{type}}/{{name}}">{{name}} ({{route}})</a>
 			<span class="features">
-				{{#if is_wheelchair_accessible}}
-					<img src="https://www.sofiatraffic.bg/svg/wheelchair.svg" title="Инвалидна количка" />
+				{{#if wheelchairs}}
+					<img src="https://www.sofiatraffic.bg/images/wheel.svg" title="Инвалидна количка" />
 				{{/if}}
-				{{#if has_air_conditioning}}
-					<img src="https://www.sofiatraffic.bg/svg/air-conditioning.svg" title="Климатик" />
+				{{#if ac}}
+					<img src="https://www.sofiatraffic.bg/images/snow.svg" title="Климатик" />
 				{{/if}}
-				{{#if has_wifi}}
-					<img src="https://www.sofiatraffic.bg/svg/wifi.svg" title="WiFi" />
+				{{#if bikes}}
+					<img src="https://www.sofiatraffic.bg/images/bike.svg" title="Място за велосипеди" />
 				{{/if}}
 			</span>
 		</li>
