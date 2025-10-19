@@ -62,7 +62,20 @@ const getRoutesCached = async (typeNum, name) => {
 	}
 
 	const data = await result.json();
-	const routes = data.routes.map(route => {
+	// Some routes are non-service (deadhead) - from depot to first/final stop or vice versa and no passengers are serviced.
+	// Deadhead routes are represented by empty string in 'setRoutes' and will be ignored.
+	// Other routes do service on the way to or from a depot and those routes will not be ignored.
+	const setRoutes = new Set(['']);
+	// Some routes are returned from the API twice.
+	// Both show exactly the same data, except the "id" property.
+	const uniqueRoutes = data.routes.filter(route => {
+		const stops = route.segments.map(segment => segment.stop.code).join('');
+		const routeIsNew = !setRoutes.has(stops);
+		setRoutes.add(stops);
+		return routeIsNew;
+	});
+
+	const routes = uniqueRoutes.map(route => {
 		let {id, name} = route;
 		if (typeNum == transportTypes.subway) {
 			const firstStop = route.segments[0].stop.name;
