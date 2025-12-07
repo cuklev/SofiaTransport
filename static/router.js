@@ -6,7 +6,7 @@ const routerInit = () => {
 		.split(/\//g)
 		.map(decodeURIComponent);
 
-	const navigate = () => {
+	const navigate = async () => {
 		const [code, type, name] = parse();
 
 		if(!code && oldState.code) {
@@ -21,26 +21,26 @@ const routerInit = () => {
 		const newCode = code && oldState.code !== code;
 		const newLine = type && name && (oldState.type !== type || oldState.name !== name);
 
-		if(newCode || (code && newLine)) {
-			oldState.code = code;
-			timingController.load(code, type, name);
-			window.scrollTo(0, document.querySelector('#timing-container').offsetTop);
-
-			document.querySelectorAll(`li[data-stop-code].selected`)
-				.forEach(x => x.classList.remove('selected'));
-			document.querySelectorAll(`li[data-stop-code="${code}"]`)
-				.forEach(x => x.classList.add('selected'));
-		}
-
 		if(newLine) {
 			oldState.type = type;
 			oldState.name = name;
-			routesController.get(type, name);
+			await routesController.get(type, name);
 			window.scrollTo(0, document.querySelector('#routes-container').offsetTop);
 
 			document.querySelectorAll(`a[data-line-name].selected`)
 				.forEach(x => x.classList.remove('selected'));
 			document.querySelectorAll(`a[data-line-name="${name}"].${type}`)
+				.forEach(x => x.classList.add('selected'));
+		}
+
+		if(newCode || (code && newLine)) {
+			oldState.code = code;
+			await timingController.load(code, type, name);
+			window.scrollTo(0, document.querySelector('#timing-container').offsetTop);
+
+			document.querySelectorAll(`li[data-stop-code].selected`)
+				.forEach(x => x.classList.remove('selected'));
+			document.querySelectorAll(`li[data-stop-code="${code}"]`)
 				.forEach(x => x.classList.add('selected'));
 		}
 	};
