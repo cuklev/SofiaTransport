@@ -30,9 +30,6 @@ a:hover {
 	background-color: gray;
 	color: white;
 }
-.selected a {
-	font-weight: bold;
-}
 
 @media(min-width:768px) {
 	.rows {

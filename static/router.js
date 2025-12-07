@@ -1,4 +1,6 @@
 const routerInit = () => {
+	const selectionStyles = document.querySelector('#selection-styles');
+
 	const oldState = {};
 
 	const parse = () => location.hash
@@ -26,23 +28,31 @@ const routerInit = () => {
 			oldState.name = name;
 			await routesController.get(type, name);
 			window.scrollTo(0, document.querySelector('#routes-container').offsetTop);
-
-			document.querySelectorAll(`a[data-line-name].selected`)
-				.forEach(x => x.classList.remove('selected'));
-			document.querySelectorAll(`a[data-line-name="${name}"].${type}`)
-				.forEach(x => x.classList.add('selected'));
 		}
 
 		if(newCode || (code && newLine)) {
 			oldState.code = code;
 			await timingController.load(code, type, name);
 			window.scrollTo(0, document.querySelector('#timing-container').offsetTop);
-
-			document.querySelectorAll(`li[data-stop-code].selected`)
-				.forEach(x => x.classList.remove('selected'));
-			document.querySelectorAll(`li[data-stop-code="${code}"]`)
-				.forEach(x => x.classList.add('selected'));
 		}
+
+		const styles = [];
+		if (type && name) {
+			styles.push(`
+.${type}[data-line-name="${name}"] {
+	background-color: var(--${type}-color);
+	color: white;
+}`);
+		}
+		if (code) {
+			styles.push(`
+[data-stop-code="${code}"] > a {
+	font-weight: bold;
+	text-decoration: underline;
+}`);
+		}
+
+		selectionStyles.innerText = styles.join('');
 	};
 
 	const setStopcode = (code) => {

@@ -9,39 +9,20 @@
 	text-align: center;
 }
 
-a.selected {
-	color: white;
-}
-
 .tram {
 	color: var(--tram-color);
-}
-.tram.selected {
-	background-color: var(--tram-color);
 }
 .bus {
 	color: var(--bus-color);
 }
-.bus.selected {
-	background-color: var(--bus-color);
-}
 .nightbus {
 	color: var(--nightbus-color);
-}
-.nightbus.selected {
-	background-color: var(--nightbus-color);
 }
 .trolley {
 	color: var(--trolley-color);
 }
-.trolley.selected {
-	background-color: var(--trolley-color);
-}
 .subway {
 	color: var(--subway-color);
-}
-.subway.selected {
-	background-color: var(--subway-color);
 }
 
 .trams::before, .buses::before, .trolleys::before, .subways::before {
