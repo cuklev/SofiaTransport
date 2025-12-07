@@ -1,3 +1,11 @@
+:root {
+	--tram-color: orange;
+	--bus-color: red;
+	--nightbus-color: purple;
+	--trolley-color: blue;
+	--subway-color: green;
+}
+
 body {
 	height: 100vh;
 	margin: 0;
@@ -15,59 +23,12 @@ body {
 	white-space: nowrap;
 }
 
-.search-wrapper label {
-	margin-right: 15px;
-}
-.search-wrapper > label::before {
-	content: '';
-	display: inline-block;
-	background-size: cover;
-	background-image: url('../imgs/search.ico');
-	height: 24px;
-	width: 24px;
-}
-
-.tram {
-	color: orange;
-}
-.bus {
-	color: red;
-}
-.nightbus {
-	color: purple;
-}
-.trolley {
-	color: blue;
-}
-.subway {
-	color: green;
-}
-
 a {
 	text-decoration: none;
 }
 a:hover {
-	background-color: lightgray;
-	color: black;
-}
-.selected a {
-	font-weight: bold;
-}
-
-.fav-item {
-	line-height: 24px;
-}
-.fav-item a {
-	line-height: 100%;
-}
-.fav-item input {
-	border: none;
-	border-bottom: solid 1px;
-	width: 100%;
-}
-.edit-favourite, .remove-favourite {
-	cursor: pointer;
-	float: right;
+	background-color: gray;
+	color: white;
 }
 
 @media(min-width:768px) {
@@ -88,18 +49,7 @@ a:hover {
 	}
 }
 
-.features {
-	padding-left: 8px;
-}
-.features img {
-	height: 15px;
-}
-
-.timestamp {
-	color: rgb(96, 96, 96);
-}
-
-#timing-container > ul {
+#timing-container > ul, #lines-container > ul {
 	list-style: none;
 	padding: 0;
 }
