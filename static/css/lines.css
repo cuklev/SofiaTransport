@@ -25,19 +25,19 @@
 	color: white;
 }
 .lines .lines-wrapper a.trolley.selected {
-	background-color: blue;
+	background-color: var(--trolley-color);
 }
 .lines .lines-wrapper a.tram.selected {
-	background-color: orange;
+	background-color: var(--tram-color);
 }
 .lines .lines-wrapper a.bus.selected {
-	background-color: red;
+	background-color: var(--bus-color);
 }
 .lines .lines-wrapper a.nightbus.selected {
-	background-color: purple;
+	background-color: var(--nightbus-color);
 }
 .lines .lines-wrapper a.subway.selected {
-	background-color: green;
+	background-color: var(--subway-color);
 }
 
 .lines strong::before {

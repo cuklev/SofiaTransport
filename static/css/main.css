@@ -1,3 +1,11 @@
+:root {
+	--tram-color: orange;
+	--bus-color: red;
+	--nightbus-color: purple;
+	--trolley-color: blue;
+	--subway-color: green;
+}
+
 body {
 	height: 100vh;
 	margin: 0;
@@ -28,19 +36,19 @@ body {
 }
 
 .tram {
-	color: orange;
+	color: var(--tram-color);
 }
 .bus {
-	color: red;
+	color: var(--bus-color);
 }
 .nightbus {
-	color: purple;
+	color: var(--nightbus-color);
 }
 .trolley {
-	color: blue;
+	color: var(--trolley-color);
 }
 .subway {
-	color: green;
+	color: var(--subway-color);
 }
 
 a {
