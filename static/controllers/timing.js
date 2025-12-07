@@ -62,11 +62,11 @@ const timingInit = (container, formatCheckbox, autoPoll) => {
 		setTimingFormat();
 	};
 
-	const load = (code, type, id) => {
+	const load = async (code, type, id) => {
 		const loading = document.createElement('H3');
 		loading.innerHTML = `Loading timings for stop ${code}`;
 		container.insertBefore(loading, container.firstChild);
-		get(code, type, id);
+		await get(code, type, id);
 	};
 
 	formatCheckbox.addEventListener('change', setTimingFormat);
