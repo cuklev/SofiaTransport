@@ -1,8 +1,3 @@
-.lines {
-	list-style: none;
-	padding: 0;
-}
-
 .lines-wrapper {
 	overflow: hidden;
 }
@@ -14,26 +9,38 @@
 	text-align: center;
 }
 
-a:hover {
-	background-color: gray;
-	color: white;
-}
 a.selected {
 	color: white;
 }
-a.trolley.selected {
-	background-color: var(--trolley-color);
+
+.tram {
+	color: var(--tram-color);
 }
-a.tram.selected {
+.tram.selected {
 	background-color: var(--tram-color);
 }
-a.bus.selected {
+.bus {
+	color: var(--bus-color);
+}
+.bus.selected {
 	background-color: var(--bus-color);
 }
-a.nightbus.selected {
+.nightbus {
+	color: var(--nightbus-color);
+}
+.nightbus.selected {
 	background-color: var(--nightbus-color);
 }
-a.subway.selected {
+.trolley {
+	color: var(--trolley-color);
+}
+.trolley.selected {
+	background-color: var(--trolley-color);
+}
+.subway {
+	color: var(--subway-color);
+}
+.subway.selected {
 	background-color: var(--subway-color);
 }
 
