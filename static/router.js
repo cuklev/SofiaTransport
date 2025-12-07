@@ -23,16 +23,22 @@ const routerInit = () => {
 		const newCode = code && oldState.code !== code;
 		const newLine = type && name && (oldState.type !== type || oldState.name !== name);
 
-		if(newLine) {
+		if (newLine) {
 			oldState.type = type;
 			oldState.name = name;
 			await routesController.get(type, name);
-			window.scrollTo(0, document.querySelector('#routes-container').offsetTop);
+
+			if (!code) {
+				window.scrollTo(0, document.querySelector('#routes-container').offsetTop);
+			}
 		}
 
-		if(newCode || (code && newLine)) {
+		if (newCode || (code && newLine)) {
 			oldState.code = code;
 			await timingController.load(code, type, name);
+		}
+
+		if (newCode) {
 			window.scrollTo(0, document.querySelector('#timing-container').offsetTop);
 		}
 
