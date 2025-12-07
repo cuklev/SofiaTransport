@@ -3,44 +3,41 @@
 	padding: 0;
 }
 
-.lines .lines-wrapper {
+.lines-wrapper {
 	overflow: hidden;
 }
 
-.lines .lines-wrapper a.blocks {
+.lines-wrapper a {
 	float: left;
 	width: 50px;
 	padding: 5px 0;
 	text-align: center;
 }
-.lines .lines-wrapper a.subway {
-	display: block;
-}
 
-.lines .lines-wrapper a:hover {
+a:hover {
 	background-color: gray;
 	color: white;
 }
-.lines .lines-wrapper a.selected {
+a.selected {
 	color: white;
 }
-.lines .lines-wrapper a.trolley.selected {
+a.trolley.selected {
 	background-color: var(--trolley-color);
 }
-.lines .lines-wrapper a.tram.selected {
+a.tram.selected {
 	background-color: var(--tram-color);
 }
-.lines .lines-wrapper a.bus.selected {
+a.bus.selected {
 	background-color: var(--bus-color);
 }
-.lines .lines-wrapper a.nightbus.selected {
+a.nightbus.selected {
 	background-color: var(--nightbus-color);
 }
-.lines .lines-wrapper a.subway.selected {
+a.subway.selected {
 	background-color: var(--subway-color);
 }
 
-.lines strong::before {
+.trams::before, .buses::before, .trolleys::before, .subways::before {
 	content: '';
 	display: inline-block;
 	background-size: cover;
@@ -49,15 +46,15 @@
 	margin-right: 2%;
 }
 
-.lines .trams strong::before {
+.trams::before {
 	background-image: url('../imgs/tram.png');
 }
-.lines .buses strong::before {
+.buses::before {
 	background-image: url('../imgs/bus.png');
 }
-.lines .trolleys strong::before {
+.trolleys::before {
 	background-image: url('../imgs/trolleybus.png');
 }
-.lines .subways strong::before {
+.subways::before {
 	background-image: url('../imgs/subway.png');
 }

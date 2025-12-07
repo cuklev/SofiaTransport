@@ -1,41 +1,41 @@
 <ul class="lines">
-	<li class="trolleys">
-		<strong>Тролеи:</strong>
+	<li>
+		<strong class="trolleys">Тролеи:</strong>
 		<div class="lines-wrapper">
 			{{#each trolleybus}}
-				<a class="blocks trolley nowrap" href="#/trolley/{{this}}" data-line-name="{{this}}">{{this}}</a>
+				<a class="trolley nowrap" href="#/trolley/{{this}}" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
-	<li class="trams">
-		<strong>Трамваи:</strong>
+	<li>
+		<strong class="trams">Трамваи:</strong>
 		<div class="lines-wrapper">
 			{{#each tram}}
-				<a class="blocks tram nowrap" href="#/tram/{{this}}" data-line-name="{{this}}">{{this}}</a>
+				<a class="tram nowrap" href="#/tram/{{this}}" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
-	<li class="buses">
-		<strong>Автобуси:</strong>
+	<li>
+		<strong class="buses">Автобуси:</strong>
 		<div class="lines-wrapper">
 			{{#each bus}}
-				<a class="blocks bus nowrap" href="#/bus/{{this}}" data-line-name="{{this}}">{{this}}</a>
+				<a class="bus nowrap" href="#/bus/{{this}}" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
-	<li class="buses">
-		<strong>Нощни автобуси:</strong>
+	<li>
+		<strong class="buses">Нощни автобуси:</strong>
 		<div class="lines-wrapper">
 			{{#each nightbus}}
-				<a class="blocks nightbus nowrap" href="#/nightbus/{{this}}" data-line-name="{{this}}">{{this}}</a>
+				<a class="nightbus nowrap" href="#/nightbus/{{this}}" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
-	<li class="subways">
-		<strong>Метро:</strong>
+	<li>
+		<strong class="subways">Метро:</strong>
 		<div class="lines-wrapper">
 			{{#each subway}}
-				<a class="blocks subway nowrap" href="#/subway/{{this}}" data-line-name="{{this}}">{{this}}</a>
+				<a class="subway nowrap" href="#/subway/{{this}}" data-line-name="{{this}}">{{this}}</a>
 			{{/each}}
 		</div>
 	</li>
