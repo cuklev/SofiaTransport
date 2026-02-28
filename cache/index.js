@@ -74,9 +74,11 @@ const getCache = async () => {
 };
 
 const init = async () => {
+	// Also refreshes tokens needed for other quiries to work.
+	// Tokens seem to expire after 2h, we refresh in 53 minutes.
 	try {
 		await getCache();
-		setTimeout(init, 24*60*60*1000); // 1 day
+		setTimeout(init, 53*60*1000); // 53 minutes
 	} catch(e) {
 		console.error(e);
 		setTimeout(init, 10*60*1000); // 10 minutes
