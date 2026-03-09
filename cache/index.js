@@ -74,7 +74,7 @@ const getCache = async () => {
 };
 
 const init = async () => {
-	// Also refreshes tokens needed for other quiries to work.
+	// Also refreshes tokens needed for other queries to work.
 	// Tokens seem to expire after 2h, we refresh in 53 minutes.
 	try {
 		await getCache();
